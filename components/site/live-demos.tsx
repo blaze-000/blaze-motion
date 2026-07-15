@@ -9,12 +9,12 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 
 function DemoCell({
   name,
-  item,
+  usage,
   blurb,
   children,
 }: {
   name: string;
-  item: string;
+  usage: string;
   blurb: string;
   children: ReactNode;
 }) {
@@ -44,7 +44,7 @@ function DemoCell({
 
       <div className="border-t border-border px-5 py-3">
         <code className="block overflow-x-auto whitespace-nowrap font-mono text-[11px] text-muted-foreground [scrollbar-width:none]">
-          <span className="text-primary/70">add</span> /r/{item}.json
+          {usage}
         </code>
       </div>
     </div>
@@ -60,19 +60,19 @@ const Swatch = ({ children }: { children: ReactNode }) => (
 export function LiveDemos() {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <DemoCell name="Reveal" item="reveal" blurb="Scroll rise — straight, no overshoot">
+      <DemoCell name="Reveal" usage="<Reveal>…</Reveal>" blurb="Scroll rise — straight, no overshoot">
         <Reveal className="w-full max-w-[240px]">
           <Swatch>Rises into view</Swatch>
         </Reveal>
       </DemoCell>
 
-      <DemoCell name="FadeIn" item="fade-in" blurb="Opacity only — for on-mount">
+      <DemoCell name="FadeIn" usage="<FadeIn>…</FadeIn>" blurb="Opacity only — for on-mount">
         <FadeIn className="w-full max-w-[240px]">
           <Swatch>Fades in</Swatch>
         </FadeIn>
       </DemoCell>
 
-      <DemoCell name="Stagger" item="stagger" blurb="Sequenced children cascade">
+      <DemoCell name="Stagger" usage="<Stagger> <StaggerItem/> </Stagger>" blurb="Sequenced children cascade">
         <Stagger className="grid w-full max-w-[240px] gap-2">
           {["One", "Two", "Three", "Four"].map((label) => (
             <StaggerItem key={label}>
@@ -84,7 +84,7 @@ export function LiveDemos() {
         </Stagger>
       </DemoCell>
 
-      <DemoCell name="CinematicImage" item="cinematic-image" blurb="Scale-down settle — big images only">
+      <DemoCell name="CinematicImage" usage="<CinematicImage className='overflow-hidden'>" blurb="Scale-down settle — big images only">
         <CinematicImage className="relative aspect-video w-full max-w-[240px] overflow-hidden rounded-xl border border-border">
           <div className="size-full bg-[radial-gradient(120%_120%_at_20%_10%,#f0894a_0%,#c76a32_35%,#131620_80%)]" />
         </CinematicImage>

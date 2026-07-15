@@ -4,7 +4,7 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Command } from "@/components/site/command";
 import { LiveDemos } from "@/components/site/live-demos";
 
-const INSTALL = "npx shadcn@latest add https://motion.asmitsah.dev/r/core.json";
+const INSTALL = "npx shadcn@latest add https://motion.asmitsah.dev/r/all.json";
 
 function Eyebrow({ n, children }: { n: string; children: string }) {
   return (
@@ -94,8 +94,8 @@ export default function Home() {
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
             <Reveal className="flex flex-col gap-3">
               <p className="font-mono text-xs text-muted-foreground">1 — install the engine</p>
-              <Command>{"npx shadcn add …/r/core.json"}</Command>
-              <p className="text-sm text-muted-foreground">Drops the tokens, the provider, and all five primitives into your repo — editable.</p>
+              <Command>{"npx shadcn add …/r/all.json"}</Command>
+              <p className="text-sm text-muted-foreground">One command drops the tokens, the provider, and all five primitives into your repo — editable.</p>
             </Reveal>
             <Reveal className="flex flex-col gap-3" delay={0.06}>
               <p className="font-mono text-xs text-muted-foreground">2 — mount once, in your root layout</p>
@@ -115,6 +115,32 @@ export default function Home() {
               <p className="text-sm text-muted-foreground">That&apos;s it. The primitive becomes your layout element — no orphan wrapper.</p>
             </Reveal>
           </div>
+
+          <Reveal className="mt-8">
+            <div className="rounded-2xl border border-border bg-card p-6 sm:p-7">
+              <p className="font-mono text-sm text-foreground">
+                Prefer the <span className="text-primary">@blaze-motion</span> shorthand?
+              </p>
+              <p className="mt-1.5 max-w-2xl text-sm text-muted-foreground">
+                Register the namespace in your{" "}
+                <code className="rounded bg-background/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">components.json</code>{" "}
+                once — then pull the whole engine with{" "}
+                <code className="rounded bg-background/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">@blaze-motion/all</code>, exactly like{" "}
+                <code className="rounded bg-background/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">@shadcn</code> or{" "}
+                <code className="rounded bg-background/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">@magicui</code>.
+              </p>
+              <div className="mt-5 grid gap-4 lg:grid-cols-2 lg:items-center">
+                <Code>{`// components.json
+"registries": {
+  "@blaze-motion": "https://motion.asmitsah.dev/r/{name}.json"
+}`}</Code>
+                <div className="flex flex-col justify-center gap-2.5">
+                  <Command>{"npx shadcn add @blaze-motion/all"}</Command>
+                  <p className="font-mono text-[11px] text-muted-foreground">One command — tokens, provider, and all five primitives, editable.</p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

@@ -4,97 +4,21 @@
   "homepage": "https://motion.asmitsah.dev",
   "items": [
     {
-      "name": "motion-tokens",
-      "type": "registry:lib",
-      "title": "Motion Tokens",
-      "description": "The tuned duration/ease/variant tokens — the single source of truth for blaze-motion's feel. Edit the `feel` block to retune the whole engine.",
+      "name": "all",
+      "type": "registry:block",
+      "title": "blaze-motion",
+      "description": "The full motion engine in one install — tuned tokens (lib/motion.ts), the provider, and all five primitives (FadeIn, Reveal, Stagger, CinematicImage, PageTransition).",
       "dependencies": ["motion"],
+      "docs": "Mount <MotionProvider> once in your root layout, then wrap anything in <Reveal> / <Stagger> / <FadeIn>. Retune the whole engine from the `feel` block at the top of lib/motion.ts. Primitives import `m` from motion/react-m — a raw motion.* throws under strict mode.",
       "files": [
-        { "path": "lib/motion.ts", "type": "registry:lib", "target": "@lib/motion.ts" }
-      ]
-    },
-    {
-      "name": "motion-provider",
-      "type": "registry:component",
-      "title": "Motion Provider",
-      "description": "LazyMotion(strict, domAnimation) + MotionConfig(reducedMotion='user'). Mount ONCE in your root layout.",
-      "dependencies": ["motion"],
-      "registryDependencies": ["https://motion.asmitsah.dev/r/motion-tokens.json"],
-      "docs": "Wrap your root layout's {children} with <MotionProvider> exactly once. Primitives import `m` from motion/react-m; a raw motion.* throws under strict mode.",
-      "files": [
-        { "path": "components/motion/motion-provider.tsx", "type": "registry:component", "target": "@components/motion/motion-provider.tsx" }
-      ]
-    },
-    {
-      "name": "fade-in",
-      "type": "registry:component",
-      "title": "Fade In",
-      "description": "Opacity-only fade for on-mount / above-the-fold reveals.",
-      "dependencies": ["motion"],
-      "registryDependencies": ["https://motion.asmitsah.dev/r/motion-tokens.json"],
-      "files": [
-        { "path": "components/motion/fade-in.tsx", "type": "registry:component", "target": "@components/motion/fade-in.tsx" }
-      ]
-    },
-    {
-      "name": "reveal",
-      "type": "registry:component",
-      "title": "Reveal",
-      "description": "Scroll-triggered rise-from-below. Straight tween, no spring overshoot.",
-      "dependencies": ["motion"],
-      "registryDependencies": ["https://motion.asmitsah.dev/r/motion-tokens.json"],
-      "files": [
-        { "path": "components/motion/reveal.tsx", "type": "registry:component", "target": "@components/motion/reveal.tsx" }
-      ]
-    },
-    {
-      "name": "stagger",
-      "type": "registry:component",
-      "title": "Stagger",
-      "description": "Stagger + StaggerItem — flat named exports for staggered children reveals.",
-      "dependencies": ["motion"],
-      "registryDependencies": ["https://motion.asmitsah.dev/r/motion-tokens.json"],
-      "files": [
-        { "path": "components/motion/stagger.tsx", "type": "registry:component", "target": "@components/motion/stagger.tsx" }
-      ]
-    },
-    {
-      "name": "cinematic-image",
-      "type": "registry:component",
-      "title": "Cinematic Image",
-      "description": "Scale-down 110%→100% settle for large hero images. Wrap in an overflow-hidden box.",
-      "dependencies": ["motion"],
-      "registryDependencies": ["https://motion.asmitsah.dev/r/motion-tokens.json"],
-      "files": [
-        { "path": "components/motion/cinematic-image.tsx", "type": "registry:component", "target": "@components/motion/cinematic-image.tsx" }
-      ]
-    },
-    {
-      "name": "page-transition",
-      "type": "registry:component",
-      "title": "Page Transition",
-      "description": "AnimatePresence route transition keyed on routeKey.",
-      "dependencies": ["motion"],
-      "registryDependencies": ["https://motion.asmitsah.dev/r/motion-tokens.json"],
-      "files": [
+        { "path": "lib/motion.ts", "type": "registry:lib", "target": "@lib/motion.ts" },
+        { "path": "components/motion/motion-provider.tsx", "type": "registry:component", "target": "@components/motion/motion-provider.tsx" },
+        { "path": "components/motion/fade-in.tsx", "type": "registry:component", "target": "@components/motion/fade-in.tsx" },
+        { "path": "components/motion/reveal.tsx", "type": "registry:component", "target": "@components/motion/reveal.tsx" },
+        { "path": "components/motion/stagger.tsx", "type": "registry:component", "target": "@components/motion/stagger.tsx" },
+        { "path": "components/motion/cinematic-image.tsx", "type": "registry:component", "target": "@components/motion/cinematic-image.tsx" },
         { "path": "components/motion/page-transition.tsx", "type": "registry:component", "target": "@components/motion/page-transition.tsx" }
       ]
-    },
-    {
-      "name": "core",
-      "type": "registry:block",
-      "title": "Core Bundle",
-      "description": "The full blaze-motion primitive set — tokens, provider, and all five primitives — in one install.",
-      "registryDependencies": [
-        "https://motion.asmitsah.dev/r/motion-tokens.json",
-        "https://motion.asmitsah.dev/r/motion-provider.json",
-        "https://motion.asmitsah.dev/r/fade-in.json",
-        "https://motion.asmitsah.dev/r/reveal.json",
-        "https://motion.asmitsah.dev/r/stagger.json",
-        "https://motion.asmitsah.dev/r/cinematic-image.json",
-        "https://motion.asmitsah.dev/r/page-transition.json"
-      ],
-      "files": []
     }
   ]
 }
