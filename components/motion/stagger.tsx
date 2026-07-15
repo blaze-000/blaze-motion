@@ -1,0 +1,39 @@
+"use client";
+
+import * as m from "motion/react-m";
+import type { CSSProperties, ReactNode } from "react";
+import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
+
+type StaggerProps = {
+  children: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+};
+
+/**
+ * Staggered children reveal. FLAT exports on purpose — never a compound
+ * `Stagger.Item` (a bolted-on property is undefined across the RSC
+ * client-reference boundary and crashes a Server Component at build).
+ */
+export function Stagger({ children, className, style }: StaggerProps) {
+  return (
+    <m.div
+      className={className}
+      style={style}
+      variants={staggerContainer}
+      initial="initial"
+      whileInView="animate"
+      viewport={viewportOnce}
+    >
+      {children}
+    </m.div>
+  );
+}
+
+export function StaggerItem({ children, className, style }: StaggerProps) {
+  return (
+    <m.div className={className} style={style} variants={staggerItem}>
+      {children}
+    </m.div>
+  );
+}

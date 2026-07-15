@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# generated shadcn registry output (rebuilt by `pnpm registry:build`)
+/public/r/
+
 # production
 /build
 
