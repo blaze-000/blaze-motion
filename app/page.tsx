@@ -73,7 +73,7 @@ export default function Home() {
     <div className="relative">
       {/* nav */}
       <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-5xl items-center gap-6 px-6">
+        <div className="mx-auto flex h-14 max-w-7xl items-center gap-6 px-6">
           <a href="#top" className="flex items-center gap-2.5 font-mono text-sm font-medium text-foreground">
             <span className="size-2.5 rounded-full bg-primary shadow-[0_0_14px_1px] shadow-primary/40" />
             blaze-motion
@@ -94,7 +94,7 @@ export default function Home() {
           aria-hidden
           className="pointer-events-none absolute inset-x-0 -top-40 h-[420px] bg-[radial-gradient(50%_50%_at_35%_20%,rgba(240,137,74,0.13),transparent_70%)]"
         />
-        <div className="relative mx-auto max-w-5xl px-6 py-24 sm:py-28">
+        <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-28">
           <FadeIn>
             <p className="mb-6 font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
               The <span className="text-primary">shadcn</span> of motion · built on motion.dev
@@ -132,7 +132,7 @@ export default function Home() {
 
       {/* playground */}
       <section id="playground" className="border-t border-border">
-        <div className="mx-auto max-w-5xl px-6 py-20">
+        <div className="mx-auto max-w-7xl px-6 py-20">
           <Reveal>
             <Eyebrow n="01">Playground</Eyebrow>
             <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
@@ -153,7 +153,7 @@ export default function Home() {
 
       {/* quick start */}
       <section id="start" className="border-t border-border">
-        <div className="mx-auto max-w-5xl px-6 py-20">
+        <div className="mx-auto max-w-7xl px-6 py-20">
           <Reveal>
             <Eyebrow n="02">Install</Eyebrow>
             <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
@@ -213,7 +213,7 @@ export default function Home() {
 
       {/* primitives */}
       <section id="primitives" className="border-t border-border">
-        <div className="mx-auto max-w-5xl px-6 py-20">
+        <div className="mx-auto max-w-7xl px-6 py-20">
           <Reveal>
             <Eyebrow n="03">The primitives</Eyebrow>
             <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
@@ -234,7 +234,7 @@ export default function Home() {
 
       {/* usage patterns */}
       <section id="patterns" className="border-t border-border">
-        <div className="mx-auto max-w-5xl px-6 py-20">
+        <div className="mx-auto max-w-7xl px-6 py-20">
           <Reveal>
             <Eyebrow n="04">Usage patterns</Eyebrow>
             <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
@@ -260,7 +260,7 @@ export default function Home() {
 
       {/* why safe */}
       <section className="border-t border-border">
-        <div className="mx-auto max-w-5xl px-6 py-20">
+        <div className="mx-auto max-w-7xl px-6 py-20">
           <Reveal>
             <Eyebrow n="05">Why it&apos;s safe</Eyebrow>
             <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
@@ -287,7 +287,7 @@ export default function Home() {
 
       {/* coming soon */}
       <section id="soon" className="border-t border-border">
-        <div className="mx-auto max-w-5xl px-6 py-20">
+        <div className="mx-auto max-w-7xl px-6 py-20">
           <Reveal>
             <Eyebrow n="06">Coming soon</Eyebrow>
             <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
@@ -324,7 +324,7 @@ export default function Home() {
 
       {/* footer */}
       <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-5xl flex-col gap-6 px-6 py-14 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-14 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div className="flex items-center gap-2.5 font-mono text-sm text-foreground">
               <span className="size-2.5 rounded-full bg-primary shadow-[0_0_14px_1px] shadow-primary/40" />
