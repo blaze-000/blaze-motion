@@ -1,10 +1,12 @@
 import { FadeIn } from "@/components/motion/fade-in";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import { CodeBlock } from "@/components/site/code-block";
 import { Command } from "@/components/site/command";
 import { LiveDemos } from "@/components/site/live-demos";
+import { Playground } from "@/components/site/playground";
 
-const INSTALL = "npx shadcn add @blaze-motion/all";
+const INSTALL = "npx shadcn add https://motion.asmitsah.dev/r/all.json";
 
 function Eyebrow({ n, children }: { n: string; children: string }) {
   return (
@@ -14,15 +16,57 @@ function Eyebrow({ n, children }: { n: string; children: string }) {
   );
 }
 
-function Code({ children }: { children: React.ReactNode }) {
-  return (
-    <pre className="overflow-x-auto rounded-xl border border-border bg-card p-5 font-mono text-[13px] leading-relaxed text-foreground">
-      <code>{children}</code>
-    </pre>
-  );
-}
+const PATTERNS = [
+  {
+    title: "Reveal a section",
+    blurb: "A straight rise from below, once, as it scrolls into view.",
+    code: `<Reveal>
+  <h2>Your headline rises in.</h2>
+  <p>Once, when it enters the viewport.</p>
+</Reveal>`,
+  },
+  {
+    title: "Stagger a grid",
+    blurb: "Cards cascade in sequence — the dashboard load.",
+    code: `<Stagger className="grid grid-cols-3 gap-4">
+  {items.map((item) => (
+    <StaggerItem key={item.id}>
+      <Card {...item} />
+    </StaggerItem>
+  ))}
+</Stagger>`,
+  },
+  {
+    title: "Cinematic hero image",
+    blurb: "A big image settles from 110% to 100% as it fades in.",
+    code: `<CinematicImage className="relative aspect-video overflow-hidden rounded-2xl">
+  <Image src={hero} alt="Product" fill className="object-cover" />
+</CinematicImage>`,
+  },
+  {
+    title: "Page transitions",
+    blurb: "Fade every route change with one app-router template.",
+    code: `// app/template.tsx
+"use client";
+import { usePathname } from "next/navigation";
+import { PageTransition } from "@/components/motion/page-transition";
 
-const c = { key: "text-primary", com: "text-muted-foreground", str: "text-ember-bright" };
+export default function Template({ children }: { children: React.ReactNode }) {
+  return <PageTransition routeKey={usePathname()}>{children}</PageTransition>;
+}`,
+  },
+];
+
+const SOON = [
+  { name: "SpringPop", note: "hover / tap scale-up — the one sanctioned overshoot" },
+  { name: "BlurToFocus", note: "blur → sharp settle, for text or media" },
+  { name: "TextReveal", note: "per-word blur + rise, scroll-triggered" },
+  { name: "NumberTicker", note: "spring-eased in-view counter for stats" },
+  { name: "ScrollProgressBar", note: "a slim bar bound to scroll progress" },
+  { name: "Hover pack", note: "sweep · directional underline · spotlight dimming" },
+];
+
+const SETUP_ONCE = "npx shadcn registry add @blaze-motion=https://motion.asmitsah.dev/r/{name}.json";
 
 export default function Home() {
   return (
@@ -34,10 +78,12 @@ export default function Home() {
             <span className="size-2.5 rounded-full bg-primary shadow-[0_0_14px_1px] shadow-primary/40" />
             blaze-motion
           </a>
-          <nav className="ml-auto flex items-center gap-1 font-mono text-xs">
-            <a href="#start" className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-card hover:text-foreground">Start</a>
-            <a href="#tune" className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-card hover:text-foreground">Tune</a>
+          <nav className="ml-auto hidden items-center gap-1 font-mono text-xs sm:flex">
+            <a href="#playground" className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-card hover:text-foreground">Playground</a>
+            <a href="#start" className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-card hover:text-foreground">Install</a>
             <a href="#primitives" className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-card hover:text-foreground">Primitives</a>
+            <a href="#patterns" className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-card hover:text-foreground">Patterns</a>
+            <a href="https://github.com/blaze-000/blaze-motion" target="_blank" rel="noopener noreferrer" className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-card hover:text-foreground">GitHub ↗</a>
           </nav>
         </div>
       </header>
@@ -51,19 +97,19 @@ export default function Home() {
         <div className="relative mx-auto max-w-5xl px-6 py-24 sm:py-28">
           <FadeIn>
             <p className="mb-6 font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
-              A <span className="text-primary">motion.dev</span> engine · shipped as a shadcn registry
+              The <span className="text-primary">shadcn</span> of motion · built on motion.dev
             </p>
             <h1 className="max-w-3xl text-balance text-5xl font-extrabold leading-[1.02] tracking-tight text-foreground sm:text-6xl">
               Motion, <span className="text-primary">tuned once.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              Install the primitives, wrap a{" "}
-              <code className="rounded bg-card px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">&lt;div&gt;</code>, and get a subtle, RSC-safe animation. Tune the whole feel — slower here, faster there — from a single file.
+              Subtle, production-grade motion primitives for Next.js. Install the engine, wrap a{" "}
+              <code className="rounded bg-card px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">&lt;div&gt;</code>, and tune the whole feel — slower here, faster there — from a single editable file.
             </p>
             <div className="mt-8 max-w-xl">
               <Command>{INSTALL}</Command>
               <p className="mt-2.5 font-mono text-[11px] text-muted-foreground">
-                New project? Register the namespace once (see Quick start) — then this is the only command you ever run.
+                One command, zero setup · RSC-safe · reduced-motion honored · own the files. Install it often? Grab the <span className="text-primary">@blaze-motion</span> shorthand below.
               </p>
             </div>
           </FadeIn>
@@ -84,11 +130,32 @@ export default function Home() {
         </div>
       </section>
 
+      {/* playground */}
+      <section id="playground" className="border-t border-border">
+        <div className="mx-auto max-w-5xl px-6 py-20">
+          <Reveal>
+            <Eyebrow n="01">Playground</Eyebrow>
+            <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
+              Tune the feel. Watch it move.
+            </h2>
+            <p className="mt-4 max-w-xl text-muted-foreground">
+              Every primitive reads from one <code className="rounded bg-card px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">feel</code> object. Drag the sliders — the list re-animates live and the config updates to copy. Grab a preset, or <span className="text-foreground">copy a config link</span> and hand someone your exact feel.
+            </p>
+          </Reveal>
+          <div className="mt-10">
+            <Playground />
+          </div>
+          <p className="mt-5 font-mono text-[11px] text-muted-foreground">
+            global default in lib/motion.ts · per-instance props override · real JS values, no CSS-variable guesswork
+          </p>
+        </div>
+      </section>
+
       {/* quick start */}
       <section id="start" className="border-t border-border">
         <div className="mx-auto max-w-5xl px-6 py-20">
           <Reveal>
-            <Eyebrow n="01">Quick start</Eyebrow>
+            <Eyebrow n="02">Install</Eyebrow>
             <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
               Three steps to your first animation.
             </h2>
@@ -97,24 +164,24 @@ export default function Home() {
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
             <Reveal className="flex flex-col gap-3">
               <p className="font-mono text-xs text-muted-foreground">1 — install the engine</p>
-              <Command>{"npx shadcn add @blaze-motion/all"}</Command>
-              <p className="text-sm text-muted-foreground">Drops the tokens, the provider, and all five primitives into your repo — editable. (First run needs the one-time setup below.)</p>
+              <Command>{"npx shadcn add https://motion.asmitsah.dev/r/all.json"}</Command>
+              <p className="text-sm text-muted-foreground">One command, zero setup — drops the tokens, the provider, and all five primitives into your repo, editable.</p>
             </Reveal>
             <Reveal className="flex flex-col gap-3" delay={0.06}>
               <p className="font-mono text-xs text-muted-foreground">2 — mount once, in your root layout</p>
-              <Code>
-                <span className={c.com}>{"// app/layout.tsx"}</span>
-                {"\n<"}<span className={c.key}>MotionProvider</span>{">{children}</"}<span className={c.key}>MotionProvider</span>{">"}
-              </Code>
+              <CodeBlock
+                code={`// app/layout.tsx
+<MotionProvider>{children}</MotionProvider>`}
+              />
               <p className="text-sm text-muted-foreground">One provider. Pages stay Server Components.</p>
             </Reveal>
             <Reveal className="flex flex-col gap-3" delay={0.12}>
               <p className="font-mono text-xs text-muted-foreground">3 — wrap anything</p>
-              <Code>
-                {"<"}<span className={c.key}>Reveal</span>{">"}
-                {"\n  <h2>rises into view</h2>"}
-                {"\n</"}<span className={c.key}>Reveal</span>{">"}
-              </Code>
+              <CodeBlock
+                code={`<Reveal>
+  <h2>rises into view</h2>
+</Reveal>`}
+              />
               <p className="text-sm text-muted-foreground">That&apos;s it. The primitive becomes your layout element — no orphan wrapper.</p>
             </Reveal>
           </div>
@@ -122,60 +189,24 @@ export default function Home() {
           <Reveal className="mt-8">
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-7">
               <p className="font-mono text-sm text-foreground">
-                First time? Register <span className="text-primary">@blaze-motion</span> once.
+                Installing across projects? Get the <span className="text-primary">@blaze-motion</span> shorthand.
               </p>
               <p className="mt-1.5 max-w-2xl text-sm text-muted-foreground">
-                One CLI command wires the namespace into your{" "}
-                <code className="rounded bg-background/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">components.json</code>. After that it&apos;s always{" "}
-                <code className="rounded bg-background/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">@blaze-motion/all</code> — exactly like{" "}
-                <code className="rounded bg-background/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">@shadcn</code> or{" "}
-                <code className="rounded bg-background/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">@magicui</code>. Drop it in your project template and forget it.
+                Register the namespace once — a single CLI command into your{" "}
+                <code className="rounded bg-background/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">components.json</code> — and every future install shortens to{" "}
+                <code className="rounded bg-background/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">@blaze-motion/all</code>. Ideal for your own project template.
               </p>
               <div className="mt-5 flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
-                  <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">once, per project</p>
-                  <Command>{"npx shadcn registry add @blaze-motion=https://motion.asmitsah.dev/r/{name}.json"}</Command>
+                  <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">register once</p>
+                  <Command>{SETUP_ONCE}</Command>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <p className="font-mono text-[11px] uppercase tracking-wider text-primary">then, forever</p>
+                  <p className="font-mono text-[11px] uppercase tracking-wider text-primary">then it&apos;s just</p>
                   <Command>{"npx shadcn add @blaze-motion/all"}</Command>
                 </div>
               </div>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* tune — the differentiator */}
-      <section id="tune" className="border-t border-border">
-        <div className="mx-auto grid max-w-5xl gap-10 px-6 py-20 lg:grid-cols-2 lg:items-center">
-          <Reveal>
-            <Eyebrow n="02">Tune it</Eyebrow>
-            <h2 className="text-balance text-3xl font-bold tracking-tight text-foreground">
-              The whole feel lives in <span className="text-primary">one block</span>.
-            </h2>
-            <p className="mt-5 text-muted-foreground">
-              Every primitive derives from a single{" "}
-              <code className="rounded bg-card px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">feel</code>{" "}
-              object. Need a slower project? Raise the durations. A snappier one? Lower them. One edit re-tunes everything — and a per-instance prop still wins where a section wants something different.
-            </p>
-            <ul className="mt-6 space-y-2.5 text-sm text-muted-foreground">
-              <li className="flex gap-3"><span className="mt-2 h-px w-4 shrink-0 bg-primary" />Global default lives in <code className="font-mono text-[0.85em] text-foreground">lib/motion.ts</code></li>
-              <li className="flex gap-3"><span className="mt-2 h-px w-4 shrink-0 bg-primary" />Per-instance override wins where a section needs it</li>
-              <li className="flex gap-3"><span className="mt-2 h-px w-4 shrink-0 bg-primary" />Real JS values motion consumes directly — no CSS-variable guesswork</li>
-            </ul>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <Code>
-              <span className={c.com}>{"// lib/motion.ts — edit here, retune everything"}</span>
-              {"\n"}<span className={c.key}>export const</span>{" feel = {"}
-              {"\n  duration: { fast: "}<span className={c.str}>0.2</span>{", base: "}<span className={c.str}>0.55</span>{", slow: "}<span className={c.str}>0.8</span>{" },"}
-              {"\n  ease: ["}<span className={c.str}>0.22, 0.61, 0.36, 1</span>{"],"}
-              {"\n  rise: "}<span className={c.str}>28</span>{",       "}<span className={c.com}>{"// px a Reveal rises from"}</span>
-              {"\n  inView: "}<span className={c.str}>0.3</span>{","}
-              {"\n  stagger: "}<span className={c.str}>0.08</span>{","}
-              {"\n} "}<span className={c.key}>as const</span>{";"}
-            </Code>
           </Reveal>
         </div>
       </section>
@@ -201,11 +232,37 @@ export default function Home() {
         </div>
       </section>
 
+      {/* usage patterns */}
+      <section id="patterns" className="border-t border-border">
+        <div className="mx-auto max-w-5xl px-6 py-20">
+          <Reveal>
+            <Eyebrow n="04">Usage patterns</Eyebrow>
+            <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
+              Real code, real contexts.
+            </h2>
+            <p className="mt-4 max-w-xl text-muted-foreground">
+              The everyday places motion earns its keep — copy-paste ready.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+            {PATTERNS.map((p, i) => (
+              <Reveal key={p.title} delay={(i % 2) * 0.06} className="flex flex-col gap-3">
+                <div>
+                  <h3 className="font-mono text-sm text-foreground">{p.title}</h3>
+                  <p className="mt-0.5 text-sm text-muted-foreground">{p.blurb}</p>
+                </div>
+                <CodeBlock code={p.code} className="flex-1" />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* why safe */}
       <section className="border-t border-border">
         <div className="mx-auto max-w-5xl px-6 py-20">
           <Reveal>
-            <Eyebrow n="04">Why it&apos;s safe</Eyebrow>
+            <Eyebrow n="05">Why it&apos;s safe</Eyebrow>
             <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
               The discipline is the product.
             </h2>
@@ -213,7 +270,7 @@ export default function Home() {
           <Stagger className="mt-10 grid gap-4 sm:grid-cols-2">
             {[
               ["Flat exports, no compound components", "Stagger + StaggerItem ship as two named exports — a bolted-on X.Item is undefined across the RSC boundary and crashes a Server Component at build."],
-              ["m from motion/react-m", "The provider runs strict, so primitives import the light m component. A raw motion.* throws — on purpose, so the bundle stays lean."],
+              ["m from motion/react-m", "The provider runs strict, so primitives import the light m component through LazyMotion — only the DOM-animation feature set loads, and a raw motion.* throws on purpose."],
               ["className passthrough", "Every primitive forwards className + style, so it becomes your grid or flex child instead of adding an orphan wrapper div."],
               ["Reduced-motion, honored", "MotionConfig respects the OS setting for everyone — transforms drop to a clean opacity fade, no special-casing."],
             ].map(([t, d]) => (
@@ -225,6 +282,43 @@ export default function Home() {
               </StaggerItem>
             ))}
           </Stagger>
+        </div>
+      </section>
+
+      {/* coming soon */}
+      <section id="soon" className="border-t border-border">
+        <div className="mx-auto max-w-5xl px-6 py-20">
+          <Reveal>
+            <Eyebrow n="06">Coming soon</Eyebrow>
+            <h2 className="max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground">
+              More boilerplates, same restraint.
+            </h2>
+            <p className="mt-4 max-w-xl text-muted-foreground">
+              The next set of opt-in primitives — each one held to the same subtle, RSC-safe bar before it ships.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {SOON.map((s) => (
+              <div
+                key={s.name}
+                className="group relative overflow-hidden rounded-2xl border border-dashed border-border/60 bg-card/40 p-5"
+              >
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-primary/10 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                />
+                <div className="relative flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="font-mono text-sm text-muted-foreground transition-colors group-hover:text-foreground">{s.name}</h3>
+                    <p className="mt-1 text-xs text-muted-foreground/80">{s.note}</p>
+                  </div>
+                  <span className="shrink-0 rounded-md border border-border/60 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    WIP
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -241,7 +335,8 @@ export default function Home() {
             </p>
           </div>
           <div className="font-mono text-xs text-muted-foreground">
-            <p className="text-foreground">motion.asmitsah.dev</p>
+            <a href="https://github.com/blaze-000/blaze-motion" target="_blank" rel="noopener noreferrer" className="text-foreground transition-colors hover:text-primary">GitHub ↗</a>
+            <p className="mt-1">motion.asmitsah.dev</p>
             <p className="mt-1">Motion, tuned once.</p>
           </div>
         </div>
