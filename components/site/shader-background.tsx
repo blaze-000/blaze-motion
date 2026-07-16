@@ -300,16 +300,14 @@ export function ShaderBackground({ className }: { className?: string }) {
   }, []);
 
   return (
-    <div aria-hidden className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}>
+    <div
+      aria-hidden
+      className={cn("pointer-events-none fixed inset-0 -z-10 overflow-hidden", className)}
+      style={{ background: "var(--color-background)" }}
+    >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-      {/* readability scrims: radial vignette + a left ground for hero text */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(115% 85% at 50% 25%, transparent 0%, var(--color-background) 80%), linear-gradient(to right, var(--color-background) 0%, transparent 60%)",
-        }}
-      />
+      {/* Uniform scrim knocks the faint contours back so text stays AA over the whole page. */}
+      <div className="absolute inset-0 bg-background/45" />
     </div>
   );
 }

@@ -1,12 +1,13 @@
+import Link from "next/link";
 import { EasingCurveMark } from "./easing-curve-mark";
 
 const COLUMNS = [
   {
     heading: "Product",
     links: [
-      { label: "Primitives", href: "#primitives" },
-      { label: "Docs", href: "#docs" },
-      { label: "Install", href: "#install" },
+      { label: "Primitives", href: "/#primitives" },
+      { label: "Docs", href: "/docs" },
+      { label: "Install", href: "/#install" },
     ],
   },
   {
@@ -43,19 +44,29 @@ export function Footer() {
               <div key={col.heading}>
                 <p className="fig-label text-muted-foreground">{col.heading}</p>
                 <ul className="mt-4 flex flex-col gap-2.5">
-                  {col.links.map((link) => (
-                    <li key={link.label}>
-                      <a
-                        href={link.href}
-                        {...("external" in link && link.external
-                          ? { target: "_blank", rel: "noopener noreferrer" }
-                          : {})}
-                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
+                  {col.links.map((link) => {
+                    const external = "external" in link && link.external;
+                    const className =
+                      "text-sm text-muted-foreground transition-colors hover:text-foreground";
+                    return (
+                      <li key={link.label}>
+                        {external ? (
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={className}
+                          >
+                            {link.label}
+                          </a>
+                        ) : (
+                          <Link href={link.href} className={className}>
+                            {link.label}
+                          </Link>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}

@@ -1,15 +1,16 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { EasingCurveMark } from "./easing-curve-mark";
 import { GitHubStars } from "./github-stars";
 
 const LINKS = [
-  { label: "Primitives", href: "#primitives" },
-  { label: "Docs", href: "#docs" },
-  { label: "Install", href: "#install" },
+  { label: "Primitives", href: "/#primitives" },
+  { label: "Docs", href: "/docs" },
+  { label: "Install", href: "/#install" },
 ] as const;
 
 export function Nav() {
@@ -27,7 +28,7 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="container-page flex h-16 items-center gap-4 px-6 lg:px-12">
-        <a href="#top" className="flex items-center gap-2.5" aria-label="blaze-motion — home">
+        <Link href="/" className="flex items-center gap-2.5" aria-label="blaze-motion — home">
           <EasingCurveMark variant="nav" className="size-5" />
           <span className="text-[0.95rem] font-semibold tracking-tight text-foreground">
             blaze-motion
@@ -35,17 +36,17 @@ export function Nav() {
           <span className="hidden rounded border border-border px-1.5 py-0.5 font-mono text-[0.6875rem] text-muted-foreground sm:inline-block">
             motion 12.42
           </span>
-        </a>
+        </Link>
 
         <nav className="ml-auto hidden items-center gap-1 md:flex" aria-label="Primary">
           {LINKS.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               className="rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-card hover:text-foreground"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
           <div className="mx-2 h-5 w-px bg-border" aria-hidden />
           <GitHubStars />
@@ -75,14 +76,14 @@ export function Nav() {
       >
         <nav className="container-page flex flex-col gap-1 px-6 py-4" aria-label="Mobile">
           {LINKS.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
               className="rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-card hover:text-foreground"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
       </div>

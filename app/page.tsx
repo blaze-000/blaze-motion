@@ -13,7 +13,6 @@ import { InstallBlock } from "@/components/site/install-block";
 import { Nav } from "@/components/site/nav";
 import { OpenSourceBand } from "@/components/site/open-source-band";
 import { PrimitiveShowcase } from "@/components/site/primitive-showcase";
-import { ShaderBackground } from "@/components/site/shader-background";
 import { TechnicalTruths } from "@/components/site/technical-truths";
 
 const MOUNT_CODE = `// app/layout.tsx
@@ -49,8 +48,7 @@ export default function Home() {
         <DraftingFrame />
 
         <div className="relative z-10">
-          <section className="relative overflow-hidden">
-            <ShaderBackground />
+          <section className="relative">
             <div className="container-page relative z-10 px-6 py-20 sm:py-24 lg:px-12 lg:py-28">
               <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
                 <FadeIn className="flex min-w-0 flex-col gap-6">

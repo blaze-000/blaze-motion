@@ -4,8 +4,7 @@
 
 ## Install
 
-- URL (works today, zero setup): `npx shadcn add https://motion.asmitsah.dev/r/all.json`
-- Shorthand (needs a one-time components.json registries entry until shadcn-ui/ui#11188 merges): `npx shadcn add @blaze-motion/all`
+- URL (works today, zero setup — no components.json entry required): `npx shadcn add https://motion.asmitsah.dev/r/all.json`
 - Single runtime dependency: `motion@^12.42.2`
 - One command installs all 7 files (lib/motion.ts + the six primitives) — the "all" registry item.
 

@@ -53,10 +53,12 @@
   }
   html {
     @apply font-sans;
+    /* Graphite backdrop behind the fixed shader layer; body stays transparent so it shows through. */
+    background: var(--background);
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply text-foreground antialiased;
     line-height: 1.65;
   }
   ::selection {

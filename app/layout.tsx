@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, Spline_Sans_Mono } from "next/font/google";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { ShaderBackground } from "@/components/site/shader-background";
 import "./globals.css";
 
 const sans = Schibsted_Grotesk({
@@ -65,6 +66,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-dvh">
+        <ShaderBackground />
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
