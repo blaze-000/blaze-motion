@@ -211,7 +211,10 @@ export function FeelPlayground() {
         }
         bodyClassName="relative flex items-center p-5 sm:p-8"
       >
-        <div className="pointer-events-none absolute left-4 top-8 bottom-8 hidden items-center sm:flex" aria-hidden>
+        <div
+          className="pointer-events-none absolute left-4 top-8 bottom-8 hidden items-center sm:flex"
+          aria-hidden
+        >
           <div className="relative h-full w-px bg-border">
             <span className="absolute -left-px top-0 h-px w-2 bg-signal/70" />
             <span className="absolute -left-px bottom-0 h-px w-2 bg-signal/70" />

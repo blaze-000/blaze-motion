@@ -4,7 +4,7 @@ import { RotateCw } from "lucide-react";
 import { useState } from "react";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
-import { type EffectName, EFFECT_META, renderEffectDemo } from "./effect-demos";
+import { EFFECT_META, type EffectName, renderEffectDemo } from "./effect-demos";
 import { FigPanel } from "./fig-panel";
 
 type Effect = {
@@ -115,7 +115,9 @@ function EffectCard({ effect }: { effect: Effect }) {
                 aria-pressed={view === v}
                 className={cn(
                   "rounded-[3px] px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-wide transition-colors",
-                  view === v ? "bg-signal/15 text-signal" : "text-muted-foreground hover:text-foreground",
+                  view === v
+                    ? "bg-signal/15 text-signal"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {v}

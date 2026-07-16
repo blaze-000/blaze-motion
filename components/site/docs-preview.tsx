@@ -21,10 +21,7 @@ const TOC = ["Overview", "When to use", "Preview", "Props"];
 export function DocsPreview() {
   return (
     <div className="flex flex-col gap-6">
-      <div
-        aria-hidden
-        className="overflow-hidden rounded-md border border-border bg-card"
-      >
+      <div aria-hidden className="overflow-hidden rounded-md border border-border bg-card">
         <div className="grid lg:grid-cols-[15rem_1fr_12rem]">
           <div className="hidden border-b border-border p-5 md:block lg:border-b-0 lg:border-r">
             <div className="flex flex-col gap-5">
@@ -78,7 +75,9 @@ export function DocsPreview() {
                 <tbody>
                   {PROPS.map((row) => (
                     <tr key={row.prop} className="border-b border-border/60 last:border-0">
-                      <td className="py-2.5 pr-4 font-mono text-[0.8125rem] text-signal">{row.prop}</td>
+                      <td className="py-2.5 pr-4 font-mono text-[0.8125rem] text-signal">
+                        {row.prop}
+                      </td>
                       <td className="py-2.5 pr-4 font-mono text-[0.8125rem] text-muted-foreground">
                         {row.type}
                       </td>
@@ -97,7 +96,10 @@ export function DocsPreview() {
             <p className="fig-label text-muted-foreground">On this page</p>
             <ul className="mt-3 flex flex-col gap-2">
               {TOC.map((item, i) => (
-                <li key={item} className={i === 0 ? "text-sm text-signal" : "text-sm text-muted-foreground"}>
+                <li
+                  key={item}
+                  className={i === 0 ? "text-sm text-signal" : "text-sm text-muted-foreground"}
+                >
                   {item}
                 </li>
               ))}

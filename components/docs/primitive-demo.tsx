@@ -8,11 +8,7 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { PageTransition } from "@/components/motion/page-transition";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import {
-  type EffectName,
-  EFFECT_META,
-  renderEffectDemo,
-} from "@/components/site/effect-demos";
+import { EFFECT_META, type EffectName, renderEffectDemo } from "@/components/site/effect-demos";
 import { FigPanel } from "@/components/site/fig-panel";
 
 type CorePrimitive = "fadein" | "reveal" | "stagger" | "cinematicimage" | "pagetransition";
@@ -28,7 +24,8 @@ function Swatch({ children }: { children: ReactNode }) {
 
 function RouteSwap({ swap }: { swap: number }) {
   const routes = ["/", "/docs"];
-  const current = routes[swap % 2];
+  // swap % 2 is always 0 or 1 — both in-bounds for this fixed 2-element array.
+  const current = routes[swap % 2]!;
   return (
     <PageTransition routeKey={current} className="w-full max-w-[16rem]">
       <div className="flex flex-col gap-1.5 rounded-sm border border-border bg-panel-2 px-4 py-3">

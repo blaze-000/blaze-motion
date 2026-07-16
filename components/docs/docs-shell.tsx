@@ -67,7 +67,10 @@ export function DocsShell({ children }: { children: React.ReactNode }) {
           <ul className="flex flex-col gap-0.5 border-t border-border px-4 py-3">
             {DOCS_FLAT.map((item) => (
               <li key={item.id}>
-                <a href={`#${item.id}`} className="block py-1 text-sm text-muted-foreground hover:text-foreground">
+                <a
+                  href={`#${item.id}`}
+                  className="block py-1 text-sm text-muted-foreground hover:text-foreground"
+                >
                   {item.label}
                 </a>
               </li>

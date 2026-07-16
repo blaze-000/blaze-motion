@@ -201,7 +201,7 @@ const PRIMITIVES: Primitive[] = [
     figNo: "03",
     oneLine: "Sibling choreography — children rise in sequence.",
     desc: "Stagger is the container; each StaggerItem does the same straight rise as Reveal. The step is tunable via staggerChildren / delayChildren (defaults 0.08s / 0.05s). Two flat exports, never a compound Stagger.Item.",
-    when: "Lists and grids of peers — cards, rows, chips — where a sequenced reveal beats all-at-once. Give a StaggerItem className=\"flex\" when it wraps a grid or flex child.",
+    when: 'Lists and grids of peers — cards, rows, chips — where a sequenced reveal beats all-at-once. Give a StaggerItem className="flex" when it wraps a grid or flex child.',
     code: STAGGER_CODE,
     propsKey: "stagger",
     secondary: { heading: "StaggerItem props", propsKey: "staggerItem" },
@@ -223,7 +223,7 @@ const PRIMITIVES: Primitive[] = [
     demoName: "pagetransition",
     figNo: "05",
     oneLine: "Route changes fade + shift, keyed by route.",
-    desc: "Wraps route content in AnimatePresence (mode=\"wait\") and fades + shifts (y 8 → 0) on each route change using the softer easeSoft curve. Keyed via routeKey, not key.",
+    desc: 'Wraps route content in AnimatePresence (mode="wait") and fades + shifts (y 8 → 0) on each route change using the softer easeSoft curve. Keyed via routeKey, not key.',
     when: "Once, in app/template.tsx, so every navigation inherits the transition — including the move between this page and home.",
     code: PAGETRANSITION_CODE,
     propsKey: "pagetransition",
@@ -314,7 +314,7 @@ const PRIMITIVES: Primitive[] = [
     figNo: "13",
     oneLine: "Per-word (or per-char) staggered rise.",
     desc: "TextReveal splits its text and rises each word — or char — into place with the same straight, no-scale feel as Reveal. The full string rides on aria-label so screen readers read it whole.",
-    when: "Headings and short lead paragraphs that deserve a considered entrance. Reach for by=\"char\" only on short, display-size text.",
+    when: 'Headings and short lead paragraphs that deserve a considered entrance. Reach for by="char" only on short, display-size text.',
     code: TEXTREVEAL_CODE,
     propsKey: "textreveal",
   },
@@ -428,7 +428,9 @@ export default function DocsPage() {
                         <span className="font-mono text-sm text-signal sm:w-56 sm:shrink-0">
                           {rule.k}
                         </span>
-                        <span className="text-sm leading-relaxed text-muted-foreground">{rule.v}</span>
+                        <span className="text-sm leading-relaxed text-muted-foreground">
+                          {rule.v}
+                        </span>
                       </div>
                     </StaggerItem>
                   ))}
@@ -443,8 +445,8 @@ export default function DocsPage() {
             >
               <p className="max-w-prose text-base leading-relaxed text-muted-foreground">
                 MotionProvider wraps your whole app in LazyMotion (domAnimation, strict) and
-                MotionConfig (reducedMotion=&quot;user&quot;). Mount it once, in the root layout — it is
-                a single client leaf, so every page around it stays a Server Component.
+                MotionConfig (reducedMotion=&quot;user&quot;). Mount it once, in the root layout —
+                it is a single client leaf, so every page around it stays a Server Component.
               </p>
               <CodeBlock code={MOUNT_CODE} caption="app/layout.tsx" />
               <ul className="flex flex-col gap-2 text-sm leading-relaxed text-muted-foreground">
@@ -474,7 +476,9 @@ export default function DocsPage() {
 
             {PRIMITIVES.map((p) => (
               <DocSection key={p.id} id={p.id} title={p.title} oneLine={p.oneLine}>
-                <p className="max-w-prose text-base leading-relaxed text-muted-foreground">{p.desc}</p>
+                <p className="max-w-prose text-base leading-relaxed text-muted-foreground">
+                  {p.desc}
+                </p>
                 <WhenToUse>{p.when}</WhenToUse>
                 <PrimitiveDemo name={p.demoName} figNo={p.figNo} />
                 <CodeBlock code={p.code} caption="usage" />

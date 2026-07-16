@@ -17,10 +17,17 @@ export function InstallBlock() {
           <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap text-foreground [scrollbar-width:none]">
             {URL_CMD}
           </code>
-          <CopyButton text={URL_CMD} label="Copy install command" className="shrink-0 rounded-md p-1" />
+          <CopyButton
+            text={URL_CMD}
+            label="Copy install command"
+            className="shrink-0 rounded-md p-1"
+          />
         </div>
         <p className="text-sm text-muted-foreground">
-          Resolves for anyone today — no <code className="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">components.json</code>{" "}
+          Resolves for anyone today — no{" "}
+          <code className="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">
+            components.json
+          </code>{" "}
           entry, no prior setup. One command lands the whole engine — the tokens, the provider, and
           every primitive — into your repo, editable.
         </p>

@@ -60,16 +60,19 @@ export default function Home() {
                     Motion, <span className="text-signal">tuned once.</span>
                   </h1>
                   <p className="text-lead">
-                    Subtle, RSC-safe motion primitives for Next.js + shadcn. One command installs the
-                    whole engine into your repo — you own the files, and retune the entire feel from a
-                    single object.
+                    Subtle, RSC-safe motion primitives for Next.js + shadcn. One command installs
+                    the whole engine into your repo — you own the files, and retune the entire feel
+                    from a single object.
                   </p>
                   <HeroInstall />
                 </FadeIn>
 
                 <FadeIn delay={0.15} className="min-w-0">
                   <FigPanel figNo="—" title="ease · the curve" bodyClassName="p-6 sm:p-8">
-                    <EasingCurveMark variant="hero" className="mx-auto block h-40 w-48 sm:h-52 sm:w-64" />
+                    <EasingCurveMark
+                      variant="hero"
+                      className="mx-auto block h-40 w-48 sm:h-52 sm:w-64"
+                    />
                     <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-border pt-5 font-mono text-xs">
                       <div className="flex items-center justify-between">
                         <dt className="text-muted-foreground">ease</dt>
@@ -99,16 +102,18 @@ export default function Home() {
               <Reveal className="flex flex-col gap-3">
                 <h2 className="text-h2 text-foreground">Three steps to your first animation.</h2>
                 <p className="text-lead">
-                  One command lands the whole engine — the tokens, the provider, and every primitive.
-                  The registry declares its single runtime dependency (motion@^12.42.2); the CLI
-                  installs it for you.
+                  One command lands the whole engine — the tokens, the provider, and every
+                  primitive. The registry declares its single runtime dependency (motion@^12.42.2);
+                  the CLI installs it for you.
                 </p>
               </Reveal>
 
               <div className="mt-12 flex flex-col gap-8">
                 <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
                   <div className="flex items-baseline gap-3 sm:w-52 sm:shrink-0">
-                    <span className="font-mono text-2xl tabular-nums text-signal">{STEPS[0].n}</span>
+                    <span className="font-mono text-2xl tabular-nums text-signal">
+                      {STEPS[0].n}
+                    </span>
                     <span className="text-sm font-medium text-foreground">{STEPS[0].label}</span>
                   </div>
                   <div className="min-w-0 flex-1">
@@ -119,7 +124,9 @@ export default function Home() {
                 <div className="grid gap-8 md:grid-cols-2">
                   <div className="flex min-w-0 flex-col gap-4">
                     <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-2xl tabular-nums text-signal">{STEPS[1].n}</span>
+                      <span className="font-mono text-2xl tabular-nums text-signal">
+                        {STEPS[1].n}
+                      </span>
                       <span className="text-sm font-medium text-foreground">{STEPS[1].label}</span>
                     </div>
                     <CodeBlock code={MOUNT_CODE} caption="app/layout.tsx" />
@@ -129,7 +136,9 @@ export default function Home() {
                   </div>
                   <div className="flex min-w-0 flex-col gap-4">
                     <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-2xl tabular-nums text-signal">{STEPS[2].n}</span>
+                      <span className="font-mono text-2xl tabular-nums text-signal">
+                        {STEPS[2].n}
+                      </span>
                       <span className="text-sm font-medium text-foreground">{STEPS[2].label}</span>
                     </div>
                     <CodeBlock code={WRAP_CODE} caption="any component" />
@@ -147,7 +156,10 @@ export default function Home() {
               <Reveal className="flex flex-col gap-3">
                 <h2 className="text-h2 text-foreground">One file. The whole feel.</h2>
                 <p className="text-lead">
-                  Every primitive derives from one <code className="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">feel</code>{" "}
+                  Every primitive derives from one{" "}
+                  <code className="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">
+                    feel
+                  </code>{" "}
                   object. Drag a value — the demo retunes live, and the source updates to copy.
                   Per-instance props still override.
                 </p>
@@ -163,8 +175,8 @@ export default function Home() {
               <div className="flex flex-col gap-3">
                 <h2 className="text-h2 text-foreground">Six primitives. Each one load-bearing.</h2>
                 <p className="text-lead">
-                  Not a catalog of effects — a small, tuned core you wrap around your own markup. Every
-                  panel below is a real, running instance.
+                  Not a catalog of effects — a small, tuned core you wrap around your own markup.
+                  Every panel below is a real, running instance.
                 </p>
               </div>
               <div className="mt-12">
@@ -179,7 +191,8 @@ export default function Home() {
                 <h2 className="text-h2 text-foreground">Ten more effects, same engine.</h2>
                 <p className="text-lead">
                   Entrance, hover, stagger, and text — each tuned from the same feel object, each an
-                  RSC-safe flat export. Toggle Code on any panel, or hover, click, and scroll them live.
+                  RSC-safe flat export. Toggle Code on any panel, or hover, click, and scroll them
+                  live.
                 </p>
               </div>
               <div className="mt-12">
@@ -199,7 +212,8 @@ export default function Home() {
               <div className="flex flex-col gap-3">
                 <h2 className="text-h2 text-foreground">Why it&apos;s safe to drop in.</h2>
                 <p className="text-lead">
-                  The discipline is the product — the real engineering decisions behind the six files.
+                  The discipline is the product — the real engineering decisions behind the six
+                  files.
                 </p>
               </div>
               <TechnicalTruths />

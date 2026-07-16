@@ -14,7 +14,11 @@ const COLUMNS = [
     heading: "Source",
     links: [
       { label: "GitHub", href: "https://github.com/blaze-000/blaze-motion", external: true },
-      { label: "Registry (all.json)", href: "https://motion.asmitsah.dev/r/all.json", external: true },
+      {
+        label: "Registry (all.json)",
+        href: "https://motion.asmitsah.dev/r/all.json",
+        external: true,
+      },
       { label: "Built on motion.dev", href: "https://motion.dev", external: true },
     ],
   },
@@ -34,8 +38,17 @@ export function Footer() {
             </div>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
               A tuned motion engine and six composable primitives for Next.js + shadcn — curated on
-              top of <a href="https://motion.dev" target="_blank" rel="noopener noreferrer" className="text-foreground underline decoration-border underline-offset-2 hover:decoration-signal">motion.dev</a>, not a
-              reinvention of it. Install once, own the files, tune the whole feel from one object.
+              top of{" "}
+              <a
+                href="https://motion.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground underline decoration-border underline-offset-2 hover:decoration-signal"
+              >
+                motion.dev
+              </a>
+              , not a reinvention of it. Install once, own the files, tune the whole feel from one
+              object.
             </p>
           </div>
 

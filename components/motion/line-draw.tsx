@@ -1,8 +1,8 @@
 "use client";
 
+import type { Variants } from "motion/react";
 import * as m from "motion/react-m";
 import type { ComponentPropsWithoutRef } from "react";
-import type { Variants } from "motion/react";
 import { durations, ease } from "@/lib/motion";
 
 // pathLength + fillOpacity are variant animations — supported by domAnimation, no domMax/extra feature import.
@@ -24,7 +24,14 @@ type LineDrawProps = ComponentPropsWithoutRef<typeof m.svg> & {
   stagger?: number;
 };
 
-export function LineDraw({ children, className, style, delay = 0, stagger = 0, ...rest }: LineDrawProps) {
+export function LineDraw({
+  children,
+  className,
+  style,
+  delay = 0,
+  stagger = 0,
+  ...rest
+}: LineDrawProps) {
   return (
     <m.svg
       {...rest}
@@ -40,6 +47,9 @@ export function LineDraw({ children, className, style, delay = 0, stagger = 0, .
 }
 
 // Inherits the parent LineDraw's variant label via context — draws then fills.
-export function LineDrawPath({ strokeLinecap = "round", ...pathProps }: ComponentPropsWithoutRef<typeof m.path>) {
+export function LineDrawPath({
+  strokeLinecap = "round",
+  ...pathProps
+}: ComponentPropsWithoutRef<typeof m.path>) {
   return <m.path strokeLinecap={strokeLinecap} {...pathProps} variants={drawPath} />;
 }

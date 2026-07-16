@@ -21,7 +21,8 @@ function Swatch({ children }: { children: ReactNode }) {
 
 function RouteSwap({ swap }: { swap: number }) {
   const routes = ["/", "/docs"];
-  const current = routes[swap % 2];
+  // swap % 2 is always 0 or 1 — both in-bounds for this fixed 2-element array.
+  const current = routes[swap % 2]!;
   return (
     <PageTransition routeKey={current} className="w-full max-w-[15rem]">
       <div className="flex flex-col gap-1.5 rounded-sm border border-border bg-panel-2 px-4 py-3">
@@ -163,7 +164,9 @@ function PrimitiveCard({ primitive }: { primitive: Primitive }) {
                 aria-pressed={view === v}
                 className={cn(
                   "rounded-[3px] px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-wide transition-colors",
-                  view === v ? "bg-signal/15 text-signal" : "text-muted-foreground hover:text-foreground",
+                  view === v
+                    ? "bg-signal/15 text-signal"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {v}

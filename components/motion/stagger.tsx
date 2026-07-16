@@ -1,8 +1,8 @@
 "use client";
 
+import type { Variants } from "motion/react";
 import * as m from "motion/react-m";
 import type { CSSProperties, ReactNode } from "react";
-import type { Variants } from "motion/react";
 import { feel, staggerItem, viewportOnce } from "@/lib/motion";
 
 type StaggerProps = {

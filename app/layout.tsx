@@ -57,15 +57,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`dark ${sans.variable} ${mono.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`dark ${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <body className="min-h-dvh">
         <ShaderBackground />
         <MotionProvider>

@@ -81,9 +81,7 @@ export function GitHubStarsReadout() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={
-        stars === null
-          ? `Star ${REPO} on GitHub`
-          : `Star ${REPO} on GitHub — ${stars} stars`
+        stars === null ? `Star ${REPO} on GitHub` : `Star ${REPO} on GitHub — ${stars} stars`
       }
       className="group inline-flex items-center gap-4 rounded-md border border-border bg-card px-5 py-4 transition-colors hover:border-signal/50"
     >

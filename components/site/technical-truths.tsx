@@ -16,7 +16,7 @@ const TRUTHS = [
   {
     key: "Reduced-motion",
     detail:
-      "reducedMotion=\"user\" on MotionConfig honors the OS setting for everyone — transforms fall back to a clean opacity fade, no special-casing.",
+      'reducedMotion="user" on MotionConfig honors the OS setting for everyone — transforms fall back to a clean opacity fade, no special-casing.',
   },
   {
     key: "Flat exports",

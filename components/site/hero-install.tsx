@@ -48,7 +48,11 @@ export function HeroInstall() {
           onClick={copy}
           className="inline-flex items-center gap-2 rounded-md bg-signal px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-signal-strong"
         >
-          {copied ? <Check className="size-4" aria-hidden /> : <Copy className="size-4" aria-hidden />}
+          {copied ? (
+            <Check className="size-4" aria-hidden />
+          ) : (
+            <Copy className="size-4" aria-hidden />
+          )}
           {copied ? "Copied" : "Copy install"}
         </button>
         <a

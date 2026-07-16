@@ -23,7 +23,13 @@ type CodeBlockProps = {
   noCopy?: boolean;
 };
 
-export async function CodeBlock({ code, lang = "tsx", caption, className, noCopy }: CodeBlockProps) {
+export async function CodeBlock({
+  code,
+  lang = "tsx",
+  caption,
+  className,
+  noCopy,
+}: CodeBlockProps) {
   const highlighter = await getHighlighter();
   const trimmed = code.trim();
   const html = highlighter.codeToHtml(trimmed, { lang, theme: "vesper" });

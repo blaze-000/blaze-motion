@@ -6,9 +6,18 @@ import { cn } from "@/lib/utils";
 const F3 = 1 / 3;
 const G3 = 1 / 6;
 const GRAD3 = [
-  [1, 1, 0], [-1, 1, 0], [1, -1, 0], [-1, -1, 0],
-  [1, 0, 1], [-1, 0, 1], [1, 0, -1], [-1, 0, -1],
-  [0, 1, 1], [0, -1, 1], [0, 1, -1], [0, -1, -1],
+  [1, 1, 0],
+  [-1, 1, 0],
+  [1, -1, 0],
+  [-1, -1, 0],
+  [1, 0, 1],
+  [-1, 0, 1],
+  [1, 0, -1],
+  [-1, 0, -1],
+  [0, 1, 1],
+  [0, -1, 1],
+  [0, 1, -1],
+  [0, -1, -1],
 ];
 
 class SimplexNoise {
@@ -22,53 +31,151 @@ class SimplexNoise {
     for (let i = 255; i > 0; i--) {
       s = (s * 16807) % 2147483647;
       const j = s % (i + 1);
-      const tmp = p[i];
-      p[i] = p[j];
+      // i, j are both in [0, 255] here — p is a fixed 256-length Uint8Array,
+      // so these reads are provably in-bounds; `!` only satisfies the checker.
+      const tmp = p[i]!;
+      p[i] = p[j]!;
       p[j] = tmp;
     }
     for (let i = 0; i < 512; i++) {
-      this.perm[i] = p[i & 255];
-      this.permMod12[i] = this.perm[i] % 12;
+      // i & 255 is in [0, 255], always in-bounds for p (length 256).
+      this.perm[i] = p[i & 255]!;
+      this.permMod12[i] = this.perm[i]! % 12;
     }
   }
 
   noise3D(xin: number, yin: number, zin: number): number {
     const { perm, permMod12 } = this;
-    let n0 = 0, n1 = 0, n2 = 0, n3 = 0;
+    let n0 = 0,
+      n1 = 0,
+      n2 = 0,
+      n3 = 0;
     const s = (xin + yin + zin) * F3;
-    const i = Math.floor(xin + s), j = Math.floor(yin + s), k = Math.floor(zin + s);
+    const i = Math.floor(xin + s),
+      j = Math.floor(yin + s),
+      k = Math.floor(zin + s);
     const t = (i + j + k) * G3;
-    const x0 = xin - (i - t), y0 = yin - (j - t), z0 = zin - (k - t);
+    const x0 = xin - (i - t),
+      y0 = yin - (j - t),
+      z0 = zin - (k - t);
     let i1: number, j1: number, k1: number, i2: number, j2: number, k2: number;
     if (x0 >= y0) {
-      if (y0 >= z0) { i1 = 1; j1 = 0; k1 = 0; i2 = 1; j2 = 1; k2 = 0; }
-      else if (x0 >= z0) { i1 = 1; j1 = 0; k1 = 0; i2 = 1; j2 = 0; k2 = 1; }
-      else { i1 = 0; j1 = 0; k1 = 1; i2 = 1; j2 = 0; k2 = 1; }
+      if (y0 >= z0) {
+        i1 = 1;
+        j1 = 0;
+        k1 = 0;
+        i2 = 1;
+        j2 = 1;
+        k2 = 0;
+      } else if (x0 >= z0) {
+        i1 = 1;
+        j1 = 0;
+        k1 = 0;
+        i2 = 1;
+        j2 = 0;
+        k2 = 1;
+      } else {
+        i1 = 0;
+        j1 = 0;
+        k1 = 1;
+        i2 = 1;
+        j2 = 0;
+        k2 = 1;
+      }
     } else {
-      if (y0 < z0) { i1 = 0; j1 = 0; k1 = 1; i2 = 0; j2 = 1; k2 = 1; }
-      else if (x0 < z0) { i1 = 0; j1 = 1; k1 = 0; i2 = 0; j2 = 1; k2 = 1; }
-      else { i1 = 0; j1 = 1; k1 = 0; i2 = 1; j2 = 1; k2 = 0; }
+      if (y0 < z0) {
+        i1 = 0;
+        j1 = 0;
+        k1 = 1;
+        i2 = 0;
+        j2 = 1;
+        k2 = 1;
+      } else if (x0 < z0) {
+        i1 = 0;
+        j1 = 1;
+        k1 = 0;
+        i2 = 0;
+        j2 = 1;
+        k2 = 1;
+      } else {
+        i1 = 0;
+        j1 = 1;
+        k1 = 0;
+        i2 = 1;
+        j2 = 1;
+        k2 = 0;
+      }
     }
-    const x1 = x0 - i1 + G3, y1 = y0 - j1 + G3, z1 = z0 - k1 + G3;
-    const x2 = x0 - i2 + 2 * G3, y2 = y0 - j2 + 2 * G3, z2 = z0 - k2 + 2 * G3;
-    const x3 = x0 - 1 + 3 * G3, y3 = y0 - 1 + 3 * G3, z3 = z0 - 1 + 3 * G3;
-    const ii = i & 255, jj = j & 255, kk = k & 255;
+    const x1 = x0 - i1 + G3,
+      y1 = y0 - j1 + G3,
+      z1 = z0 - k1 + G3;
+    const x2 = x0 - i2 + 2 * G3,
+      y2 = y0 - j2 + 2 * G3,
+      z2 = z0 - k2 + 2 * G3;
+    const x3 = x0 - 1 + 3 * G3,
+      y3 = y0 - 1 + 3 * G3,
+      z3 = z0 - 1 + 3 * G3;
+    const ii = i & 255,
+      jj = j & 255,
+      kk = k & 255;
+    // Every perm/permMod12/GRAD3 lookup below is provably in-bounds: ii/jj/kk
+    // (and the +0/1/i1/i2/j1/j2/k1/k2 offsets, each 0 or 1) stay within [0, 510]
+    // against the 512-length perm tables, and permMod12's values are mod 12
+    // against GRAD3's 12 rows — `!` only satisfies the checker, values are unchanged.
     let t0 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0;
-    if (t0 >= 0) { t0 *= t0; const g = GRAD3[permMod12[ii + perm[jj + perm[kk]]]]; n0 = t0 * t0 * (g[0] * x0 + g[1] * y0 + g[2] * z0); }
+    if (t0 >= 0) {
+      t0 *= t0;
+      const g = GRAD3[permMod12[ii + perm[jj + perm[kk]!]!]!]!;
+      n0 = t0 * t0 * (g[0]! * x0 + g[1]! * y0 + g[2]! * z0);
+    }
     let t1 = 0.6 - x1 * x1 - y1 * y1 - z1 * z1;
-    if (t1 >= 0) { t1 *= t1; const g = GRAD3[permMod12[ii + i1 + perm[jj + j1 + perm[kk + k1]]]]; n1 = t1 * t1 * (g[0] * x1 + g[1] * y1 + g[2] * z1); }
+    if (t1 >= 0) {
+      t1 *= t1;
+      const g = GRAD3[permMod12[ii + i1 + perm[jj + j1 + perm[kk + k1]!]!]!]!;
+      n1 = t1 * t1 * (g[0]! * x1 + g[1]! * y1 + g[2]! * z1);
+    }
     let t2 = 0.6 - x2 * x2 - y2 * y2 - z2 * z2;
-    if (t2 >= 0) { t2 *= t2; const g = GRAD3[permMod12[ii + i2 + perm[jj + j2 + perm[kk + k2]]]]; n2 = t2 * t2 * (g[0] * x2 + g[1] * y2 + g[2] * z2); }
+    if (t2 >= 0) {
+      t2 *= t2;
+      const g = GRAD3[permMod12[ii + i2 + perm[jj + j2 + perm[kk + k2]!]!]!]!;
+      n2 = t2 * t2 * (g[0]! * x2 + g[1]! * y2 + g[2]! * z2);
+    }
     let t3 = 0.6 - x3 * x3 - y3 * y3 - z3 * z3;
-    if (t3 >= 0) { t3 *= t3; const g = GRAD3[permMod12[ii + 1 + perm[jj + 1 + perm[kk + 1]]]]; n3 = t3 * t3 * (g[0] * x3 + g[1] * y3 + g[2] * z3); }
+    if (t3 >= 0) {
+      t3 *= t3;
+      const g = GRAD3[permMod12[ii + 1 + perm[jj + 1 + perm[kk + 1]!]!]!]!;
+      n3 = t3 * t3 * (g[0]! * x3 + g[1]! * y3 + g[2]! * z3);
+    }
     return 32 * (n0 + n1 + n2 + n3);
   }
 }
 
 // Marching-squares edge table: 4-bit case → edge pairs (0=top,1=right,2=bottom,3=left)
-const EDGE_TABLE: number[][][] = [
-  [], [[3, 2]], [[2, 1]], [[3, 1]], [[1, 0]], [[1, 0], [3, 2]], [[2, 0]], [[3, 0]],
-  [[0, 3]], [[0, 2]], [[0, 3], [2, 1]], [[0, 1]], [[1, 3]], [[1, 2]], [[2, 3]], [],
+// Typed as fixed 2-tuples (not number[]) so destructuring an entry gives two
+// `number`s, not `number | undefined`, under noUncheckedIndexedAccess.
+const EDGE_TABLE: Array<Array<[number, number]>> = [
+  [],
+  [[3, 2]],
+  [[2, 1]],
+  [[3, 1]],
+  [[1, 0]],
+  [
+    [1, 0],
+    [3, 2],
+  ],
+  [[2, 0]],
+  [[3, 0]],
+  [[0, 3]],
+  [[0, 2]],
+  [
+    [0, 3],
+    [2, 1],
+  ],
+  [[0, 1]],
+  [[1, 3]],
+  [[1, 2]],
+  [[2, 3]],
+  [],
 ];
 
 type RGB = { r: number; g: number; b: number };
@@ -121,7 +228,10 @@ export function ShaderBackground({ className }: { className?: string }) {
     let resizeTimer = 0;
 
     function fbm(x: number, y: number, z: number): number {
-      let val = 0, amp = 1, freq = 1, sum = 0;
+      let val = 0,
+        amp = 1,
+        freq = 1,
+        sum = 0;
       for (let o = 0; o < 4; o++) {
         val += noise.noise3D(x * freq, y * freq, z) * amp;
         sum += amp;
@@ -137,15 +247,26 @@ export function ShaderBackground({ className }: { className?: string }) {
     }
 
     function edgePoint(
-      edge: number, cx: number, cy: number,
-      tl: number, tr: number, br: number, bl: number, th: number,
+      edge: number,
+      cx: number,
+      cy: number,
+      tl: number,
+      tr: number,
+      br: number,
+      bl: number,
+      th: number,
     ): [number, number] {
       switch (edge) {
-        case 0: return [cx + interp(tl, tr, th) * CELL, cy];
-        case 1: return [cx + CELL, cy + interp(tr, br, th) * CELL];
-        case 2: return [cx + interp(bl, br, th) * CELL, cy + CELL];
-        case 3: return [cx, cy + interp(tl, bl, th) * CELL];
-        default: return [cx, cy];
+        case 0:
+          return [cx + interp(tl, tr, th) * CELL, cy];
+        case 1:
+          return [cx + CELL, cy + interp(tr, br, th) * CELL];
+        case 2:
+          return [cx + interp(bl, br, th) * CELL, cy + CELL];
+        case 3:
+          return [cx, cy + interp(tl, bl, th) * CELL];
+        default:
+          return [cx, cy];
       }
     }
 
@@ -173,13 +294,16 @@ export function ShaderBackground({ className }: { className?: string }) {
         }
       }
 
-      let min = Infinity, max = -Infinity;
+      let min = Infinity,
+        max = -Infinity;
       for (let k = 0; k < field.length; k++) {
-        if (field[k] < min) min = field[k];
-        if (field[k] > max) max = field[k];
+        // k < field.length guarantees this read is in-bounds.
+        const v = field[k]!;
+        if (v < min) min = v;
+        if (v > max) max = v;
       }
       const range = max - min || 1;
-      for (let k = 0; k < field.length; k++) field[k] = (field[k] - min) / range;
+      for (let k = 0; k < field.length; k++) field[k] = (field[k]! - min) / range;
 
       for (let cIdx = 0; cIdx < CONTOURS; cIdx++) {
         const th = (cIdx + 1) / (CONTOURS + 1);
@@ -195,12 +319,16 @@ export function ShaderBackground({ className }: { className?: string }) {
         const segs: number[] = [];
         for (let j = 0; j < rows - 1; j++) {
           for (let i = 0; i < cols - 1; i++) {
-            const tl = field[j * cols + i];
-            const tr = field[j * cols + i + 1];
-            const br = field[(j + 1) * cols + i + 1];
-            const bl = field[(j + 1) * cols + i];
-            const idx = (tl >= th ? 8 : 0) | (tr >= th ? 4 : 0) | (br >= th ? 2 : 0) | (bl >= th ? 1 : 0);
-            const edges = EDGE_TABLE[idx];
+            // j < rows-1 and i < cols-1 keep every offset below in-bounds for
+            // the (cols * rows)-length field array.
+            const tl = field[j * cols + i]!;
+            const tr = field[j * cols + i + 1]!;
+            const br = field[(j + 1) * cols + i + 1]!;
+            const bl = field[(j + 1) * cols + i]!;
+            const idx =
+              (tl >= th ? 8 : 0) | (tr >= th ? 4 : 0) | (br >= th ? 2 : 0) | (bl >= th ? 1 : 0);
+            // idx is a 4-bit combination (0-15) — always a valid EDGE_TABLE index.
+            const edges = EDGE_TABLE[idx]!;
             if (edges.length === 0) continue;
             const cx = i * CELL;
             const cy = j * CELL;
@@ -215,10 +343,12 @@ export function ShaderBackground({ className }: { className?: string }) {
 
         ctx.lineCap = "round";
         // glow pass
+        // segs is always pushed in groups of 4 (p1x, p1y, p2x, p2y), so
+        // segs.length is a multiple of 4 and every offset here is in-bounds.
         ctx.beginPath();
         for (let s = 0; s < segs.length; s += 4) {
-          ctx.moveTo(segs[s], segs[s + 1]);
-          ctx.lineTo(segs[s + 2], segs[s + 3]);
+          ctx.moveTo(segs[s]!, segs[s + 1]!);
+          ctx.lineTo(segs[s + 2]!, segs[s + 3]!);
         }
         ctx.strokeStyle = rgba(color, glowA);
         ctx.lineWidth = glowW;
@@ -226,8 +356,8 @@ export function ShaderBackground({ className }: { className?: string }) {
         // sharp pass
         ctx.beginPath();
         for (let s = 0; s < segs.length; s += 4) {
-          ctx.moveTo(segs[s], segs[s + 1]);
-          ctx.lineTo(segs[s + 2], segs[s + 3]);
+          ctx.moveTo(segs[s]!, segs[s + 1]!);
+          ctx.lineTo(segs[s + 2]!, segs[s + 3]!);
         }
         ctx.strokeStyle = rgba(color, sharpA);
         ctx.lineWidth = sharpW;
