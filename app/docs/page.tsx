@@ -14,7 +14,7 @@ import { Nav } from "@/components/site/nav";
 export const metadata: Metadata = {
   title: "Documentation",
   description:
-    "Install blaze-motion and compose its six RSC-safe motion primitives — FadeIn, Reveal, Stagger, CinematicImage, PageTransition — all tuned from one feel object.",
+    "Install blaze-motion and compose its RSC-safe motion primitives — the core five plus entrance, hover, stagger, and text effects — all tuned from one feel object.",
   alternates: { canonical: "/docs" },
 };
 
@@ -68,6 +68,72 @@ export default function Template({ children }) {
   return <PageTransition routeKey={pathname}>{children}</PageTransition>;
 }`;
 
+const SPRINGPOP_CODE = `import { SpringPop } from "@/components/motion/spring-pop";
+
+<SpringPop>
+  <Badge>New</Badge>
+</SpringPop>`;
+
+const BLURTOFOCUS_CODE = `import Image from "next/image";
+import { BlurToFocus } from "@/components/motion/blur-to-focus";
+
+<BlurToFocus className="relative aspect-video overflow-hidden">
+  <Image src="/hero.jpg" alt="" fill className="object-cover" />
+</BlurToFocus>`;
+
+const LINEDRAW_CODE = `import { LineDraw, LineDrawPath } from "@/components/motion/line-draw";
+
+<LineDraw viewBox="0 0 200 100" fill="none" stroke="currentColor" strokeWidth={2} stagger={0.15}>
+  <LineDrawPath d="M8 92 L192 92" className="text-border" />
+  <LineDrawPath d="M8 78 L56 52 L104 64 L152 24 L192 12" />
+</LineDraw>`;
+
+const SWEEPBUTTON_CODE = `import { SweepButton } from "@/components/motion/sweep-button";
+
+<SweepButton className="rounded-md border border-border px-5 py-2.5 text-foreground group-hover:text-primary-foreground">
+  Deploy
+</SweepButton>`;
+
+const ANIMATEDUNDERLINE_CODE = `import Link from "next/link";
+import { AnimatedUnderline } from "@/components/motion/animated-underline";
+
+<AnimatedUnderline as={Link} href="/docs">
+  Read the docs
+</AnimatedUnderline>`;
+
+const SIBLINGDIMMING_CODE = `import { SiblingDimming, SiblingDimmingItem } from "@/components/motion/sibling-dimming";
+
+<SiblingDimming className="grid grid-cols-3 gap-4">
+  {items.map((it) => (
+    <SiblingDimmingItem key={it.id}>
+      <Card {...it} />
+    </SiblingDimmingItem>
+  ))}
+</SiblingDimming>`;
+
+const RADIALSTAGGER_CODE = `import { RadialStagger } from "@/components/motion/radial-stagger";
+
+<RadialStagger columns={5} className="gap-2" itemClassName="aspect-square rounded-md bg-signal/70">
+  {cells.map((c) => (
+    <span key={c.id} className="block size-full" />
+  ))}
+</RadialStagger>`;
+
+const TEXTREVEAL_CODE = `import { TextReveal } from "@/components/motion/text-reveal";
+
+<TextReveal as="h2" by="word" className="text-h2">
+  Motion, tuned once.
+</TextReveal>`;
+
+const NUMBERTICKER_CODE = `import { NumberTicker } from "@/components/motion/number-ticker";
+
+<NumberTicker value={1240} suffix="+" className="text-h2 text-signal" />`;
+
+const SCROLLPROGRESSBAR_CODE = `import { ScrollProgressBar } from "@/components/motion/scroll-progress-bar";
+
+// mount once, high in your layout
+<ScrollProgressBar />`;
+
 const HARD_RULES = [
   {
     k: "m from motion/react-m",
@@ -101,6 +167,8 @@ type Primitive = {
   when: string;
   code: string;
   propsKey: keyof typeof PROPS;
+  /** an optional second props table — the companion export (LineDrawPath, StaggerItem, …) */
+  secondary?: { heading: string; propsKey: keyof typeof PROPS };
 };
 
 const PRIMITIVES: Primitive[] = [
@@ -132,10 +200,11 @@ const PRIMITIVES: Primitive[] = [
     demoName: "stagger",
     figNo: "03",
     oneLine: "Sibling choreography — children rise in sequence.",
-    desc: "Stagger is the container (staggerChildren 0.08s); each StaggerItem does the same straight rise as Reveal. Two flat exports, never a compound Stagger.Item.",
+    desc: "Stagger is the container; each StaggerItem does the same straight rise as Reveal. The step is tunable via staggerChildren / delayChildren (defaults 0.08s / 0.05s). Two flat exports, never a compound Stagger.Item.",
     when: "Lists and grids of peers — cards, rows, chips — where a sequenced reveal beats all-at-once. Give a StaggerItem className=\"flex\" when it wraps a grid or flex child.",
     code: STAGGER_CODE,
     propsKey: "stagger",
+    secondary: { heading: "StaggerItem props", propsKey: "staggerItem" },
   },
   {
     id: "cinematicimage",
@@ -158,6 +227,118 @@ const PRIMITIVES: Primitive[] = [
     when: "Once, in app/template.tsx, so every navigation inherits the transition — including the move between this page and home.",
     code: PAGETRANSITION_CODE,
     propsKey: "pagetransition",
+  },
+  {
+    id: "springpop",
+    title: "SpringPop",
+    demoName: "springpop",
+    figNo: "06",
+    oneLine: "A scale-up overshoot spring — the one deliberate pop.",
+    desc: "SpringPop mounts from scale 0.8 up past ~1.05 and settles to 1, plus opacity, on a spring (stiffness 300 / damping 15). The overshoot emerges from the spring itself — never keyframed.",
+    when: "A single element earning a beat of attention on mount — a badge, a confirmation, a just-added item. This is the only place overshoot is wanted; titles and text always get the straight rise.",
+    code: SPRINGPOP_CODE,
+    propsKey: "springpop",
+  },
+  {
+    id: "blurtofocus",
+    title: "BlurToFocus",
+    demoName: "blurtofocus",
+    figNo: "07",
+    oneLine: "Blur 10px → sharp, on mount.",
+    desc: "BlurToFocus animates filter blur(10px) → blur(0) with opacity over the base duration. The filter is GPU-costly, so it is reserved for a single focal element.",
+    when: "A hero image or one focal element that should resolve into clarity. Never a list or grid — the blur filter is expensive per node.",
+    code: BLURTOFOCUS_CODE,
+    propsKey: "blurtofocus",
+  },
+  {
+    id: "linedraw",
+    title: "LineDraw",
+    demoName: "linedraw",
+    figNo: "08",
+    oneLine: "SVG strokes draw themselves, then fill.",
+    desc: "LineDraw is the <svg>; each LineDrawPath animates pathLength 0 → 1 over the slow duration, then fades its fill in once the stroke completes. Set stagger to cascade multiple paths.",
+    when: "Logos, icons, diagrams, signatures — any vector mark that reads better drawn than popped in. Pass a viewBox, and give every path a d.",
+    code: LINEDRAW_CODE,
+    propsKey: "linedraw",
+    secondary: { heading: "LineDrawPath props", propsKey: "linedrawpath" },
+  },
+  {
+    id: "sweepbutton",
+    title: "SweepButton",
+    demoName: "sweepbutton",
+    figNo: "09",
+    oneLine: "A CSS fill sweeps in on hover.",
+    desc: "SweepButton is a real <button> with an aria-hidden fill layer that scales in from your chosen origin on hover — pure CSS, no JS. The label stays above it on z-10.",
+    when: "Primary actions that want a little life on hover. It forwards every native button prop, so it drops in wherever a <button> goes.",
+    code: SWEEPBUTTON_CODE,
+    propsKey: "sweepbutton",
+  },
+  {
+    id: "animatedunderline",
+    title: "AnimatedUnderline",
+    demoName: "animatedunderline",
+    figNo: "10",
+    oneLine: "An underline draws L→R, retracts out on leave.",
+    desc: "AnimatedUnderline draws its underline left-to-right on hover and retracts it out to the right on leave (origin-right at rest, origin-left while hovered). Polymorphic via as — pass Link for internal nav.",
+    when: "Inline links and nav items. Render it as a Link (or button) so it stays a real, keyboard-operable control.",
+    code: ANIMATEDUNDERLINE_CODE,
+    propsKey: "animatedunderline",
+  },
+  {
+    id: "siblingdimming",
+    title: "SiblingDimming",
+    demoName: "siblingdimming",
+    figNo: "11",
+    oneLine: "Hover one card; its siblings dim.",
+    desc: "SiblingDimming is the grid container; each SiblingDimmingItem dims to 50% when a sibling is hovered while the hovered one stays full — via :has(), no JS. Two flat exports.",
+    when: "Card grids and menus where hovering one item should quiet the rest. Put your grid or flex classes on the container.",
+    code: SIBLINGDIMMING_CODE,
+    propsKey: "siblingdimming",
+    secondary: { heading: "SiblingDimmingItem props", propsKey: "siblingdimmingitem" },
+  },
+  {
+    id: "radialstagger",
+    title: "RadialStagger",
+    demoName: "radialstagger",
+    figNo: "12",
+    oneLine: "Click a tile; a pop ripples outward.",
+    desc: "RadialStagger lays out a grid of clickable tiles; clicking one replays a spring-pop outward, each cell delayed by its distance from the clicked origin. columns drives both the layout and the ripple geometry.",
+    when: "Interactive tile grids — palettes, galleries, pickers — that reward a click with a wave. Keep tile content non-interactive (no links or buttons inside a tile).",
+    code: RADIALSTAGGER_CODE,
+    propsKey: "radialstagger",
+  },
+  {
+    id: "textreveal",
+    title: "TextReveal",
+    demoName: "textreveal",
+    figNo: "13",
+    oneLine: "Per-word (or per-char) staggered rise.",
+    desc: "TextReveal splits its text and rises each word — or char — into place with the same straight, no-scale feel as Reveal. The full string rides on aria-label so screen readers read it whole.",
+    when: "Headings and short lead paragraphs that deserve a considered entrance. Reach for by=\"char\" only on short, display-size text.",
+    code: TEXTREVEAL_CODE,
+    propsKey: "textreveal",
+  },
+  {
+    id: "numberticker",
+    title: "NumberTicker",
+    demoName: "numberticker",
+    figNo: "14",
+    oneLine: "Counts up to a target, in view.",
+    desc: "NumberTicker animates from its start value to value the first time it scrolls into view — formatted with decimals, prefix, and suffix — in a tabular-nums span so the width never jitters.",
+    when: "Stats, counters, pricing, dashboards — any figure that lands better counting up. Reduced motion snaps straight to the final value.",
+    code: NUMBERTICKER_CODE,
+    propsKey: "numberticker",
+  },
+  {
+    id: "scrollprogressbar",
+    title: "ScrollProgressBar",
+    demoName: "scrollprogressbar",
+    figNo: "15",
+    oneLine: "A thin bar fills with scroll.",
+    desc: "ScrollProgressBar is a fixed, spring-smoothed bar whose scaleX tracks page scroll — or a target element's progress through the viewport. It is aria-hidden and pins to the top or bottom edge.",
+    when: "Long reads and docs, mounted once high in the layout. Pass a target ref to track one long section instead of the whole page.",
+    code: SCROLLPROGRESSBAR_CODE,
+    propsKey: "scrollprogressbar",
   },
 ];
 
@@ -212,8 +393,9 @@ export default function DocsPage() {
                 Own the files. <span className="text-signal">Tune the feel.</span>
               </h1>
               <p className="text-lead">
-                Install once, then compose six RSC-safe primitives around your own markup. Every
-                animation derives from a single feel object — retune the whole engine from one place.
+                Install once, then compose a full set of RSC-safe primitives around your own markup.
+                Every animation derives from a single feel object — retune the whole engine from one
+                place.
               </p>
             </Reveal>
           </div>
@@ -226,8 +408,8 @@ export default function DocsPage() {
             >
               <p className="max-w-prose text-base leading-relaxed text-muted-foreground">
                 blaze-motion installs the shadcn way — the source files land in your repo, editable,
-                not as an opaque npm dependency. One command brings the tokens, the provider, and all
-                six primitives.
+                not as an opaque npm dependency. One command brings the tokens, the provider, and
+                every primitive.
               </p>
               <InstallBlock />
               <p className="max-w-prose text-sm leading-relaxed text-muted-foreground">
@@ -302,11 +484,11 @@ export default function DocsPage() {
                     <PropsTable rows={PROPS[p.propsKey]} />
                   </div>
                 </div>
-                {p.id === "stagger" ? (
+                {p.secondary ? (
                   <div>
-                    <h3 className="text-h3 text-foreground">StaggerItem props</h3>
+                    <h3 className="text-h3 text-foreground">{p.secondary.heading}</h3>
                     <div className="mt-4">
-                      <PropsTable rows={PROPS.staggerItem} />
+                      <PropsTable rows={PROPS[p.secondary.propsKey]} />
                     </div>
                   </div>
                 ) : null}

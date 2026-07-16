@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, Spline_Sans_Mono } from "next/font/google";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { ScrollProgressBar } from "@/components/motion/scroll-progress-bar";
 import { ShaderBackground } from "@/components/site/shader-background";
 import "./globals.css";
 
@@ -67,7 +68,10 @@ export default function RootLayout({
     >
       <body className="min-h-dvh">
         <ShaderBackground />
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          <ScrollProgressBar />
+          {children}
+        </MotionProvider>
       </body>
     </html>
   );

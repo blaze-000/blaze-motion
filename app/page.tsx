@@ -5,6 +5,7 @@ import { CodeBlock } from "@/components/site/code-block";
 import { DocsPreview } from "@/components/site/docs-preview";
 import { DraftingFrame } from "@/components/site/drafting-frame";
 import { EasingCurveMark } from "@/components/site/easing-curve-mark";
+import { EffectsShowcase } from "@/components/site/effects-showcase";
 import { FeelPlayground } from "@/components/site/feel-playground";
 import { FigPanel } from "@/components/site/fig-panel";
 import { Footer } from "@/components/site/footer";
@@ -98,9 +99,9 @@ export default function Home() {
               <Reveal className="flex flex-col gap-3">
                 <h2 className="text-h2 text-foreground">Three steps to your first animation.</h2>
                 <p className="text-lead">
-                  One command lands all 7 files — the tokens, the provider, and every primitive. The
-                  registry declares its single runtime dependency (motion@^12.42.2); the CLI installs
-                  it for you.
+                  One command lands the whole engine — the tokens, the provider, and every primitive.
+                  The registry declares its single runtime dependency (motion@^12.42.2); the CLI
+                  installs it for you.
                 </p>
               </Reveal>
 
@@ -162,12 +163,27 @@ export default function Home() {
               <div className="flex flex-col gap-3">
                 <h2 className="text-h2 text-foreground">Six primitives. Each one load-bearing.</h2>
                 <p className="text-lead">
-                  Not a catalog of effects — a small, tuned set you wrap around your own markup. Every
+                  Not a catalog of effects — a small, tuned core you wrap around your own markup. Every
                   panel below is a real, running instance.
                 </p>
               </div>
               <div className="mt-12">
                 <PrimitiveShowcase />
+              </div>
+            </div>
+          </section>
+
+          <section id="effects" className="border-t border-border">
+            <div className="container-page px-6 py-20 lg:px-12 lg:py-24">
+              <div className="flex flex-col gap-3">
+                <h2 className="text-h2 text-foreground">Ten more effects, same engine.</h2>
+                <p className="text-lead">
+                  Entrance, hover, stagger, and text — each tuned from the same feel object, each an
+                  RSC-safe flat export. Toggle Code on any panel, or hover, click, and scroll them live.
+                </p>
+              </div>
+              <div className="mt-12">
+                <EffectsShowcase />
               </div>
             </div>
           </section>

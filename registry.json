@@ -7,7 +7,7 @@
       "name": "all",
       "type": "registry:block",
       "title": "blaze-motion",
-      "description": "The full motion engine in one install — tuned tokens (lib/motion.ts), the provider, and all five primitives (FadeIn, Reveal, Stagger, CinematicImage, PageTransition).",
+      "description": "The full motion engine in one install — tuned tokens (lib/motion.ts), the provider, and every motion primitive.",
       "dependencies": ["motion"],
       "docs": "Mount <MotionProvider> once in your root layout, then wrap anything in <Reveal> / <Stagger> / <FadeIn>. Retune the whole engine from the `feel` block at the top of lib/motion.ts. Primitives import `m` from motion/react-m — a raw motion.* throws under strict mode.",
       "files": [
@@ -17,7 +17,17 @@
         { "path": "components/motion/reveal.tsx", "type": "registry:component", "target": "@components/motion/reveal.tsx" },
         { "path": "components/motion/stagger.tsx", "type": "registry:component", "target": "@components/motion/stagger.tsx" },
         { "path": "components/motion/cinematic-image.tsx", "type": "registry:component", "target": "@components/motion/cinematic-image.tsx" },
-        { "path": "components/motion/page-transition.tsx", "type": "registry:component", "target": "@components/motion/page-transition.tsx" }
+        { "path": "components/motion/page-transition.tsx", "type": "registry:component", "target": "@components/motion/page-transition.tsx" },
+        { "path": "components/motion/spring-pop.tsx", "type": "registry:component", "target": "@components/motion/spring-pop.tsx" },
+        { "path": "components/motion/blur-to-focus.tsx", "type": "registry:component", "target": "@components/motion/blur-to-focus.tsx" },
+        { "path": "components/motion/line-draw.tsx", "type": "registry:component", "target": "@components/motion/line-draw.tsx" },
+        { "path": "components/motion/sweep-button.tsx", "type": "registry:component", "target": "@components/motion/sweep-button.tsx" },
+        { "path": "components/motion/animated-underline.tsx", "type": "registry:component", "target": "@components/motion/animated-underline.tsx" },
+        { "path": "components/motion/sibling-dimming.tsx", "type": "registry:component", "target": "@components/motion/sibling-dimming.tsx" },
+        { "path": "components/motion/radial-stagger.tsx", "type": "registry:component", "target": "@components/motion/radial-stagger.tsx" },
+        { "path": "components/motion/text-reveal.tsx", "type": "registry:component", "target": "@components/motion/text-reveal.tsx" },
+        { "path": "components/motion/number-ticker.tsx", "type": "registry:component", "target": "@components/motion/number-ticker.tsx" },
+        { "path": "components/motion/scroll-progress-bar.tsx", "type": "registry:component", "target": "@components/motion/scroll-progress-bar.tsx" }
       ]
     }
   ]

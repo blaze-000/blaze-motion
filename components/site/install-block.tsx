@@ -21,8 +21,8 @@ export function InstallBlock() {
         </div>
         <p className="text-sm text-muted-foreground">
           Resolves for anyone today — no <code className="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">components.json</code>{" "}
-          entry, no prior setup. One command lands all 7 files (the tokens, the provider, and every
-          primitive) into your repo, editable.
+          entry, no prior setup. One command lands the whole engine — the tokens, the provider, and
+          every primitive — into your repo, editable.
         </p>
       </div>
     </div>

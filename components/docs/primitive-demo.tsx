@@ -8,9 +8,15 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { PageTransition } from "@/components/motion/page-transition";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import {
+  type EffectName,
+  EFFECT_META,
+  renderEffectDemo,
+} from "@/components/site/effect-demos";
 import { FigPanel } from "@/components/site/fig-panel";
 
-export type DemoName = "fadein" | "reveal" | "stagger" | "cinematicimage" | "pagetransition";
+type CorePrimitive = "fadein" | "reveal" | "stagger" | "cinematicimage" | "pagetransition";
+export type DemoName = CorePrimitive | EffectName;
 
 function Swatch({ children }: { children: ReactNode }) {
   return (
@@ -76,24 +82,32 @@ function renderDemo(name: DemoName, k: number): ReactNode {
       );
     case "pagetransition":
       return <RouteSwap swap={k} />;
+    default:
+      return renderEffectDemo(name, k);
   }
 }
 
 export function PrimitiveDemo({ name, figNo }: { name: DemoName; figNo: string }) {
   const [replayKey, setReplayKey] = useState(0);
+  const meta = EFFECT_META[name as EffectName];
+  const replayable = meta ? meta.replayable : true;
   return (
     <FigPanel
       figNo={figNo}
       title="Preview"
       headerRight={
-        <button
-          type="button"
-          onClick={() => setReplayKey((k) => k + 1)}
-          aria-label="Replay demo"
-          className="inline-flex size-6 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:border-signal/50 hover:text-foreground"
-        >
-          <RotateCw className="size-3" aria-hidden />
-        </button>
+        replayable ? (
+          <button
+            type="button"
+            onClick={() => setReplayKey((k) => k + 1)}
+            aria-label="Replay demo"
+            className="inline-flex size-6 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:border-signal/50 hover:text-foreground"
+          >
+            <RotateCw className="size-3" aria-hidden />
+          </button>
+        ) : meta?.hint ? (
+          <span className="fig-label text-muted-foreground">{meta.hint}</span>
+        ) : null
       }
       bodyClassName="flex min-h-[12rem] items-center justify-center p-6"
     >

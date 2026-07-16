@@ -24,6 +24,14 @@ export const feel = {
   stagger: 0.08,
   /** seconds before the first staggered child */
   staggerDelay: 0.05,
+  /** seconds between staggered words (TextReveal, per-word) */
+  textStagger: 0.04,
+  /** seconds between staggered chars (TextReveal, per-char) */
+  textStaggerChar: 0.02,
+  /** px a TextReveal word/char rises from — shorter than a section rise */
+  textRise: 12,
+  /** spring pop — the ONE deliberate overshoot (SpringPop/RadialStagger); never titles */
+  spring: { stiffness: 300, damping: 15 },
 } as const;
 /* ───────────────────────────────────────────────────────────────────── */
 
@@ -67,3 +75,36 @@ export const staggerItem: Variants = {
   initial: { opacity: 0, y: feel.rise },
   animate: { opacity: 1, y: 0, transition: revealTransition },
 };
+
+/** spring overshoot — the 0.8 → ~1.05 → 1 pop comes from the spring itself. */
+export const springPopTransition = {
+  type: "spring",
+  stiffness: feel.spring.stiffness,
+  damping: feel.spring.damping,
+} as const satisfies Transition;
+
+export const springPop = {
+  initial: { opacity: 0, scale: 0.8 },
+  animate: { opacity: 1, scale: 1 },
+} as const;
+
+/** blur → sharp; `filter` is GPU-costly — hero / single-focal use only. */
+export const blurToFocus = {
+  initial: { opacity: 0, filter: "blur(10px)" },
+  animate: { opacity: 1, filter: "blur(0px)" },
+} as const;
+
+/** per-word / per-char reveal — STRAIGHT rise, NO scale (the title rule). */
+export const textRevealItem: Variants = {
+  initial: { opacity: 0, y: feel.textRise },
+  animate: { opacity: 1, y: 0, transition: revealTransition },
+};
+
+// Factory: TextReveal tunes its step per word vs char, plus an optional lead delay.
+export const textRevealContainer = (
+  staggerChildren: number = feel.textStagger,
+  delayChildren = 0,
+): Variants => ({
+  initial: {},
+  animate: { transition: { staggerChildren, delayChildren } },
+});
