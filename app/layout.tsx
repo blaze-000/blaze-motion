@@ -1,10 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Schibsted_Grotesk, Spline_Sans_Mono } from "next/font/google";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
+const sans = Schibsted_Grotesk({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const mono = Spline_Sans_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
 
 const SITE = "https://motion.asmitsah.dev";
 
@@ -15,8 +26,18 @@ export const metadata: Metadata = {
     template: "%s · blaze-motion",
   },
   description:
-    "A subtle, RSC-safe shadcn registry of motion primitives for Next.js. Install one command, wrap your div, and tune the whole feel from a single file.",
-  keywords: ["motion", "framer motion", "shadcn", "registry", "Next.js", "React", "animation", "RSC"],
+    "Subtle, RSC-safe motion primitives for Next.js + shadcn. One command installs the whole engine into your repo — you own the files, and retune the entire feel from a single object.",
+  keywords: [
+    "motion",
+    "motion.dev",
+    "framer motion",
+    "shadcn",
+    "registry",
+    "Next.js",
+    "React",
+    "animation",
+    "RSC",
+  ],
   authors: [{ name: "Asmit" }],
   alternates: { canonical: "/" },
   openGraph: {
@@ -25,7 +46,7 @@ export const metadata: Metadata = {
     siteName: "blaze-motion",
     title: "blaze-motion — Motion, tuned once",
     description:
-      "Subtle, RSC-safe motion primitives for Next.js + shadcn. Own-and-tweak, tuned from one file.",
+      "Subtle, RSC-safe motion primitives for Next.js + shadcn. Own the files, tune the whole feel from one object.",
   },
   twitter: {
     card: "summary_large_image",
@@ -38,7 +59,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`dark ${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`dark ${sans.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
       <body className="min-h-dvh">
         <MotionProvider>{children}</MotionProvider>
       </body>
