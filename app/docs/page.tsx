@@ -88,12 +88,6 @@ const LINEDRAW_CODE = `import { LineDraw, LineDrawPath } from "@/components/moti
   <LineDrawPath d="M8 78 L56 52 L104 64 L152 24 L192 12" />
 </LineDraw>`;
 
-const SWEEPBUTTON_CODE = `import { SweepButton } from "@/components/motion/sweep-button";
-
-<SweepButton className="rounded-md border border-border px-5 py-2.5 text-foreground group-hover:text-primary-foreground">
-  Deploy
-</SweepButton>`;
-
 const ANIMATEDUNDERLINE_CODE = `import Link from "next/link";
 import { AnimatedUnderline } from "@/components/motion/animated-underline";
 
@@ -261,17 +255,6 @@ const PRIMITIVES: Primitive[] = [
     code: LINEDRAW_CODE,
     propsKey: "linedraw",
     secondary: { heading: "LineDrawPath props", propsKey: "linedrawpath" },
-  },
-  {
-    id: "sweepbutton",
-    title: "SweepButton",
-    demoName: "sweepbutton",
-    figNo: "09",
-    oneLine: "A CSS fill sweeps in on hover.",
-    desc: "SweepButton is a real <button> with an aria-hidden fill layer that scales in from your chosen origin on hover — pure CSS, no JS. The label stays above it on z-10.",
-    when: "Primary actions that want a little life on hover. It forwards every native button prop, so it drops in wherever a <button> goes.",
-    code: SWEEPBUTTON_CODE,
-    propsKey: "sweepbutton",
   },
   {
     id: "animatedunderline",

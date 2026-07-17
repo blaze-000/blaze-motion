@@ -9,14 +9,12 @@ import { RadialStagger } from "@/components/motion/radial-stagger";
 import { ScrollProgressBar } from "@/components/motion/scroll-progress-bar";
 import { SiblingDimming, SiblingDimmingItem } from "@/components/motion/sibling-dimming";
 import { SpringPop } from "@/components/motion/spring-pop";
-import { SweepButton } from "@/components/motion/sweep-button";
 import { TextReveal } from "@/components/motion/text-reveal";
 
 export type EffectName =
   | "springpop"
   | "blurtofocus"
   | "linedraw"
-  | "sweepbutton"
   | "animatedunderline"
   | "siblingdimming"
   | "radialstagger"
@@ -35,7 +33,6 @@ export const EFFECT_META: Record<EffectName, EffectMeta> = {
   springpop: { replayable: true },
   blurtofocus: { replayable: true },
   linedraw: { replayable: true },
-  sweepbutton: { replayable: false, hint: "Hover" },
   animatedunderline: { replayable: false, hint: "Hover" },
   siblingdimming: { replayable: false, hint: "Hover a tile" },
   radialstagger: { replayable: false, hint: "Click a tile" },
@@ -93,12 +90,6 @@ export function renderEffectDemo(name: EffectName, k: number): ReactNode {
           <LineDrawPath d="M8 92 L192 92" strokeWidth={1.5} className="text-border" />
           <LineDrawPath d="M8 78 L56 52 L104 64 L152 24 L192 12" />
         </LineDraw>
-      );
-    case "sweepbutton":
-      return (
-        <SweepButton className="rounded-md border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors group-hover:text-primary-foreground">
-          Hover me
-        </SweepButton>
       );
     case "animatedunderline":
       return (

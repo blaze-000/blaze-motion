@@ -26,7 +26,6 @@ One block tunes the whole engine: `duration` (fast 0.2 / base 0.55 / slow 0.8), 
 - SpringPop — scale-up overshoot spring (0.8 → ~1.05 → 1) + opacity on mount; the one deliberate overshoot, never on titles.
 - BlurToFocus — filter blur(10px) → blur(0) + opacity on mount; GPU-costly filter, hero / single focal element only.
 - LineDraw + LineDrawPath — SVG line-draw; each path animates pathLength 0→1 then fades its fill in. Two flat exports; LineDraw IS the <svg>.
-- SweepButton — a real <button> with a pure-CSS aria-hidden fill layer that sweeps in from an origin edge on hover.
 - AnimatedUnderline — underline draws L→R on hover, retracts out on leave; pure CSS, polymorphic via `as` (pass Link for internal nav).
 - SiblingDimming + SiblingDimmingItem — hover one grid card, siblings dim to 50% via :has(); no JS. Two flat exports.
 - RadialStagger — click a grid tile and a spring-pop ripples outward, each cell delayed by distance from the clicked origin.

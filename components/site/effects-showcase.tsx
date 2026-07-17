@@ -40,14 +40,6 @@ const EFFECTS: Effect[] = [
 </LineDraw>`,
   },
   {
-    figNo: "09",
-    title: "SweepButton",
-    name: "sweepbutton",
-    code: `<SweepButton className="rounded-md border px-5 py-2.5">
-  Deploy
-</SweepButton>`,
-  },
-  {
     figNo: "10",
     title: "AnimatedUnderline",
     name: "animatedunderline",

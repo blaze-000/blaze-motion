@@ -30,7 +30,6 @@ export const DOCS_NAV: NavGroup[] = [
   {
     group: "Hover",
     items: [
-      { id: "sweepbutton", label: "SweepButton" },
       { id: "animatedunderline", label: "AnimatedUnderline" },
       { id: "siblingdimming", label: "SiblingDimming" },
     ],
@@ -176,38 +175,6 @@ export const PROPS = {
       type: "SVGProps",
       def: "—",
       desc: "All <path> attributes — stroke, strokeWidth, fill, className.",
-    },
-  ],
-  sweepbutton: [
-    {
-      prop: "children",
-      type: "ReactNode",
-      def: "—",
-      desc: "The button label, kept above the sweep on z-10.",
-    },
-    {
-      prop: "className",
-      type: "string",
-      def: "—",
-      desc: "Becomes the button — put padding, radius, and text color here.",
-    },
-    {
-      prop: "origin",
-      type: '"left" | "right" | "top" | "bottom"',
-      def: '"left"',
-      desc: "Edge the fill sweeps in from.",
-    },
-    {
-      prop: "sweepClassName",
-      type: "string",
-      def: "bg-signal",
-      desc: "Override the fill layer (color, gradient).",
-    },
-    {
-      prop: "...button",
-      type: "ButtonHTMLAttributes",
-      def: "—",
-      desc: "All native <button> props — onClick, type, disabled.",
     },
   ],
   animatedunderline: [

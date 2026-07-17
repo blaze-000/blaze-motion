@@ -58,11 +58,6 @@
           "target": "@components/motion/line-draw.tsx"
         },
         {
-          "path": "components/motion/sweep-button.tsx",
-          "type": "registry:component",
-          "target": "@components/motion/sweep-button.tsx"
-        },
-        {
           "path": "components/motion/animated-underline.tsx",
           "type": "registry:component",
           "target": "@components/motion/animated-underline.tsx"
