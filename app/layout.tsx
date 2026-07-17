@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, Spline_Sans_Mono } from "next/font/google";
 import { MotionProvider } from "@/components/motion/motion-provider";
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <ScrollProgressBar />
           {children}
         </MotionProvider>
+        <Analytics />
       </body>
     </html>
   );
