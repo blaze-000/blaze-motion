@@ -70,6 +70,41 @@
     outline-offset: 2px;
     border-radius: 3px;
   }
+
+  /*
+   * Custom scrollbar — thin, dark, on-brand. `scrollbar-width`/`scrollbar-color`
+   * are inherited CSS properties, so setting them once on :root (Firefox)
+   * cascades into every scroll container (docs sidebar rail, mobile drawer,
+   * docs content) without needing a `*` selector. `::-webkit-scrollbar`
+   * (unprefixed) is the WebKit/Blink equivalent of a global rule, same as
+   * `::selection` above. Lives in @layer base — the utilities layer always
+   * wins the cascade, so the [scrollbar-width:none] / [&::-webkit-scrollbar]:hidden
+   * utilities on code blocks and install rows keep overriding this and stay bar-less.
+   */
+  :root {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--muted-foreground);
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
