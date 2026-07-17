@@ -4,12 +4,418 @@
   "homepage": "https://motion.asmitsah.dev",
   "items": [
     {
+      "name": "provider",
+      "type": "registry:block",
+      "title": "Motion engine (base)",
+      "description": "The shared engine base every blaze-motion component needs — the single tune surface (the `feel` block in lib/motion.ts) plus the <MotionProvider>. Install once, retune everything from one place. Pulled in automatically by any component.",
+      "dependencies": ["motion"],
+      "docs": "Mount <MotionProvider> once in your root layout, wrapping {children}. Retune the whole engine from the `feel` block at the top of lib/motion.ts. LazyMotion is `strict`, so primitives import `m` from motion/react-m — a raw motion.* throws.",
+      "files": [
+        { "path": "lib/motion.ts", "type": "registry:lib", "target": "@lib/motion.ts" },
+        {
+          "path": "components/motion/motion-provider.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/motion-provider.tsx"
+        }
+      ]
+    },
+    {
+      "name": "animated-underline",
+      "type": "registry:component",
+      "title": "Animated Underline",
+      "description": "Underline that draws left-to-right on hover and retracts out to the right on leave. Pure CSS.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/animated-underline.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/animated-underline.tsx"
+        }
+      ]
+    },
+    {
+      "name": "blur-fade-rise",
+      "type": "registry:component",
+      "title": "Blur Fade Rise",
+      "description": "Soft focus-in — fade + blur(6px → 0) + a short rise; reduced-motion users get a plain opacity fade.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/blur-fade-rise.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/blur-fade-rise.tsx"
+        }
+      ]
+    },
+    {
+      "name": "blur-to-focus",
+      "type": "registry:component",
+      "title": "Blur to Focus",
+      "description": "Blur-to-focus entrance — a gentle blur + opacity settle for a hero or single focal element.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/blur-to-focus.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/blur-to-focus.tsx"
+        }
+      ]
+    },
+    {
+      "name": "cinematic-image",
+      "type": "registry:component",
+      "title": "Cinematic Image",
+      "description": "Cinematic scale-down settle (110% → 100%) for large images inside an overflow-hidden frame.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/cinematic-image.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/cinematic-image.tsx"
+        }
+      ]
+    },
+    {
+      "name": "clip-reveal",
+      "type": "registry:component",
+      "title": "Clip Reveal",
+      "description": "Directional clip/wipe reveal — content wipes open from a chosen edge.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/clip-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/clip-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "fade-in",
+      "type": "registry:component",
+      "title": "Fade In",
+      "description": "Pure opacity fade — for above-the-fold / on-mount reveals.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/fade-in.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/fade-in.tsx"
+        }
+      ]
+    },
+    {
+      "name": "grayscale-reveal",
+      "type": "registry:component",
+      "title": "Grayscale Reveal",
+      "description": "Grayscale → color image reveal — grayscale(1) fades to grayscale(0) alongside opacity, on a slow ease.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/grayscale-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/grayscale-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "grow-from-origin",
+      "type": "registry:component",
+      "title": "Grow from Origin",
+      "description": "Fade + scale (~0.85 → 1) anchored to a transform-origin corner — the dropdown/tooltip/popover entrance.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/grow-from-origin.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/grow-from-origin.tsx"
+        }
+      ]
+    },
+    {
+      "name": "hover",
+      "type": "registry:component",
+      "title": "Hover",
+      "description": "Measured hover-response wrapper — a straight, tunable settle as the element answers the pointer.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/hover.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/hover.tsx"
+        }
+      ]
+    },
+    {
+      "name": "inset-frame-reveal",
+      "type": "registry:component",
+      "title": "Inset Frame Reveal",
+      "description": "Window settle — a uniform clip-path frame insets in from the edges, then opens to reveal.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/inset-frame-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/inset-frame-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "line-draw",
+      "type": "registry:component",
+      "title": "Line Draw",
+      "description": "SVG line draw — each path draws its stroke, then its fill fades in once the stroke completes.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/line-draw.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/line-draw.tsx"
+        }
+      ]
+    },
+    {
+      "name": "line-reveal",
+      "type": "registry:component",
+      "title": "Line Reveal",
+      "description": "Per-line rise + fade, staggered and calm — for body copy / multiline blocks; each line clips inside its own mask.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/line-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/line-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "mask-text-reveal",
+      "type": "registry:component",
+      "title": "Mask Text Reveal",
+      "description": "Masked text reveal — words rise out from behind a clip mask, token by token.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/mask-text-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/mask-text-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "number-ticker",
+      "type": "registry:component",
+      "title": "Number Ticker",
+      "description": "Animated number ticker — counts up to a value when it scrolls into view, with prefix/suffix/decimals.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/number-ticker.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/number-ticker.tsx"
+        }
+      ]
+    },
+    {
+      "name": "page-transition",
+      "type": "registry:component",
+      "title": "Page Transition",
+      "description": "Route transition — fades and shifts the page on route-key change.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/page-transition.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/page-transition.tsx"
+        }
+      ]
+    },
+    {
+      "name": "perspective-tilt-in",
+      "type": "registry:component",
+      "title": "Perspective Tilt In",
+      "description": "Reveal with a whisper of depth — rise + rotateX settle over a perspective, one straight ease-out.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/perspective-tilt-in.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/perspective-tilt-in.tsx"
+        }
+      ]
+    },
+    {
+      "name": "radial-stagger",
+      "type": "registry:component",
+      "title": "Radial Stagger",
+      "description": "Radial stagger — grid tiles spring in, ordered by their distance from a center point.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/radial-stagger.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/radial-stagger.tsx"
+        }
+      ]
+    },
+    {
+      "name": "reveal",
+      "type": "registry:component",
+      "title": "Reveal",
+      "description": "Scroll reveal — a straight rise from below the first time it enters view.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scale-in",
+      "type": "registry:component",
+      "title": "Scale In",
+      "description": "Soft 0.95 → 1 grow + fade on a straight ease tween, never a spring.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/scale-in.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/scale-in.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scale-x-reveal",
+      "type": "registry:component",
+      "title": "Scale X Reveal",
+      "description": "A rule / divider draws open — scaleX 0 → 1 + fade from the left.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/scale-x-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/scale-x-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scroll-progress-bar",
+      "type": "registry:component",
+      "title": "Scroll Progress Bar",
+      "description": "Scroll progress bar — a spring-smoothed bar tracking page (or a target element's) scroll.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/scroll-progress-bar.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/scroll-progress-bar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sibling-dimming",
+      "type": "registry:component",
+      "title": "Sibling Dimming",
+      "description": "Sibling dimming — hovering one item dims every non-hovered sibling to 50%. Pure CSS.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/sibling-dimming.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/sibling-dimming.tsx"
+        }
+      ]
+    },
+    {
+      "name": "slide-in",
+      "type": "registry:component",
+      "title": "Slide In",
+      "description": "Directional slide-in — content slides in from a chosen direction and distance tier, with fade.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/slide-in.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/slide-in.tsx"
+        }
+      ]
+    },
+    {
+      "name": "spring-pop",
+      "type": "registry:component",
+      "title": "Spring Pop",
+      "description": "Spring pop entrance — a natural ~1.05 overshoot that emerges from the spring itself, plus fade.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/spring-pop.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/spring-pop.tsx"
+        }
+      ]
+    },
+    {
+      "name": "stagger",
+      "type": "registry:component",
+      "title": "Stagger",
+      "description": "Linear stagger — children rise into view in sequence with a tunable per-child step and start delay.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/stagger.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/stagger.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-reveal",
+      "type": "registry:component",
+      "title": "Text Reveal",
+      "description": "Word-by-word text reveal — tokens rise and fade in sequence as the line enters view.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://motion.asmitsah.dev/r/provider.json"],
+      "files": [
+        {
+          "path": "components/motion/text-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/text-reveal.tsx"
+        }
+      ]
+    },
+    {
       "name": "all",
       "type": "registry:block",
       "title": "blaze-motion",
-      "description": "The full motion engine in one install — tuned tokens (lib/motion.ts), the provider, and every motion primitive.",
+      "description": "The full motion engine in one install — the tuned tokens (lib/motion.ts), the provider, and every motion primitive. Self-contained; retune the whole set from the `feel` block in lib/motion.ts.",
       "dependencies": ["motion"],
-      "docs": "Mount <MotionProvider> once in your root layout, then wrap anything in <Reveal> / <Stagger> / <FadeIn>. Retune the whole engine from the `feel` block at the top of lib/motion.ts. Primitives import `m` from motion/react-m — a raw motion.* throws under strict mode.",
+      "docs": "Mount <MotionProvider> once in your root layout, then wrap anything in <Reveal> / <Stagger> / <FadeIn> / etc. Retune the whole engine from the `feel` block at the top of lib/motion.ts. Primitives import `m` from motion/react-m — a raw motion.* throws under strict LazyMotion.",
       "files": [
         { "path": "lib/motion.ts", "type": "registry:lib", "target": "@lib/motion.ts" },
         {
@@ -18,34 +424,14 @@
           "target": "@components/motion/motion-provider.tsx"
         },
         {
-          "path": "components/motion/fade-in.tsx",
+          "path": "components/motion/animated-underline.tsx",
           "type": "registry:component",
-          "target": "@components/motion/fade-in.tsx"
+          "target": "@components/motion/animated-underline.tsx"
         },
         {
-          "path": "components/motion/reveal.tsx",
+          "path": "components/motion/blur-fade-rise.tsx",
           "type": "registry:component",
-          "target": "@components/motion/reveal.tsx"
-        },
-        {
-          "path": "components/motion/stagger.tsx",
-          "type": "registry:component",
-          "target": "@components/motion/stagger.tsx"
-        },
-        {
-          "path": "components/motion/cinematic-image.tsx",
-          "type": "registry:component",
-          "target": "@components/motion/cinematic-image.tsx"
-        },
-        {
-          "path": "components/motion/page-transition.tsx",
-          "type": "registry:component",
-          "target": "@components/motion/page-transition.tsx"
-        },
-        {
-          "path": "components/motion/spring-pop.tsx",
-          "type": "registry:component",
-          "target": "@components/motion/spring-pop.tsx"
+          "target": "@components/motion/blur-fade-rise.tsx"
         },
         {
           "path": "components/motion/blur-to-focus.tsx",
@@ -53,29 +439,54 @@
           "target": "@components/motion/blur-to-focus.tsx"
         },
         {
+          "path": "components/motion/cinematic-image.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/cinematic-image.tsx"
+        },
+        {
+          "path": "components/motion/clip-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/clip-reveal.tsx"
+        },
+        {
+          "path": "components/motion/fade-in.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/fade-in.tsx"
+        },
+        {
+          "path": "components/motion/grayscale-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/grayscale-reveal.tsx"
+        },
+        {
+          "path": "components/motion/grow-from-origin.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/grow-from-origin.tsx"
+        },
+        {
+          "path": "components/motion/hover.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/hover.tsx"
+        },
+        {
+          "path": "components/motion/inset-frame-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/inset-frame-reveal.tsx"
+        },
+        {
           "path": "components/motion/line-draw.tsx",
           "type": "registry:component",
           "target": "@components/motion/line-draw.tsx"
         },
         {
-          "path": "components/motion/animated-underline.tsx",
+          "path": "components/motion/line-reveal.tsx",
           "type": "registry:component",
-          "target": "@components/motion/animated-underline.tsx"
+          "target": "@components/motion/line-reveal.tsx"
         },
         {
-          "path": "components/motion/sibling-dimming.tsx",
+          "path": "components/motion/mask-text-reveal.tsx",
           "type": "registry:component",
-          "target": "@components/motion/sibling-dimming.tsx"
-        },
-        {
-          "path": "components/motion/radial-stagger.tsx",
-          "type": "registry:component",
-          "target": "@components/motion/radial-stagger.tsx"
-        },
-        {
-          "path": "components/motion/text-reveal.tsx",
-          "type": "registry:component",
-          "target": "@components/motion/text-reveal.tsx"
+          "target": "@components/motion/mask-text-reveal.tsx"
         },
         {
           "path": "components/motion/number-ticker.tsx",
@@ -83,9 +494,64 @@
           "target": "@components/motion/number-ticker.tsx"
         },
         {
+          "path": "components/motion/page-transition.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/page-transition.tsx"
+        },
+        {
+          "path": "components/motion/perspective-tilt-in.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/perspective-tilt-in.tsx"
+        },
+        {
+          "path": "components/motion/radial-stagger.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/radial-stagger.tsx"
+        },
+        {
+          "path": "components/motion/reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/reveal.tsx"
+        },
+        {
+          "path": "components/motion/scale-in.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/scale-in.tsx"
+        },
+        {
+          "path": "components/motion/scale-x-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/scale-x-reveal.tsx"
+        },
+        {
           "path": "components/motion/scroll-progress-bar.tsx",
           "type": "registry:component",
           "target": "@components/motion/scroll-progress-bar.tsx"
+        },
+        {
+          "path": "components/motion/sibling-dimming.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/sibling-dimming.tsx"
+        },
+        {
+          "path": "components/motion/slide-in.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/slide-in.tsx"
+        },
+        {
+          "path": "components/motion/spring-pop.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/spring-pop.tsx"
+        },
+        {
+          "path": "components/motion/stagger.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/stagger.tsx"
+        },
+        {
+          "path": "components/motion/text-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/motion/text-reveal.tsx"
         }
       ]
     }
