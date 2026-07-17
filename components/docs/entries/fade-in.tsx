@@ -1,26 +1,31 @@
 import type { DocEntry, PropRow } from "@/components/docs/registry";
+import { ReplayPreview } from "@/components/docs/replay-preview";
 import { FadeIn } from "@/components/motion/fade-in";
 
 /* ── Live preview ──────────────────────────────────────────────────────
- * A plain server component — it only composes the <FadeIn> client primitive,
- * which is allowed. No "use client" needed here because there is no local
- * state; unlike <Reveal>, FadeIn animates on MOUNT (no viewport gate), so it
- * plays the moment this demo renders — the fit for above-the-fold content
- * that shouldn't wait to scroll into view. The second block trails the first
- * via `delay` to show sequencing without a rise.
+ * FadeIn is pure opacity with no direction — so the variant set is small:
+ * a basic fade and a delayed one. Each sits in its own <ReplayPreview>
+ * (client) panel with its own Replay button. FadeIn always animates on MOUNT
+ * (no viewport gate), so remounting a panel via that button re-plays just
+ * that fade — the two panels replay independently. This entry stays a server
+ * module; it only composes the client primitives.
  */
 function Demo() {
   return (
-    <div className="flex w-full max-w-sm flex-col gap-3">
-      <FadeIn className="rounded-sm border border-border bg-panel-2 px-4 py-3 text-sm text-foreground">
-        Fades in on mount — pure opacity, no rise.
-      </FadeIn>
-      <FadeIn
-        delay={0.15}
-        className="rounded-sm border border-border bg-panel-2 px-4 py-3 text-sm text-muted-foreground"
-      >
-        A beat later — delay 0.15s.
-      </FadeIn>
+    <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
+      <ReplayPreview label="Basic">
+        <FadeIn className="w-full rounded-sm border border-border bg-panel-2 px-4 py-3 text-sm text-foreground">
+          Fades in on mount — pure opacity, no rise.
+        </FadeIn>
+      </ReplayPreview>
+      <ReplayPreview label="delay={0.15}">
+        <FadeIn
+          delay={0.15}
+          className="w-full rounded-sm border border-border bg-panel-2 px-4 py-3 text-sm text-muted-foreground"
+        >
+          A beat later — delay 0.15s.
+        </FadeIn>
+      </ReplayPreview>
     </div>
   );
 }

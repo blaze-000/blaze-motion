@@ -1,19 +1,25 @@
 import type { DocEntry, PropRow } from "@/components/docs/registry";
+import { ReplayPreview } from "@/components/docs/replay-preview";
 import { SlideIn } from "@/components/motion/slide-in";
 
 /* ── Live preview ──────────────────────────────────────────────────────
- * Shows the four cardinal directions plus a wider `hero`-tier travel. Server
- * component — it only composes the <SlideIn> client primitive. Each tile
- * fades + slides in from its labelled direction the first time it is in view.
+ * One replayable panel PER direction — all 8 travel directions SlideIn
+ * supports. Server component: it only composes the <ReplayPreview> (client)
+ * + <SlideIn> (client) primitives. Each SlideIn uses trigger="mount" so it
+ * plays the instant its panel (re)mounts, and each panel's own Replay button
+ * remounts just that SlideIn — so any one direction can be re-played on its
+ * own, independent of the others.
  */
-function Cell({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="flex flex-col items-center gap-1.5">
-      {children}
-      <span className="font-mono text-[0.625rem] text-muted-foreground">{label}</span>
-    </div>
-  );
-}
+const DIRECTIONS = [
+  { direction: "up", label: 'direction="up"' },
+  { direction: "down", label: 'direction="down"' },
+  { direction: "left", label: 'direction="left"' },
+  { direction: "right", label: 'direction="right"' },
+  { direction: "up-left", label: 'direction="up-left"' },
+  { direction: "up-right", label: 'direction="up-right"' },
+  { direction: "down-left", label: 'direction="down-left"' },
+  { direction: "down-right", label: 'direction="down-right"' },
+] as const;
 
 function Tile({ children }: { children: React.ReactNode }) {
   return (
@@ -25,27 +31,14 @@ function Tile({ children }: { children: React.ReactNode }) {
 
 function Demo() {
   return (
-    <div className="grid w-full max-w-sm grid-cols-2 gap-4">
-      <Cell label='direction="left"'>
-        <SlideIn direction="left">
-          <Tile>from left</Tile>
-        </SlideIn>
-      </Cell>
-      <Cell label='direction="right"'>
-        <SlideIn direction="right">
-          <Tile>from right</Tile>
-        </SlideIn>
-      </Cell>
-      <Cell label='direction="up"'>
-        <SlideIn direction="up">
-          <Tile>from below</Tile>
-        </SlideIn>
-      </Cell>
-      <Cell label='distance="hero"'>
-        <SlideIn direction="up" distance="hero">
-          <Tile>longer travel</Tile>
-        </SlideIn>
-      </Cell>
+    <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {DIRECTIONS.map(({ direction, label }) => (
+        <ReplayPreview key={direction} label={label}>
+          <SlideIn direction={direction} trigger="mount" className="w-full">
+            <Tile>{direction}</Tile>
+          </SlideIn>
+        </ReplayPreview>
+      ))}
     </div>
   );
 }
