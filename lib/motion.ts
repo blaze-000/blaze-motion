@@ -7,7 +7,7 @@ import type { TargetAndTransition, Transition, Variants } from "motion/react";
  *  Slower project? raise the durations. Faster? lower them. Every
  *  primitive derives from these values, so one edit re-tunes them all.
  *
- *  Per-instance overrides still win: <Reveal delay={0.1} /> etc.
+ *  Per-instance overrides still win: <Fade delay={0.1} /> etc.
  * ───────────────────────────────────────────────────────────────────── */
 export const feel = {
   /** seconds — the three speeds the engine animates at */
@@ -16,8 +16,12 @@ export const feel = {
   ease: [0.22, 0.61, 0.36, 1],
   /** the softer ease used for page transitions */
   easeSoft: [0.4, 0, 0.2, 1],
-  /** px a <Reveal> / <StaggerItem> rises from */
+  /** px a <StaggerItem> rises from (also Slide's `base` distance tier) */
   rise: 28,
+  /** px a <Fade> drifts from — a FIXED, subtle reveal drift (Slide owns tunable travel) */
+  fadeShift: 16,
+  /** px a <Fade blur> focus-settles from — blur(Npx) → 0, opt-in (`filter` is GPU-costly) */
+  fadeBlur: 8,
   /** how much of an element must be in view before it animates (0–1) */
   inView: 0.3,
   /** seconds between staggered children */
@@ -34,7 +38,7 @@ export const feel = {
   spring: { stiffness: 300, damping: 15 },
   /** scale a ScaleIn tween settles up FROM (tween, never spring — that's SpringPop) */
   scaleFrom: 0.95,
-  /** SlideIn translate TIERS in px — `base` reuses `rise` (28); see `slideDistance` */
+  /** Slide translate TIERS in px — `base` reuses `rise` (28); see `slideDistance` */
   distance: { tight: 8, hero: 64 },
   /** seconds between staggered lines (LineReveal / MaskTextReveal by line) */
   lineStagger: 0.08,
@@ -48,21 +52,6 @@ export const feel = {
   perspective: 800,
   /** percent a InsetFrameReveal clip-path insets uniformly from → 0% */
   frameInset: 15,
-  /** px a BlurFadeRise element blurs + rises from */
-  blurRise: 6,
-  /** hover magnitudes — subtle & measured; a fast STRAIGHT tween settles them (no overshoot). */
-  hover: {
-    /** px a `lift` element rises on hover (negative = up) */
-    lift: -4,
-    /** scale a `scale` element grows to on hover */
-    scale: 1.03,
-    /** degrees a `tilt` element rotates on hover */
-    tilt: -1.5,
-    /** scale the subtle whileTap press-down settles to */
-    press: 0.98,
-    /** `glow` — soft accent shadow: brand-coral rgb, hover alpha, blur + spread px */
-    glow: { rgb: "240, 104, 78", alpha: 0.35, blur: 24, spread: 2 },
-  },
 } as const;
 /* ───────────────────────────────────────────────────────────────────── */
 
@@ -84,10 +73,34 @@ export const fade = {
   animate: { opacity: 1 },
 } as const;
 
-export const fadeUp = {
-  initial: { opacity: 0, y: feel.rise },
-  animate: { opacity: 1, y: 0 },
-} as const;
+/** 5 directions a <Fade> drifts from as it fades in; `"none"` = pure opacity, no transform. */
+export type FadeDirection = "none" | "up" | "down" | "left" | "right";
+
+// Unit sign per direction → the offset it drifts FROM (× feel.fadeShift). Mirrors slideOffset.
+const fadeOffset: Record<FadeDirection, { x: number; y: number }> = {
+  none: { x: 0, y: 0 },
+  up: { x: 0, y: 1 },
+  down: { x: 0, y: -1 },
+  left: { x: 1, y: 0 },
+  right: { x: -1, y: 0 },
+};
+
+/**
+ * <Fade> variants — fade + a FIXED subtle drift from `direction`, plus an optional
+ * `blur`px → 0 focus-settle layered on top. The drift is fixed at `feel.fadeShift`
+ * (tunable travel is Slide's job). No transition is baked in — the component folds
+ * `delay` into `animate.transition` itself (the L004 variant-transition idiom).
+ */
+export const fadeVariants = (direction: FadeDirection = "up", blur = 0): Variants => {
+  const { x, y } = fadeOffset[direction];
+  const initial: TargetAndTransition = { opacity: 0, x: x * feel.fadeShift, y: y * feel.fadeShift };
+  const animate: TargetAndTransition = { opacity: 1, x: 0, y: 0 };
+  if (blur > 0) {
+    initial.filter = `blur(${blur}px)`;
+    animate.filter = "blur(0px)";
+  }
+  return { initial, animate };
+};
 
 /** scale-DOWN settle — for LARGE images only (never titles/text). */
 export const cinematicScale = {
@@ -119,12 +132,6 @@ export const springPop = {
   animate: { opacity: 1, scale: 1 },
 } as const;
 
-/** blur → sharp; `filter` is GPU-costly — hero / single-focal use only. */
-export const blurToFocus = {
-  initial: { opacity: 0, filter: "blur(10px)" },
-  animate: { opacity: 1, filter: "blur(0px)" },
-} as const;
-
 /** per-word / per-char reveal — STRAIGHT rise, NO scale (the title rule). */
 export const textRevealItem: Variants = {
   initial: { opacity: 0, y: feel.textRise },
@@ -142,7 +149,7 @@ export const textRevealContainer = (
 
 /* ── Entrance components (CARD-025 wave) — all straight `feel.ease` tweens ── */
 
-/** 8 travel directions a <SlideIn> enters along (diagonals move on both axes). */
+/** 8 travel directions a <Slide> enters along (diagonals move on both axes). */
 export type SlideDirection =
   | "up"
   | "down"
@@ -153,7 +160,7 @@ export type SlideDirection =
   | "down-left"
   | "down-right";
 
-/** The three <SlideIn> distance tiers — `base` reuses `feel.rise`. */
+/** The three <Slide> distance tiers — `base` reuses `feel.rise`. */
 export const slideDistance = {
   tight: feel.distance.tight,
   base: feel.rise,
@@ -295,45 +302,3 @@ export const grayscaleReveal = {
   initial: { opacity: 0, filter: "grayscale(1)" },
   animate: { opacity: 1, filter: "grayscale(0)" },
 } as const;
-
-/** fade + blur `feel.blurRise`px → 0 + rise — a soft focus-in (`filter` is costly). */
-export const blurFadeRise = {
-  initial: { opacity: 0, filter: `blur(${feel.blurRise}px)`, y: feel.blurRise },
-  animate: { opacity: 1, filter: "blur(0px)", y: 0 },
-} as const;
-
-/* ── Hover (CARD-023) — interactive whileHover, a fast STRAIGHT tween (never a spring) ── */
-
-/** the four ways a <Hover> responds to the pointer. */
-export type HoverEffect = "lift" | "scale" | "tilt" | "glow";
-
-/** quick straight settle for hover + tap — fast tween on the tuned ease, no overshoot. */
-export const hoverTransition = {
-  duration: feel.duration.fast,
-  ease: feel.ease,
-} as const satisfies Transition;
-
-// Brand-coral glow — a transparent → low-alpha shadow so Motion interpolates it cleanly.
-const { rgb: glowRgb, alpha: glowAlpha, blur: glowBlur, spread: glowSpread } = feel.hover.glow;
-/** boxShadow endpoints for the `glow` effect — `rest` is fully transparent (same shape). */
-export const glowShadow = {
-  rest: `0 0 0 0 rgba(${glowRgb}, 0)`,
-  hover: `0 0 ${glowBlur}px ${glowSpread}px rgba(${glowRgb}, ${glowAlpha})`,
-} as const;
-
-/** subtle press-down shared by every effect's whileTap (a transform — reduced-safe). */
-export const hoverPress = { scale: feel.hover.press } as const;
-
-/** whileHover target per effect — every magnitude lives in `feel.hover`. */
-export const hoverVariants = (effect: HoverEffect): TargetAndTransition => {
-  switch (effect) {
-    case "lift":
-      return { y: feel.hover.lift };
-    case "scale":
-      return { scale: feel.hover.scale };
-    case "tilt":
-      return { rotate: feel.hover.tilt };
-    case "glow":
-      return { boxShadow: glowShadow.hover };
-  }
-};

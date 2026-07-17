@@ -4,9 +4,7 @@ import { RotateCw } from "lucide-react";
 import Image from "next/image";
 import { type ReactNode, useState } from "react";
 import { CinematicImage } from "@/components/motion/cinematic-image";
-import { FadeIn } from "@/components/motion/fade-in";
-import { PageTransition } from "@/components/motion/page-transition";
-import { Reveal } from "@/components/motion/reveal";
+import { Fade } from "@/components/motion/fade";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
 import { FigPanel } from "./fig-panel";
@@ -16,20 +14,6 @@ function Swatch({ children }: { children: ReactNode }) {
     <div className="flex h-14 w-full max-w-[15rem] items-center justify-center rounded-sm border border-border bg-panel-2 px-4 text-sm text-foreground">
       {children}
     </div>
-  );
-}
-
-function RouteSwap({ swap }: { swap: number }) {
-  const routes = ["/", "/docs"];
-  // swap % 2 is always 0 or 1 — both in-bounds for this fixed 2-element array.
-  const current = routes[swap % 2]!;
-  return (
-    <PageTransition routeKey={current} className="w-full max-w-[15rem]">
-      <div className="flex flex-col gap-1.5 rounded-sm border border-border bg-panel-2 px-4 py-3">
-        <span className="font-mono text-[0.6875rem] text-muted-foreground">route</span>
-        <span className="font-mono text-sm text-signal">{current}</span>
-      </div>
-    </PageTransition>
   );
 }
 
@@ -44,28 +28,28 @@ type Primitive = {
 const PRIMITIVES: Primitive[] = [
   {
     figNo: "01",
-    title: "FadeIn",
+    title: "Fade",
     replayable: true,
-    code: `<FadeIn>
+    code: `<Fade direction="none">
   <h1>Above the fold</h1>
-</FadeIn>`,
+</Fade>`,
     render: (k) => (
-      <FadeIn key={k} className="w-full max-w-[15rem]">
+      <Fade key={k} direction="none" trigger="mount" className="w-full max-w-[15rem]">
         <Swatch>opacity 0 → 1</Swatch>
-      </FadeIn>
+      </Fade>
     ),
   },
   {
     figNo: "02",
-    title: "Reveal",
+    title: "Fade · reveal",
     replayable: true,
-    code: `<Reveal>
+    code: `<Fade direction="up" trigger="inView">
   <h2>Rises into view</h2>
-</Reveal>`,
+</Fade>`,
     render: (k) => (
-      <Reveal key={k} className="w-full max-w-[15rem]">
-        <Swatch>y +28 → 0</Swatch>
-      </Reveal>
+      <Fade key={k} direction="up" trigger="mount" className="w-full max-w-[15rem]">
+        <Swatch>y +16 → 0</Swatch>
+      </Fade>
     ),
   },
   {
@@ -113,16 +97,6 @@ const PRIMITIVES: Primitive[] = [
   },
   {
     figNo: "05",
-    title: "PageTransition",
-    replayable: true,
-    code: `// app/template.tsx
-<PageTransition routeKey={pathname}>
-  {children}
-</PageTransition>`,
-    render: (k) => <RouteSwap swap={k} />,
-  },
-  {
-    figNo: "06",
     title: "MotionProvider",
     replayable: false,
     code: `// app/layout.tsx
@@ -190,7 +164,11 @@ function PrimitiveCard({ primitive }: { primitive: Primitive }) {
       {view === "preview" ? (
         primitive.render(replayKey)
       ) : (
-        <pre className="w-full overflow-x-auto font-mono text-[0.75rem] leading-relaxed text-muted-foreground [scrollbar-width:none]">
+        <pre
+          // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable code block must be keyboard-focusable (WCAG 2.1.1 / axe scrollable-region-focusable).
+          tabIndex={0}
+          className="w-full overflow-x-auto font-mono text-[0.75rem] leading-relaxed text-muted-foreground [scrollbar-width:none]"
+        >
           <code>{primitive.code}</code>
         </pre>
       )}

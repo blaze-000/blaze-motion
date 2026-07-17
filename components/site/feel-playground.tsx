@@ -169,7 +169,11 @@ export function FeelPlayground() {
               {copied ? "copied" : "copy"}
             </button>
           </div>
-          <pre className="overflow-x-auto p-4 font-mono text-[0.75rem] leading-relaxed text-foreground [scrollbar-width:none]">
+          <pre
+            // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable code block must be keyboard-focusable (WCAG 2.1.1 / axe scrollable-region-focusable).
+            tabIndex={0}
+            className="overflow-x-auto p-4 font-mono text-[0.75rem] leading-relaxed text-foreground [scrollbar-width:none]"
+          >
             <code>
               <span className="text-muted-foreground">export const</span> feel = {"{"}
               {"\n  duration: { fast: "}

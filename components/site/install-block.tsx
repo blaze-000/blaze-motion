@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { CopyButton } from "./copy-button";
 
 const ALL_CMD = "npx shadcn add https://motion.asmitsah.dev/r/all.json";
-const ONE_CMD = "npx shadcn add https://motion.asmitsah.dev/r/slide-in.json";
+const ONE_CMD = "npx shadcn add https://motion.asmitsah.dev/r/slide.json";
 const NS_REGISTER =
   "npx shadcn registry add @blaze-motion=https://motion.asmitsah.dev/r/{name}.json";
 const NS_ADD = "npx shadcn add @blaze-motion/all";
@@ -67,7 +67,7 @@ export function InstallBlock() {
           <p className="text-sm text-muted-foreground">
             Every primitive installs on its own — swap{" "}
             <code className="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">
-              slide-in
+              slide
             </code>{" "}
             for any name. It pulls the shared engine in automatically.
           </p>

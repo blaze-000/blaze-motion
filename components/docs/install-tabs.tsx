@@ -77,7 +77,7 @@ export function InstallTabs({
   installCommand: string;
   /** the highlighted full-source CodeBlock, server-rendered and passed in */
   sourceBlock: ReactNode;
-  /** where the source file should land, e.g. components/motion/reveal.tsx */
+  /** where the source file should land, e.g. components/motion/fade.tsx */
   targetPath: string;
   /** npm runtime deps the manual path installs first, e.g. ["motion"] */
   dependencies?: string[];

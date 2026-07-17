@@ -2,19 +2,21 @@ import type { DocEntry, PropRow } from "@/components/docs/registry";
 import { LineReveal } from "@/components/motion/line-reveal";
 
 // Plain server component — composes the <LineReveal> client primitive (allowed).
+// LineReveal WRAPS your own element: the tag + className ride the child.
 // No "use client": no local state; the top block plays on mount, the second
 // rises the first time it's scrolled into view.
 function Demo() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
-      <LineReveal trigger="mount" className="text-sm leading-relaxed text-foreground">
-        {"Calm, deliberate motion.\nOne line at a time.\nNever the whole block at once."}
+      <LineReveal trigger="mount">
+        <p className="text-sm leading-relaxed text-foreground">
+          {"Calm, deliberate motion.\nOne line at a time.\nNever the whole block at once."}
+        </p>
       </LineReveal>
-      <LineReveal
-        delay={0.1}
-        className="rounded-sm border border-border bg-panel-2 px-4 py-3 text-sm text-muted-foreground"
-      >
-        {"Scrolls into view, once.\nEach line staggers a beat behind the last."}
+      <LineReveal delay={0.1}>
+        <p className="rounded-sm border border-border bg-panel-2 px-4 py-3 text-sm text-muted-foreground">
+          {"Scrolls into view, once.\nEach line staggers a beat behind the last."}
+        </p>
       </LineReveal>
     </div>
   );
@@ -23,28 +25,21 @@ function Demo() {
 const props: PropRow[] = [
   {
     prop: "children",
-    type: "string",
+    type: "ReactElement",
     def: "—",
-    desc: "The passage. Split on \\n — each line gets its own clipped rise.",
-  },
-  {
-    prop: "className",
-    type: "string",
-    def: "—",
-    desc: "Passed straight through — LineReveal becomes your layout element.",
-  },
-  { prop: "style", type: "CSSProperties", def: "—", desc: "Inline style passthrough." },
-  {
-    prop: "delay",
-    type: "number",
-    def: "0",
-    desc: "Seconds before the first line's stagger begins.",
+    desc: "A single host element (h1–h6/p/span/div) wrapping a plain-string passage split on \\n. Its tag, className + style are reused and it carries the aria-label. Required.",
   },
   {
     prop: "trigger",
     type: '"inView" | "mount"',
     def: '"inView"',
     desc: "inView rises once at 30% visible; mount plays immediately on render.",
+  },
+  {
+    prop: "delay",
+    type: "number",
+    def: "0",
+    desc: "Seconds before the first line's stagger begins.",
   },
 ];
 
@@ -53,28 +48,30 @@ const entry: DocEntry = {
   usage: [
     {
       label: "Basic",
-      note: "Splits children on \\n; each line rises inside its own overflow-hidden wrapper, staggered by feel.lineStagger. aria-label carries the full passage for screen readers.",
+      note: "Wrap your own element — its tag + className win. Splits the string on \\n; each line rises inside its own overflow-hidden wrapper, staggered by feel.lineStagger. aria-label carries the full passage.",
       code: `import { LineReveal } from "@/components/motion/line-reveal";
 
-<LineReveal className="text-lg leading-relaxed">
-  {"Calm, deliberate motion.\\nOne line at a time."}
+<LineReveal>
+  <p className="text-lg leading-relaxed">
+    {"Calm, deliberate motion.\\nOne line at a time."}
+  </p>
 </LineReveal>`,
     },
     {
       label: 'trigger="mount"',
       note: "Play immediately on render instead of waiting for scroll — good for hero copy above the fold.",
       code: `<LineReveal trigger="mount">
-  {"Rises the moment it mounts.\\nNo scroll required."}
+  <p>{"Rises the moment it mounts.\\nNo scroll required."}</p>
 </LineReveal>`,
     },
     {
       label: "With delay",
       note: "Offset a LineReveal behind a sibling to sequence a heading and its body copy.",
-      code: `<Reveal>
+      code: `<Fade>
   <h2>Leads</h2>
-</Reveal>
+</Fade>
 <LineReveal delay={0.15}>
-  {"Follows, a beat later.\\nLine by line."}
+  <p>{"Follows, a beat later.\\nLine by line."}</p>
 </LineReveal>`,
     },
   ],

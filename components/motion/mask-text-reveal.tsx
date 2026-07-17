@@ -1,8 +1,13 @@
 "use client";
 
 import * as m from "motion/react-m";
-import type { CSSProperties } from "react";
-import { Fragment } from "react";
+import {
+  type CSSProperties,
+  Fragment,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 import { feel, maskTextItem, textRevealContainer, viewportOnce } from "@/lib/motion";
 
 const TAGS = {
@@ -17,13 +22,16 @@ const TAGS = {
   h6: m.h6,
 } as const;
 
+type Tag = keyof typeof TAGS;
+type HostProps = { className?: string; style?: CSSProperties; children?: ReactNode };
+
 type MaskTextRevealProps = {
-  children: string;
-  className?: string;
-  style?: CSSProperties;
+  /** A single host element (h1–h6 / p / span / div) whose own children is a
+   *  plain string. MaskTextReveal reconstructs THAT element as the animated one —
+   *  its tag, className + style win; no extra DOM wrapper is added. */
+  children: ReactNode;
   delay?: number;
   by?: "word" | "line";
-  as?: keyof typeof TAGS;
   trigger?: "inView" | "mount";
 };
 
@@ -31,33 +39,49 @@ type MaskTextRevealProps = {
  *  overflow-hidden wrapper clips an inner span that rises from below (110% → 0). */
 export function MaskTextReveal({
   children,
-  className,
-  style,
   delay = 0,
   by = "word",
-  as = "span",
   trigger = "inView",
 }: MaskTextRevealProps) {
-  const Container = TAGS[as] as typeof m.span;
-  const step = by === "line" ? feel.lineStagger : feel.textStagger;
-  const tokens =
-    by === "line"
-      ? children
-          .split("\n")
-          .map((line) => line.trim())
-          .filter(Boolean)
-      : children.trim().split(/\s+/);
   const play =
     trigger === "mount"
       ? ({ animate: "animate" } as const)
       : ({ whileInView: "animate", viewport: viewportOnce } as const);
+
+  // Read the wrapped element's tag + props + string text so we can re-render it
+  // as the matching m[tag] carrying the stagger — the caller's tag/className win.
+  const child = isValidElement(children) ? (children as ReactElement<HostProps>) : null;
+  const tag = child && typeof child.type === "string" ? child.type : null;
+  const text = child && typeof child.props.children === "string" ? child.props.children : null;
+
+  // Fail soft: if the child isn't a single host element wrapping a plain string,
+  // render it untouched (unanimated) rather than crash.
+  if (!child || !tag || !(tag in TAGS) || text === null) {
+    return <>{children}</>;
+  }
+
+  const Container = TAGS[tag as Tag] as typeof m.span;
+  const { className, style } = child.props;
+  const step = by === "line" ? feel.lineStagger : feel.textStagger;
+  // Headings permit an accessible name; generic tags (span/div/p) don't — so an
+  // aria-label there is prohibited. role="img" lets the label name the composite
+  // while the per-token masks stay aria-hidden.
+  const isHeading = tag.length === 2 && tag.startsWith("h");
+  const tokens =
+    by === "line"
+      ? text
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
+      : text.trim().split(/\s+/);
 
   return (
     // aria-label carries the full string so SR reads it whole, not per-mask.
     <Container
       className={className}
       style={style}
-      aria-label={children}
+      aria-label={text}
+      role={isHeading ? undefined : "img"}
       variants={textRevealContainer(step, delay)}
       initial="initial"
       {...play}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ComponentIndex } from "@/components/docs/component-index";
-import { Reveal } from "@/components/motion/reveal";
+import { Fade } from "@/components/motion/fade";
 import { CodeBlock } from "@/components/site/code-block";
 import { InstallBlock } from "@/components/site/install-block";
 
@@ -29,7 +29,7 @@ export default function DocsPage() {
     <div className="relative">
       <div className="relative z-10">
         <div className="mx-auto max-w-[88rem] px-6 pt-12 lg:px-12 lg:pt-20">
-          <Reveal className="flex max-w-3xl flex-col gap-4">
+          <Fade direction="up" trigger="inView" className="flex max-w-3xl flex-col gap-4">
             <p className="fig-label text-muted-foreground">Documentation</p>
             <h1 className="text-display text-foreground">
               Own the files. <span className="text-signal">Tune the feel.</span>
@@ -38,7 +38,7 @@ export default function DocsPage() {
               Install once, then compose primitives around your own markup. Every component has its
               own page below — a live preview, source, and props.
             </p>
-          </Reveal>
+          </Fade>
         </div>
 
         <div className="mx-auto max-w-[88rem] px-6 py-16 lg:px-12 lg:py-24">
@@ -58,7 +58,7 @@ export default function DocsPage() {
           <section className="border-t border-border pt-16 mt-16">
             <div className="flex flex-col gap-2">
               <h2 className="text-h2 text-foreground">All components</h2>
-              <p className="font-mono text-sm text-signal">26 primitives, one page each.</p>
+              <p className="font-mono text-sm text-signal">21 primitives, one page each.</p>
             </div>
             <div className="mt-8">
               <ComponentIndex />

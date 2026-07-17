@@ -3,10 +3,8 @@
 import { RotateCw } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { FadeIn } from "@/components/motion/fade-in";
-import { Hover } from "@/components/motion/hover";
-import { Reveal } from "@/components/motion/reveal";
-import { SlideIn } from "@/components/motion/slide-in";
+import { Fade } from "@/components/motion/fade";
+import { Slide } from "@/components/motion/slide";
 import { FigPanel } from "./fig-panel";
 
 /** A neutral thing to wrap — stands in for "your card / heading / button". */
@@ -31,65 +29,49 @@ type WrapDemo = {
 const DEMOS: WrapDemo[] = [
   {
     figNo: "01",
-    title: "SlideIn",
+    title: "Slide",
     trigger: "entrance",
     hint: "slides in on view",
-    snippet: `<SlideIn direction="up">
+    snippet: `<Slide direction="up">
   <Card />
-</SlideIn>`,
+</Slide>`,
     render: (k) => (
-      <SlideIn key={k} direction="up" trigger="mount" className="flex justify-center">
+      <Slide key={k} direction="up" trigger="mount" className="flex justify-center">
         <DemoBox>Your card</DemoBox>
-      </SlideIn>
+      </Slide>
     ),
   },
   {
     figNo: "02",
-    title: "FadeIn",
+    title: "Fade",
     trigger: "entrance",
     hint: "fades in on mount",
-    snippet: `<FadeIn>
+    snippet: `<Fade direction="none">
   <Stat />
-</FadeIn>`,
+</Fade>`,
     render: (k) => (
-      <FadeIn key={k} className="flex justify-center">
+      <Fade key={k} direction="none" trigger="mount" className="flex justify-center">
         <DemoBox>
           <span className="font-mono tabular-nums text-signal">99.9%</span>
           <span className="ml-2 text-muted-foreground">uptime</span>
         </DemoBox>
-      </FadeIn>
+      </Fade>
     ),
   },
   {
     figNo: "03",
-    title: "Reveal",
+    title: "Fade · reveal",
     trigger: "entrance",
     hint: "rises in on view",
-    snippet: `<Reveal>
+    snippet: `<Fade direction="up" trigger="inView">
   <h3>Tuned once.</h3>
-</Reveal>`,
+</Fade>`,
     render: (k) => (
-      <Reveal key={k} className="flex justify-center">
+      <Fade key={k} direction="up" trigger="mount" className="flex justify-center">
         <DemoBox>
           <span className="text-h3 text-foreground">Tuned once.</span>
         </DemoBox>
-      </Reveal>
-    ),
-  },
-  {
-    figNo: "04",
-    title: "Hover",
-    trigger: "pointer",
-    hint: "hover the button",
-    snippet: `<Hover effect="lift">
-  <button>Deploy</button>
-</Hover>`,
-    render: () => (
-      <Hover effect="lift" className="flex justify-center">
-        <DemoBox>
-          <span className="font-semibold text-signal">Deploy</span>
-        </DemoBox>
-      </Hover>
+      </Fade>
     ),
   },
 ];
@@ -120,7 +102,11 @@ export function WrapShowcase() {
             headerRight={<span className="fig-label text-signal">{demo.hint}</span>}
             bodyClassName="flex flex-col"
           >
-            <pre className="overflow-x-auto border-b border-border px-4 py-4 font-mono text-[0.75rem] leading-relaxed text-muted-foreground [scrollbar-width:none]">
+            <pre
+              // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable code block must be keyboard-focusable (WCAG 2.1.1 / axe scrollable-region-focusable).
+              tabIndex={0}
+              className="overflow-x-auto border-b border-border px-4 py-4 font-mono text-[0.75rem] leading-relaxed text-muted-foreground [scrollbar-width:none]"
+            >
               <code>{demo.snippet}</code>
             </pre>
             <div className="flex min-h-[7.5rem] items-center justify-center p-5">

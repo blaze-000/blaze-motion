@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-import { FadeIn } from "@/components/motion/fade-in";
-import { Reveal } from "@/components/motion/reveal";
+import { Fade } from "@/components/motion/fade";
 import { CinematicBand } from "@/components/site/cinematic-band";
 import { CodeBlock } from "@/components/site/code-block";
 import { DocsPreview } from "@/components/site/docs-preview";
@@ -17,20 +16,6 @@ import { OpenSourceBand } from "@/components/site/open-source-band";
 import { PrimitiveShowcase } from "@/components/site/primitive-showcase";
 import { TechnicalTruths } from "@/components/site/technical-truths";
 import { WrapShowcase } from "@/components/site/wrap-showcase";
-
-const MOUNT_CODE = `// app/layout.tsx
-import { MotionProvider }
-  from "@/components/motion/motion-provider";
-
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body>
-        <MotionProvider>{children}</MotionProvider>
-      </body>
-    </html>
-  );
-}`;
 
 // Truthful excerpt of the actual `feel` block at the top of lib/motion.ts.
 const FEEL_CODE = `// lib/motion.ts — the whole engine's feel, in one place.
@@ -65,11 +50,11 @@ function SectionHead({
   children: ReactNode;
 }) {
   return (
-    <Reveal className="flex flex-col gap-3">
+    <Fade direction="up" trigger="inView" className="flex flex-col gap-3">
       <BeatLabel n={beat} label={label} />
       <h2 className="text-h2 text-foreground">{title}</h2>
       <p className="text-lead">{children}</p>
-    </Reveal>
+    </Fade>
   );
 }
 
@@ -85,7 +70,7 @@ export default function Home() {
           <section className="relative">
             <div className="container-page relative z-10 px-6 py-20 sm:py-24 lg:px-12 lg:py-28">
               <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-                <FadeIn className="flex min-w-0 flex-col gap-6">
+                <Fade className="flex min-w-0 flex-col gap-6">
                   <p className="fig-label text-muted-foreground">
                     Motion registry · built on motion.dev
                   </p>
@@ -97,9 +82,9 @@ export default function Home() {
                     Every primitive derives from a single feel object you own.
                   </p>
                   <HeroInstall />
-                </FadeIn>
+                </Fade>
 
-                <FadeIn delay={0.15} className="min-w-0">
+                <Fade delay={0.15} className="min-w-0">
                   <FigPanel figNo="—" title="ease · the curve" bodyClassName="p-6 sm:p-8">
                     <EasingCurveMark
                       variant="hero"
@@ -124,7 +109,7 @@ export default function Home() {
                       </div>
                     </dl>
                   </FigPanel>
-                </FadeIn>
+                </Fade>
               </div>
             </div>
           </section>
@@ -138,15 +123,8 @@ export default function Home() {
                 server-rendered.
               </SectionHead>
 
-              <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+              <div className="mt-12">
                 <InstallBlock />
-                <div className="flex min-w-0 flex-col gap-4">
-                  <CodeBlock code={MOUNT_CODE} caption="app/layout.tsx" />
-                  <p className="text-sm text-muted-foreground">
-                    One client leaf, mounted in the root layout. That&apos;s the only boundary you
-                    add — the rest of your tree is untouched.
-                  </p>
-                </div>
               </div>
             </div>
           </section>
@@ -210,7 +188,7 @@ export default function Home() {
                 <h2 className="text-h2 text-foreground">More effects. Same engine, same feel.</h2>
                 <p className="text-lead">
                   Entrance, hover, stagger, and text — every one tuned from the same feel object.
-                  Hover, click, scroll, or flip to Code on any panel.
+                  Hover, click, or flip to Code on any panel.
                 </p>
               </div>
               <div className="mt-12">
@@ -244,13 +222,13 @@ export default function Home() {
 
           <section id="docs">
             <div className="container-page px-6 py-20 lg:px-12 lg:py-24">
-              <Reveal className="flex flex-col gap-3">
+              <Fade direction="up" trigger="inView" className="flex flex-col gap-3">
                 <h2 className="text-h2 text-foreground">Docs, built like the rest of it.</h2>
                 <p className="text-lead">
                   Grouped sidebar, live Preview / Code, and a props table per component — plus a
                   copy-ready format so the AI in your editor reads it as fast as you do.
                 </p>
-              </Reveal>
+              </Fade>
               <div className="mt-12">
                 <DocsPreview />
               </div>

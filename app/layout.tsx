@@ -2,7 +2,6 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, Spline_Sans_Mono } from "next/font/google";
 import { MotionProvider } from "@/components/motion/motion-provider";
-import { ScrollProgressBar } from "@/components/motion/scroll-progress-bar";
 import { ShaderBackground } from "@/components/site/shader-background";
 import "./globals.css";
 
@@ -62,10 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`dark ${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <body className="min-h-dvh">
         <ShaderBackground />
-        <MotionProvider>
-          <ScrollProgressBar />
-          {children}
-        </MotionProvider>
+        <MotionProvider>{children}</MotionProvider>
         <Analytics />
       </body>
     </html>

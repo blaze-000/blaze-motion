@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FadeIn } from "@/components/motion/fade-in";
+import { Fade } from "@/components/motion/fade";
 import { DraftingFrame } from "@/components/site/drafting-frame";
 import { EasingCurveMark } from "@/components/site/easing-curve-mark";
 import { Footer } from "@/components/site/footer";
@@ -19,7 +19,7 @@ export default function NotFound() {
       <main className="relative">
         <DraftingFrame />
         <div className="container-page relative z-10 px-6 py-24 sm:py-32 lg:px-12 lg:py-40">
-          <FadeIn className="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
+          <Fade className="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
             <EasingCurveMark variant="hero" className="h-24 w-28 opacity-80 sm:h-28 sm:w-32" />
             <p className="fig-label text-muted-foreground">
               FIG.&nbsp;404<span className="px-1.5 text-border">·</span>
@@ -47,7 +47,7 @@ export default function NotFound() {
                 Browse components
               </Link>
             </div>
-          </FadeIn>
+          </Fade>
         </div>
       </main>
       <Footer />

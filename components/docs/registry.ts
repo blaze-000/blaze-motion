@@ -26,7 +26,7 @@ export type UsageSnippet = {
   note?: string;
 };
 
-/** A companion props table (e.g. StaggerItem, LineDrawPath). */
+/** A companion props table (e.g. StaggerItem). */
 export type SecondaryProps = {
   heading: string;
   rows: PropRow[];
@@ -46,7 +46,7 @@ export type DocEntry = {
 };
 
 /* ─────────────────────────────────────────────────────────────────────
- *  THE CENTRAL COMPONENT MAP — all 26 components, metadata only.
+ *  THE CENTRAL COMPONENT MAP — all 17 components, metadata only.
  *  Written ONCE here; fan-out agents only ADD entry files, never edit this.
  * ───────────────────────────────────────────────────────────────────── */
 
@@ -59,10 +59,7 @@ export type DocCategory =
   | "Text"
   | "Hover"
   | "Stagger"
-  | "Scroll"
-  | "SVG"
-  | "Image"
-  | "Routing";
+  | "Image";
 
 export type DocMeta = {
   slug: string;
@@ -81,38 +78,16 @@ export const CATEGORY_ORDER: DocCategory[] = [
   "Text",
   "Hover",
   "Stagger",
-  "Scroll",
-  "SVG",
   "Image",
-  "Routing",
 ];
 
 export const DOC_COMPONENTS: DocMeta[] = [
   {
-    slug: "fade-in",
-    title: "Fade In",
-    description: "Pure opacity fade — for above-the-fold, on-mount reveals.",
-    category: "Fade",
-  },
-  {
-    slug: "blur-fade-rise",
-    title: "Blur Fade Rise",
+    slug: "fade",
+    title: "Fade",
     description:
-      "Soft focus-in — fade + blur(6px → 0) + a short rise; reduced-motion gets a plain fade.",
+      "One prop-driven fade — opacity plus an optional subtle drift (direction) and blur focus-in (blur), on inView or mount. Covers above-the-fold fades and scroll reveals alike.",
     category: "Fade",
-  },
-  {
-    slug: "blur-to-focus",
-    title: "Blur to Focus",
-    description:
-      "Blur-to-focus entrance — a gentle blur + opacity settle for a single focal element.",
-    category: "Fade",
-  },
-  {
-    slug: "reveal",
-    title: "Reveal",
-    description: "Scroll reveal — a straight rise from below the first time it enters view.",
-    category: "Reveal",
   },
   {
     slug: "perspective-tilt-in",
@@ -121,10 +96,10 @@ export const DOC_COMPONENTS: DocMeta[] = [
     category: "Reveal",
   },
   {
-    slug: "slide-in",
-    title: "Slide In",
+    slug: "slide",
+    title: "Slide",
     description:
-      "Directional slide-in — content slides in from a chosen direction and distance tier, with fade.",
+      "Directional slide — content slides in from a chosen direction and distance tier, with fade.",
     category: "Slide",
   },
   {
@@ -185,20 +160,6 @@ export const DOC_COMPONENTS: DocMeta[] = [
     category: "Text",
   },
   {
-    slug: "hover",
-    title: "Hover",
-    description:
-      "Measured hover-response wrapper — a straight, tunable settle as the element answers the pointer.",
-    category: "Hover",
-  },
-  {
-    slug: "animated-underline",
-    title: "Animated Underline",
-    description:
-      "Underline that draws left-to-right on hover and retracts out to the right on leave.",
-    category: "Hover",
-  },
-  {
     slug: "sibling-dimming",
     title: "Sibling Dimming",
     description:
@@ -220,26 +181,6 @@ export const DOC_COMPONENTS: DocMeta[] = [
     category: "Stagger",
   },
   {
-    slug: "scroll-progress-bar",
-    title: "Scroll Progress Bar",
-    description:
-      "Scroll progress bar — a spring-smoothed bar tracking page (or a target element's) scroll.",
-    category: "Scroll",
-  },
-  {
-    slug: "number-ticker",
-    title: "Number Ticker",
-    description: "Animated number ticker — counts up to a value when it scrolls into view.",
-    category: "Scroll",
-  },
-  {
-    slug: "line-draw",
-    title: "Line Draw",
-    description:
-      "SVG line draw — each path draws its stroke, then its fill fades in once the stroke completes.",
-    category: "SVG",
-  },
-  {
     slug: "cinematic-image",
     title: "Cinematic Image",
     description:
@@ -252,12 +193,6 @@ export const DOC_COMPONENTS: DocMeta[] = [
     description:
       "Grayscale → color image reveal — grayscale(1) fades to grayscale(0) alongside opacity.",
     category: "Image",
-  },
-  {
-    slug: "page-transition",
-    title: "Page Transition",
-    description: "Route transition — fades and shifts the page on route-key change.",
-    category: "Routing",
   },
 ];
 

@@ -1,8 +1,13 @@
 "use client";
 
 import * as m from "motion/react-m";
-import type { CSSProperties } from "react";
-import { Fragment } from "react";
+import {
+  type CSSProperties,
+  Fragment,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 import { feel, textRevealContainer, textRevealItem, viewportOnce } from "@/lib/motion";
 
 const TAGS = {
@@ -17,41 +22,60 @@ const TAGS = {
   h6: m.h6,
 } as const;
 
+type Tag = keyof typeof TAGS;
+type HostProps = { className?: string; style?: CSSProperties; children?: ReactNode };
+
 type TextRevealProps = {
-  children: string;
-  className?: string;
-  style?: CSSProperties;
+  /** A single host element (h1–h6 / p / span / div) whose own children is a
+   *  plain string. TextReveal reconstructs THAT element as the animated one —
+   *  its tag, className + style win; no extra DOM wrapper is added. */
+  children: ReactNode;
   delay?: number;
   by?: "word" | "char";
-  as?: keyof typeof TAGS;
   stagger?: number;
   trigger?: "inView" | "mount";
 };
 
 export function TextReveal({
   children,
-  className,
-  style,
   delay = 0,
   by = "word",
-  as = "span",
   stagger,
   trigger = "inView",
 }: TextRevealProps) {
-  const Container = TAGS[as] as typeof m.span;
   const step = stagger ?? (by === "char" ? feel.textStaggerChar : feel.textStagger);
-  const words = children.trim().split(/\s+/);
   const play =
     trigger === "mount"
       ? ({ animate: "animate" } as const)
       : ({ whileInView: "animate", viewport: viewportOnce } as const);
+
+  // Read the wrapped element's tag + props + string text so we can re-render it
+  // as the matching m[tag] carrying the stagger — the caller's tag/className win.
+  const child = isValidElement(children) ? (children as ReactElement<HostProps>) : null;
+  const tag = child && typeof child.type === "string" ? child.type : null;
+  const text = child && typeof child.props.children === "string" ? child.props.children : null;
+
+  // Fail soft: if the child isn't a single host element wrapping a plain string,
+  // render it untouched (unanimated) rather than crash.
+  if (!child || !tag || !(tag in TAGS) || text === null) {
+    return <>{children}</>;
+  }
+
+  const Container = TAGS[tag as Tag] as typeof m.span;
+  const { className, style } = child.props;
+  const words = text.trim().split(/\s+/);
+  // Headings permit an accessible name; generic tags (span/div/p) don't — so an
+  // aria-label there is prohibited. role="img" lets the label name the composite
+  // while the per-token spans stay aria-hidden (no char-by-char read).
+  const isHeading = tag.length === 2 && tag.startsWith("h");
 
   return (
     // aria-label carries the full string so SR reads it whole, not per-span.
     <Container
       className={className}
       style={style}
-      aria-label={children}
+      aria-label={text}
+      role={isHeading ? undefined : "img"}
       variants={textRevealContainer(step, delay)}
       initial="initial"
       {...play}

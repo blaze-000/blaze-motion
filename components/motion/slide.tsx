@@ -13,7 +13,7 @@ import {
 
 type DistanceTier = keyof typeof slideDistance;
 
-type SlideInProps = {
+type SlideProps = {
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
@@ -24,7 +24,7 @@ type SlideInProps = {
 };
 
 /** Directional fade + slide — enters from one of 8 travel directions. Transform-only, so the provider's `reducedMotion="user"` strips it for free. */
-export function SlideIn({
+export function Slide({
   children,
   className,
   style,
@@ -32,7 +32,7 @@ export function SlideIn({
   direction,
   distance = "base",
   trigger = "inView",
-}: SlideInProps) {
+}: SlideProps) {
   const px = typeof distance === "number" ? distance : slideDistance[distance];
   const base = slideVariants(direction, px);
   // slideVariants bakes revealTransition into `animate`, and a variant's own

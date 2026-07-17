@@ -5,15 +5,20 @@ const SIDEBAR = [
   { group: "Getting Started", items: ["Installation", "Provider Setup"] },
   {
     group: "Primitives",
-    items: ["FadeIn", "Reveal", "Stagger", "CinematicImage", "PageTransition"],
-    active: "Reveal",
+    items: ["Fade", "Stagger", "CinematicImage"],
+    active: "Fade",
   },
 ];
 
 const PROPS = [
-  { prop: "children", type: "ReactNode", def: "—", desc: "The content that rises into view." },
+  { prop: "children", type: "ReactNode", def: "—", desc: "The content that fades in." },
   { prop: "className", type: "string", def: "—", desc: "Passed straight through to the element." },
-  { prop: "delay", type: "number", def: "0", desc: "Seconds before this instance animates." },
+  {
+    prop: "direction",
+    type: '"none" | "up" | …',
+    def: '"up"',
+    desc: "A fixed, subtle drift as it fades.",
+  },
 ];
 
 const TOC = ["Overview", "When to use", "Preview", "Props"];
@@ -51,9 +56,9 @@ export function DocsPreview() {
           </div>
 
           <div className="p-5 sm:p-7">
-            <h3 className="text-h3 text-foreground">Reveal</h3>
+            <h3 className="text-h3 text-foreground">Fade</h3>
             <p className="mt-2 max-w-prose text-sm text-muted-foreground">
-              A straight rise from below, once, the first time it scrolls into view.
+              A refined fade with an optional subtle drift — on scroll, or immediately on mount.
             </p>
 
             <div className="mt-5 flex w-fit rounded-sm border border-border p-0.5 font-mono text-xs">

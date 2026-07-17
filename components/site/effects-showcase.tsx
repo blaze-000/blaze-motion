@@ -24,30 +24,6 @@ const EFFECTS: Effect[] = [
 </SpringPop>`,
   },
   {
-    figNo: "07",
-    title: "BlurToFocus",
-    name: "blurtofocus",
-    code: `<BlurToFocus className="relative overflow-hidden">
-  <Image src={hero} alt="" fill />
-</BlurToFocus>`,
-  },
-  {
-    figNo: "08",
-    title: "LineDraw",
-    name: "linedraw",
-    code: `<LineDraw viewBox="0 0 200 100" stagger={0.15}>
-  <LineDrawPath d="M8 78 L104 64 L192 12" />
-</LineDraw>`,
-  },
-  {
-    figNo: "10",
-    title: "AnimatedUnderline",
-    name: "animatedunderline",
-    code: `<AnimatedUnderline as={Link} href="/docs">
-  Read the docs
-</AnimatedUnderline>`,
-  },
-  {
     figNo: "11",
     title: "SiblingDimming",
     name: "siblingdimming",
@@ -67,22 +43,9 @@ const EFFECTS: Effect[] = [
     figNo: "13",
     title: "TextReveal",
     name: "textreveal",
-    code: `<TextReveal as="h2" by="word">
-  Motion, tuned once.
+    code: `<TextReveal by="word">
+  <h2>Motion, tuned once.</h2>
 </TextReveal>`,
-  },
-  {
-    figNo: "14",
-    title: "NumberTicker",
-    name: "numberticker",
-    code: `<NumberTicker value={1240} suffix="+" />`,
-  },
-  {
-    figNo: "15",
-    title: "ScrollProgressBar",
-    name: "scrollprogressbar",
-    code: `// once, high in your layout
-<ScrollProgressBar />`,
   },
 ];
 
@@ -137,7 +100,11 @@ function EffectCard({ effect }: { effect: Effect }) {
       {view === "preview" ? (
         renderEffectDemo(effect.name, replayKey)
       ) : (
-        <pre className="w-full overflow-x-auto font-mono text-[0.75rem] leading-relaxed text-muted-foreground [scrollbar-width:none]">
+        <pre
+          // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable code block must be keyboard-focusable (WCAG 2.1.1 / axe scrollable-region-focusable).
+          tabIndex={0}
+          className="w-full overflow-x-auto font-mono text-[0.75rem] leading-relaxed text-muted-foreground [scrollbar-width:none]"
+        >
           <code>{effect.code}</code>
         </pre>
       )}

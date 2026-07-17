@@ -10,28 +10,21 @@
 
 ## The feel object (lib/motion.ts)
 
-One block tunes the whole engine: `duration` (fast 0.2 / base 0.55 / slow 0.8), `ease` [0.22, 0.61, 0.36, 1], `easeSoft` [0.4, 0, 0.2, 1] (page transitions only), `rise` 28px, `inView` 0.3, `stagger` 0.08. Per-instance props still override.
+One block tunes the whole engine: `duration` (fast 0.2 / base 0.55 / slow 0.8), `ease` [0.22, 0.61, 0.36, 1], `easeSoft` [0.4, 0, 0.2, 1] (a softer curve), `rise` 28px, `fadeShift` 16px, `fadeBlur` 8px, `inView` 0.3, `stagger` 0.08. Per-instance props still override.
 
-## The core six primitives
+## The core primitives
 
 - MotionProvider — mounts once in the root layout; wraps children in LazyMotion (domAnimation, strict) + MotionConfig (reducedMotion="user"). Strict mode requires importing `m` from `motion/react-m`.
-- FadeIn — pure opacity fade for above-the-fold / on-mount content (no scroll trigger).
-- Reveal — scroll-triggered straight rise from below (opacity 0→1, y +28→0), once, at 30% in view. No spring, no scale.
-- Stagger / StaggerItem — two flat named exports (never a compound Stagger.Item, which is undefined across the RSC client-reference boundary and crashes next build's prerender). Container staggers children; item does the fadeUp rise.
+- Fade — one prop-driven fade: opacity plus an optional subtle FIXED drift (direction, default "up", ~16px) and an optional blur focus-in (blur, ~8px). trigger is "inView" (once, default — an already-in-view element animates immediately, so it covers above-the-fold and scroll-reveal alike) or "mount". Reduced motion drops the drift + blur to a plain opacity fade. Absorbs the old FadeIn / Reveal / BlurToFocus / BlurFadeRise.
+- Stagger / StaggerItem — two flat named exports (never a compound Stagger.Item, which is undefined across the RSC client-reference boundary and crashes next build's prerender). Container staggers children; item does the rise.
 - CinematicImage — scale-down settle (opacity 0 / scale 1.1 → opacity 1 / scale 1) for large images only; the wrapper must be overflow-hidden.
-- PageTransition — wraps route content in AnimatePresence (mode="wait"); fades + shifts on route change with easeSoft. Keyed via a `routeKey` prop, not `key`.
 
 ## Entrance / hover / stagger / text effects
 
 - SpringPop — scale-up overshoot spring (0.8 → ~1.05 → 1) + opacity on mount; the one deliberate overshoot, never on titles.
-- BlurToFocus — filter blur(10px) → blur(0) + opacity on mount; GPU-costly filter, hero / single focal element only.
-- LineDraw + LineDrawPath — SVG line-draw; each path animates pathLength 0→1 then fades its fill in. Two flat exports; LineDraw IS the <svg>.
-- AnimatedUnderline — underline draws L→R on hover, retracts out on leave; pure CSS, polymorphic via `as` (pass Link for internal nav).
 - SiblingDimming + SiblingDimmingItem — hover one grid card, siblings dim to 50% via :has(); no JS. Two flat exports.
 - RadialStagger — click a grid tile and a spring-pop ripples outward, each cell delayed by distance from the clicked origin.
-- TextReveal — per-word or per-char staggered straight rise (no scale); full string on aria-label for screen readers.
-- NumberTicker — count-up to a target on scroll-into-view, tabular-nums so width never jitters; reduced motion snaps to the value.
-- ScrollProgressBar — fixed, spring-smoothed bar whose scaleX tracks page (or a target element's) scroll; aria-hidden.
+- TextReveal — wraps your own text element (`<TextReveal><h2>…</h2></TextReveal>`); splits its text into per-word or per-char staggered straight rise (no scale); full string on aria-label for screen readers.
 - Stagger's linear step is tunable via staggerChildren / delayChildren props (backward-compatible defaults 0.08 / 0.05).
 
 ## Design principles

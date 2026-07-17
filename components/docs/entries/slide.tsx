@@ -1,13 +1,13 @@
 import type { DocEntry, PropRow } from "@/components/docs/registry";
 import { ReplayPreview } from "@/components/docs/replay-preview";
-import { SlideIn } from "@/components/motion/slide-in";
+import { Slide } from "@/components/motion/slide";
 
 /* ── Live preview ──────────────────────────────────────────────────────
- * One replayable panel PER direction — all 8 travel directions SlideIn
+ * One replayable panel PER direction — all 8 travel directions Slide
  * supports. Server component: it only composes the <ReplayPreview> (client)
- * + <SlideIn> (client) primitives. Each SlideIn uses trigger="mount" so it
+ * + <Slide> (client) primitives. Each Slide uses trigger="mount" so it
  * plays the instant its panel (re)mounts, and each panel's own Replay button
- * remounts just that SlideIn — so any one direction can be re-played on its
+ * remounts just that Slide — so any one direction can be re-played on its
  * own, independent of the others.
  */
 const DIRECTIONS = [
@@ -34,9 +34,9 @@ function Demo() {
     <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {DIRECTIONS.map(({ direction, label }) => (
         <ReplayPreview key={direction} label={label}>
-          <SlideIn direction={direction} trigger="mount" className="w-full">
+          <Slide direction={direction} trigger="mount" className="w-full">
             <Tile>{direction}</Tile>
-          </SlideIn>
+          </Slide>
         </ReplayPreview>
       ))}
     </div>
@@ -67,7 +67,7 @@ const props: PropRow[] = [
     prop: "className",
     type: "string",
     def: "—",
-    desc: "Passed straight through — SlideIn becomes your layout element.",
+    desc: "Passed straight through — Slide becomes your layout element.",
   },
   { prop: "style", type: "CSSProperties", def: "—", desc: "Inline style passthrough." },
   { prop: "delay", type: "number", def: "0", desc: "Seconds before this instance animates." },
@@ -79,29 +79,29 @@ const entry: DocEntry = {
     {
       label: "Direction",
       note: "Pick any of the 8 travel directions — diagonals move on both axes.",
-      code: `import { SlideIn } from "@/components/motion/slide-in";
+      code: `import { Slide } from "@/components/motion/slide";
 
-<SlideIn direction="left">
+<Slide direction="left">
   <Card />
-</SlideIn>`,
+</Slide>`,
     },
     {
       label: "Distance tier",
       note: "tight (8px) · base (28px) · hero (64px) — or pass an explicit number.",
-      code: `<SlideIn direction="up" distance="hero">
+      code: `<Slide direction="up" distance="hero">
   <h1>Big entrance</h1>
-</SlideIn>
+</Slide>
 
-<SlideIn direction="right" distance={120}>
+<Slide direction="right" distance={120}>
   <aside>Custom travel</aside>
-</SlideIn>`,
+</Slide>`,
     },
     {
       label: "Trigger on mount",
       note: "Play immediately instead of waiting for scroll — for above-the-fold content.",
-      code: `<SlideIn direction="up" trigger="mount">
+      code: `<Slide direction="up" trigger="mount">
   <Hero />
-</SlideIn>`,
+</Slide>`,
     },
   ],
   props,

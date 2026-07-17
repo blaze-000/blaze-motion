@@ -17,7 +17,7 @@ npx shadcn add https://motion.asmitsah.dev/r/all.json
 Or install just the one you need — every component is its own item:
 
 ```bash
-npx shadcn add https://motion.asmitsah.dev/r/slide-in.json
+npx shadcn add https://motion.asmitsah.dev/r/slide.json
 ```
 
 Either way you also get the shared `feel` config + provider, so the whole engine stays tunable from one file. Installing across projects? Register the namespace once, then use the shorthand:
@@ -45,31 +45,27 @@ A small tuned core plus a full set of entrance, hover, and text primitives — [
 
 **Core**
 
-- **FadeIn** — opacity fade, for on-mount / above-the-fold.
-- **Reveal** — a straight rise from below on scroll, once.
+- **Fade** — one prop-driven fade: opacity plus an optional subtle drift (`direction`) and blur focus-in (`blur`), on scroll or on mount. Covers above-the-fold fades and scroll reveals alike.
 - **Stagger / StaggerItem** — sequenced children (flat exports).
 - **CinematicImage** — a scale-down settle for large images.
-- **PageTransition** — route transitions.
 
 **Entrance** — one prop-driven component, many variants:
 
-- **SlideIn** — directional fade + slide (`direction`, `distance`).
+- **Slide** — directional fade + slide (`direction`, `distance`).
 - **ScaleIn** — a soft grow-in, no bounce.
 - **ClipReveal** — a clip-path edge wipe (`direction`).
 - **GrowFromOrigin** — grows from a corner/anchor (`origin`) — dropdowns, popovers.
 - **PerspectiveTiltIn** — a reveal with a whisper of depth.
-- **InsetFrameReveal** · **ScaleXReveal** · **BlurFadeRise** · **GrayscaleReveal** — more entrance flavors.
+- **InsetFrameReveal** · **ScaleXReveal** · **GrayscaleReveal** — more entrance flavors.
 
 **Text**
 
 - **TextReveal** · **MaskTextReveal** — word- and line-level reveals.
 - **LineReveal** — line-by-line body copy.
-- **NumberTicker** — count-up.
 
 **Hover & interaction**
 
-- **Hover** — a generic hover wrapper (`lift` / `scale` / `tilt` / `glow`) for any element.
-- **AnimatedUnderline** · **SiblingDimming** · **RadialStagger** · **ScrollProgressBar** · **SvgLineDraw** · **SpringPop** · **BlurToFocus**.
+- **SiblingDimming** · **RadialStagger** · **SpringPop**.
 
 ## Tune it
 
