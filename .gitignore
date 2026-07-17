@@ -47,3 +47,5 @@ next-env.d.ts
 
 # Playwright MCP smoke-test artifacts
 .playwright-mcp/
+
+.claude
