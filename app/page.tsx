@@ -19,7 +19,8 @@ import { TechnicalTruths } from "@/components/site/technical-truths";
 import { WrapShowcase } from "@/components/site/wrap-showcase";
 
 const MOUNT_CODE = `// app/layout.tsx
-import { MotionProvider } from "@/components/motion/motion-provider";
+import { MotionProvider }
+  from "@/components/motion/motion-provider";
 
 export default function RootLayout({ children }) {
   return (

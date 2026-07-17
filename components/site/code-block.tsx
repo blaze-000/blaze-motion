@@ -47,7 +47,7 @@ export async function CodeBlock({
         </div>
       ) : null}
       <div
-        className="overflow-x-auto p-4 text-[0.8125rem] leading-relaxed [&_code]:font-mono [&_pre]:!m-0 [&_pre]:!bg-transparent [&_pre]:!p-0"
+        className="overflow-x-auto p-4 text-[0.8125rem] leading-relaxed [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [&_code]:font-mono [&_pre]:!m-0 [&_pre]:!bg-transparent [&_pre]:!p-0"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: build-time Shiki output over hardcoded doc source — never user input (FG-001).
         dangerouslySetInnerHTML={{ __html: html }}
       />
