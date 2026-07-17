@@ -1,4 +1,4 @@
-import type { Transition, Variants } from "motion/react";
+import type { TargetAndTransition, Transition, Variants } from "motion/react";
 
 /* ─────────────────────────────────────────────────────────────────────
  *  TUNE HERE — the whole engine's feel, in one place.
@@ -50,6 +50,19 @@ export const feel = {
   frameInset: 15,
   /** px a BlurFadeRise element blurs + rises from */
   blurRise: 6,
+  /** hover magnitudes — subtle & measured; a fast STRAIGHT tween settles them (no overshoot). */
+  hover: {
+    /** px a `lift` element rises on hover (negative = up) */
+    lift: -4,
+    /** scale a `scale` element grows to on hover */
+    scale: 1.03,
+    /** degrees a `tilt` element rotates on hover */
+    tilt: -1.5,
+    /** scale the subtle whileTap press-down settles to */
+    press: 0.98,
+    /** `glow` — soft accent shadow: brand-coral rgb, hover alpha, blur + spread px */
+    glow: { rgb: "240, 104, 78", alpha: 0.35, blur: 24, spread: 2 },
+  },
 } as const;
 /* ───────────────────────────────────────────────────────────────────── */
 
@@ -288,3 +301,39 @@ export const blurFadeRise = {
   initial: { opacity: 0, filter: `blur(${feel.blurRise}px)`, y: feel.blurRise },
   animate: { opacity: 1, filter: "blur(0px)", y: 0 },
 } as const;
+
+/* ── Hover (CARD-023) — interactive whileHover, a fast STRAIGHT tween (never a spring) ── */
+
+/** the four ways a <Hover> responds to the pointer. */
+export type HoverEffect = "lift" | "scale" | "tilt" | "glow";
+
+/** quick straight settle for hover + tap — fast tween on the tuned ease, no overshoot. */
+export const hoverTransition = {
+  duration: feel.duration.fast,
+  ease: feel.ease,
+} as const satisfies Transition;
+
+// Brand-coral glow — a transparent → low-alpha shadow so Motion interpolates it cleanly.
+const { rgb: glowRgb, alpha: glowAlpha, blur: glowBlur, spread: glowSpread } = feel.hover.glow;
+/** boxShadow endpoints for the `glow` effect — `rest` is fully transparent (same shape). */
+export const glowShadow = {
+  rest: `0 0 0 0 rgba(${glowRgb}, 0)`,
+  hover: `0 0 ${glowBlur}px ${glowSpread}px rgba(${glowRgb}, ${glowAlpha})`,
+} as const;
+
+/** subtle press-down shared by every effect's whileTap (a transform — reduced-safe). */
+export const hoverPress = { scale: feel.hover.press } as const;
+
+/** whileHover target per effect — every magnitude lives in `feel.hover`. */
+export const hoverVariants = (effect: HoverEffect): TargetAndTransition => {
+  switch (effect) {
+    case "lift":
+      return { y: feel.hover.lift };
+    case "scale":
+      return { scale: feel.hover.scale };
+    case "tilt":
+      return { rotate: feel.hover.tilt };
+    case "glow":
+      return { boxShadow: glowShadow.hover };
+  }
+};
