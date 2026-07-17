@@ -7,6 +7,7 @@ export const DOCS_NAV: NavGroup[] = [
     items: [
       { id: "installation", label: "Installation" },
       { id: "provider-setup", label: "Provider Setup" },
+      { id: "components", label: "All components" },
     ],
   },
   {

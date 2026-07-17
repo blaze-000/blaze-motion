@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { ComponentIndex } from "@/components/docs/component-index";
 import { PROPS } from "@/components/docs/docs-data";
 import { DocsShell } from "@/components/docs/docs-shell";
 import { type DemoName, PrimitiveDemo } from "@/components/docs/primitive-demo";
@@ -455,6 +456,19 @@ export default function DocsPage() {
                   <PropsTable rows={PROPS.provider} />
                 </div>
               </div>
+            </DocSection>
+
+            <DocSection
+              id="components"
+              title="All components"
+              oneLine="26 primitives, one page each."
+            >
+              <p className="max-w-prose text-base leading-relaxed text-muted-foreground">
+                Every primitive has its own page — a live preview, install command, full source, and
+                a props table. Browse them by category below, or read the deep-dive sections that
+                follow for the core set.
+              </p>
+              <ComponentIndex />
             </DocSection>
 
             {PRIMITIVES.map((p) => (
