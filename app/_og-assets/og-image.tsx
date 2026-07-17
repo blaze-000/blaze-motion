@@ -8,7 +8,7 @@ import { ImageResponse } from "next/og";
 // Consumed by both app/opengraph-image.tsx and app/twitter-image.tsx.
 
 export const alt =
-  "blaze-motion — Motion, tuned once. Subtle, RSC-safe motion primitives for Next.js + shadcn.";
+  "blaze-motion — Motion, tuned once. Subtle, RSC-safe motion primitives for React + shadcn.";
 
 export const size = { width: 1200, height: 630 };
 
@@ -217,7 +217,7 @@ export default async function renderOgImage() {
                 maxWidth: 560,
               }}
             >
-              Subtle, RSC-safe motion primitives for Next.js + shadcn.
+              Subtle, RSC-safe motion primitives for React + shadcn.
             </div>
           </div>
 

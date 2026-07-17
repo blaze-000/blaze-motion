@@ -10,10 +10,10 @@ export function OpenSourceBand() {
     <section aria-label="Open source" className="container-page px-6 py-20 lg:px-12">
       <div className="flex flex-col items-center gap-6 rounded-md border border-border bg-card px-6 py-12 text-center sm:py-16">
         <EasingCurveMark variant="hero" className="h-14 w-16" />
-        <h2 className="text-h2 text-foreground">Open-source. MIT. Own the files.</h2>
+        <h2 className="text-h2 text-foreground">Open source. MIT. Genuinely yours.</h2>
         <p className="text-lead mx-auto text-center">
-          No opaque dependency, no lock-in — the source lands in your repo and stays yours. Star the
-          work if it saves you time.
+          No black box, no lock-in — the source lands in your project and stays there. If it saves
+          you an afternoon, drop a star.
         </p>
         <div className="mt-2 flex flex-col items-center gap-4 sm:flex-row">
           <GitHubStarsReadout />

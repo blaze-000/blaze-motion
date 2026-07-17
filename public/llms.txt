@@ -1,6 +1,6 @@
 # blaze-motion
 
-> A tuned motion engine and a set of composable, RSC-safe animation primitives for Next.js + shadcn, curated on top of the motion.dev (`motion`) library — a six-primitive core plus entrance, hover, stagger, and text/number effects. Installed the shadcn way — the source files land in your repo, editable — not as an opaque npm dependency. The whole engine's feel is retuned by editing one `feel` object.
+> A tuned motion engine and a set of composable, RSC-safe animation primitives for React + shadcn, curated on top of the motion.dev (`motion`) library — a tuned core plus entrance, hover, stagger, and text/number effects. Installed the shadcn way — the source files land in your repo, editable — not as an opaque npm dependency. The whole engine's feel is retuned by editing one `feel` object.
 
 ## Install
 

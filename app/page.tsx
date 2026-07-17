@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { FadeIn } from "@/components/motion/fade-in";
 import { Reveal } from "@/components/motion/reveal";
 import { CinematicBand } from "@/components/site/cinematic-band";
@@ -15,6 +16,7 @@ import { Nav } from "@/components/site/nav";
 import { OpenSourceBand } from "@/components/site/open-source-band";
 import { PrimitiveShowcase } from "@/components/site/primitive-showcase";
 import { TechnicalTruths } from "@/components/site/technical-truths";
+import { WrapShowcase } from "@/components/site/wrap-showcase";
 
 const MOUNT_CODE = `// app/layout.tsx
 import { MotionProvider } from "@/components/motion/motion-provider";
@@ -29,17 +31,46 @@ export default function RootLayout({ children }) {
   );
 }`;
 
-const WRAP_CODE = `import { Reveal } from "@/components/motion/reveal";
+// Truthful excerpt of the actual `feel` block at the top of lib/motion.ts.
+const FEEL_CODE = `// lib/motion.ts — the whole engine's feel, in one place.
+export const feel = {
+  duration: { fast: 0.2, base: 0.55, slow: 0.8 },
+  ease: [0.22, 0.61, 0.36, 1],
+  rise: 28,
+  inView: 0.3,
+  stagger: 0.08,
+  // …one object; every primitive derives from it.
+} as const;`;
 
-<Reveal>
-  <h2>Rises into view, once.</h2>
-</Reveal>`;
+function BeatLabel({ n, label }: { n: string; label: string }) {
+  return (
+    <p className="fig-label flex items-center gap-2.5 text-muted-foreground">
+      <span className="tabular-nums text-signal">{n}</span>
+      <span className="h-px w-6 bg-border" aria-hidden />
+      <span className="text-foreground">{label}</span>
+    </p>
+  );
+}
 
-const STEPS = [
-  { n: "01", label: "Install the engine" },
-  { n: "02", label: "Mount the provider, once" },
-  { n: "03", label: "Wrap anything" },
-] as const;
+function SectionHead({
+  beat,
+  label,
+  title,
+  children,
+}: {
+  beat: string;
+  label: string;
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <Reveal className="flex flex-col gap-3">
+      <BeatLabel n={beat} label={label} />
+      <h2 className="text-h2 text-foreground">{title}</h2>
+      <p className="text-lead">{children}</p>
+    </Reveal>
+  );
+}
 
 export default function Home() {
   return (
@@ -49,6 +80,7 @@ export default function Home() {
         <DraftingFrame />
 
         <div className="relative z-10">
+          {/* ── HERO — the pitch ── */}
           <section className="relative">
             <div className="container-page relative z-10 px-6 py-20 sm:py-24 lg:px-12 lg:py-28">
               <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -57,12 +89,11 @@ export default function Home() {
                     Motion registry · built on motion.dev
                   </p>
                   <h1 className="text-display text-foreground">
-                    Motion, <span className="text-signal">tuned once.</span>
+                    One file decides how <span className="text-signal">your whole app moves.</span>
                   </h1>
                   <p className="text-lead">
-                    Subtle, RSC-safe motion primitives for Next.js + shadcn. One command installs
-                    the whole engine into your repo — you own the files, and retune the entire feel
-                    from a single object.
+                    Install cold, wrap anything, ship motion that feels designed — not decorated.
+                    Every primitive derives from a single feel object you own.
                   </p>
                   <HeroInstall />
                 </FadeIn>
@@ -97,86 +128,73 @@ export default function Home() {
             </div>
           </section>
 
+          {/* ── 01 · INSTALL ── */}
           <section id="install" className="border-t border-border">
             <div className="container-page px-6 py-20 lg:px-12 lg:py-24">
-              <Reveal className="flex flex-col gap-3">
-                <h2 className="text-h2 text-foreground">Three steps to your first animation.</h2>
-                <p className="text-lead">
-                  One command lands the whole engine — the tokens, the provider, and every
-                  primitive. The registry declares its single runtime dependency (motion@^12.42.2);
-                  the CLI installs it for you.
-                </p>
-              </Reveal>
+              <SectionHead beat="01" label="Install" title="Install cold. It just moves.">
+                One command lands the whole engine — tokens, provider, every primitive — into your
+                project. No config, no setup. Mount it once; everything around it stays fast and
+                server-rendered.
+              </SectionHead>
 
-              <div className="mt-12 flex flex-col gap-8">
-                <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
-                  <div className="flex items-baseline gap-3 sm:w-52 sm:shrink-0">
-                    <span className="font-mono text-2xl tabular-nums text-signal">
-                      {STEPS[0].n}
-                    </span>
-                    <span className="text-sm font-medium text-foreground">{STEPS[0].label}</span>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <InstallBlock />
-                  </div>
-                </div>
-
-                <div className="grid gap-8 md:grid-cols-2">
-                  <div className="flex min-w-0 flex-col gap-4">
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-2xl tabular-nums text-signal">
-                        {STEPS[1].n}
-                      </span>
-                      <span className="text-sm font-medium text-foreground">{STEPS[1].label}</span>
-                    </div>
-                    <CodeBlock code={MOUNT_CODE} caption="app/layout.tsx" />
-                    <p className="text-sm text-muted-foreground">
-                      One client leaf. Every page around it stays a Server Component.
-                    </p>
-                  </div>
-                  <div className="flex min-w-0 flex-col gap-4">
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-2xl tabular-nums text-signal">
-                        {STEPS[2].n}
-                      </span>
-                      <span className="text-sm font-medium text-foreground">{STEPS[2].label}</span>
-                    </div>
-                    <CodeBlock code={WRAP_CODE} caption="any component" />
-                    <p className="text-sm text-muted-foreground">
-                      The primitive becomes your layout element — no orphan wrapper div.
-                    </p>
-                  </div>
+              <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+                <InstallBlock />
+                <div className="flex min-w-0 flex-col gap-4">
+                  <CodeBlock code={MOUNT_CODE} caption="app/layout.tsx" />
+                  <p className="text-sm text-muted-foreground">
+                    One client leaf, mounted in the root layout. That&apos;s the only boundary you
+                    add — the rest of your tree is untouched.
+                  </p>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="border-t border-border">
+          {/* ── 02 · WRAP ── */}
+          <section id="wrap" className="border-t border-border">
             <div className="container-page px-6 py-20 lg:px-12 lg:py-24">
-              <Reveal className="flex flex-col gap-3">
-                <h2 className="text-h2 text-foreground">One file. The whole feel.</h2>
-                <p className="text-lead">
-                  Every primitive derives from one{" "}
-                  <code className="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">
-                    feel
-                  </code>{" "}
-                  object. Drag a value — the demo retunes live, and the source updates to copy.
-                  Per-instance props still override.
-                </p>
-              </Reveal>
+              <SectionHead beat="02" label="Wrap" title="Wrap it. That's the API.">
+                No keyframes, no per-element setup. Wrap a card, a heading, a button — it becomes
+                your layout element and forwards your styles, so there&apos;s no throwaway wrapper.
+                Every panel below is live, running on this page.
+              </SectionHead>
               <div className="mt-12">
+                <WrapShowcase />
+              </div>
+            </div>
+          </section>
+
+          {/* ── 03 · TUNE ── */}
+          <section id="tune" className="border-t border-border">
+            <div className="container-page px-6 py-20 lg:px-12 lg:py-24">
+              <SectionHead beat="03" label="Tune" title="Change one value. The whole app re-feels.">
+                Duration, ease, rise, stagger — all of it flows from one feel object. Nudge a number
+                and every animation retunes at once. Drag it live below. Per-instance tweaks still
+                win when you want them.
+              </SectionHead>
+
+              <div className="mt-12 flex flex-col gap-6">
+                <div className="grid gap-6 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-center">
+                  <CodeBlock code={FEEL_CODE} caption="lib/motion.ts" />
+                  <p className="text-lead">
+                    The source lands in your project, yours to edit — not a dependency you can only
+                    configure from the outside. Change it, and the update propagates to every
+                    primitive at once. Drag it below to watch the whole set re-tune live.
+                  </p>
+                </div>
                 <FeelPlayground />
               </div>
             </div>
           </section>
 
+          {/* ── Supporting — the full set ── */}
           <section id="primitives" className="border-t border-border">
             <div className="container-page px-6 py-20 lg:px-12 lg:py-24">
               <div className="flex flex-col gap-3">
-                <h2 className="text-h2 text-foreground">Six primitives. Each one load-bearing.</h2>
+                <h2 className="text-h2 text-foreground">A tuned core that earns its place.</h2>
                 <p className="text-lead">
-                  Not a catalog of effects — a small, tuned core you wrap around your own markup.
-                  Every panel below is a real, running instance.
+                  Not a catalog of effects — a small, considered set you wrap around your own
+                  markup. Every panel below is a real, running instance.
                 </p>
               </div>
               <div className="mt-12">
@@ -188,11 +206,10 @@ export default function Home() {
           <section id="effects" className="border-t border-border">
             <div className="container-page px-6 py-20 lg:px-12 lg:py-24">
               <div className="flex flex-col gap-3">
-                <h2 className="text-h2 text-foreground">Ten more effects, same engine.</h2>
+                <h2 className="text-h2 text-foreground">More effects. Same engine, same feel.</h2>
                 <p className="text-lead">
-                  Entrance, hover, stagger, and text — each tuned from the same feel object, each an
-                  RSC-safe flat export. Toggle Code on any panel, or hover, click, and scroll them
-                  live.
+                  Entrance, hover, stagger, and text — every one tuned from the same feel object.
+                  Hover, click, scroll, or flip to Code on any panel.
                 </p>
               </div>
               <div className="mt-12">
@@ -210,10 +227,10 @@ export default function Home() {
           <section className="border-b border-border">
             <div className="container-page px-6 py-20 lg:px-12 lg:py-24">
               <div className="flex flex-col gap-3">
-                <h2 className="text-h2 text-foreground">Why it&apos;s safe to drop in.</h2>
+                <h2 className="text-h2 text-foreground">Boring where it counts.</h2>
                 <p className="text-lead">
-                  The discipline is the product — the real engineering decisions behind the six
-                  files.
+                  The flashy part is optional. The discipline isn&apos;t — here&apos;s what&apos;s
+                  behind it.
                 </p>
               </div>
               <TechnicalTruths />
@@ -227,10 +244,10 @@ export default function Home() {
           <section id="docs">
             <div className="container-page px-6 py-20 lg:px-12 lg:py-24">
               <Reveal className="flex flex-col gap-3">
-                <h2 className="text-h2 text-foreground">Docs, built like the rest.</h2>
+                <h2 className="text-h2 text-foreground">Docs, built like the rest of it.</h2>
                 <p className="text-lead">
-                  A grouped sidebar, live Preview/Code, and a props table per primitive — plus an
-                  llms.txt and Copy-Markdown for AI-native reading.
+                  Grouped sidebar, live Preview / Code, and a props table per component — plus a
+                  copy-ready format so the AI in your editor reads it as fast as you do.
                 </p>
               </Reveal>
               <div className="mt-12">

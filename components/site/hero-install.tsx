@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowUpRight, Check, Copy } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, Copy } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 const INSTALL = "npx shadcn add https://motion.asmitsah.dev/r/all.json";
@@ -55,11 +56,18 @@ export function HeroInstall() {
           )}
           {copied ? "Copied" : "Copy install"}
         </button>
+        <Link
+          href="/docs"
+          className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-signal/50 hover:text-signal"
+        >
+          See it move
+          <ArrowRight className="size-4" aria-hidden />
+        </Link>
         <a
           href={REPO_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-signal/50 hover:text-signal"
+          className="inline-flex items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           Star on GitHub
           <ArrowUpRight className="size-4" aria-hidden />

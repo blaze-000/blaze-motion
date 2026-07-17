@@ -1,6 +1,6 @@
 # blaze-motion
 
-**Motion, tuned once.** — subtle, RSC-safe motion primitives for Next.js, distributed as a shadcn registry.
+**Motion, tuned once.** — subtle, RSC-safe motion primitives for React, distributed as a shadcn registry.
 
 A tuned [motion.dev](https://motion.dev) engine you install with the shadcn CLI and **own**: editable files land in your repo, and one `feel` config tunes the whole engine's speed, easing, rise, and stagger. The calm antidote to flashy motion kits.
 

@@ -37,8 +37,8 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              A tuned motion engine and six composable primitives for Next.js + shadcn — curated on
-              top of{" "}
+              A tuned motion engine and a full set of composable primitives for React + shadcn —
+              curated on top of{" "}
               <a
                 href="https://motion.dev"
                 target="_blank"
@@ -47,8 +47,8 @@ export function Footer() {
               >
                 motion.dev
               </a>
-              , not a reinvention of it. Install once, own the files, tune the whole feel from one
-              object.
+              , not a reinvention of it. Install once, own the files, tune the whole feel from a
+              single object.
             </p>
           </div>
 
@@ -87,7 +87,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex items-center justify-between border-t border-border pt-6">
-          <p className="font-mono text-xs text-muted-foreground">Motion, tuned once.</p>
+          <p className="font-mono text-xs text-muted-foreground">Move with intent.</p>
           <p className="font-mono text-xs tabular-nums text-muted-foreground">
             MIT · motion.asmitsah.dev
           </p>

@@ -1,37 +1,37 @@
 const TRUTHS = [
   {
-    key: "RSC-safe",
+    key: "Server-first by design",
     detail:
-      "Six 'use client' leaves, Server pages composed around them. MotionProvider is the one client boundary you mount; every page stays a Server Component.",
+      "One client boundary and that's it. Everything you build around it stays fast and server-rendered — you add motion, not overhead.",
   },
   {
-    key: "One runtime dep",
-    detail: "motion@^12.42.2 — the motion.dev package. Nothing else is pulled into your app.",
+    key: "One dependency, that's the deal",
+    detail: "Just the motion.dev package under the hood. Nothing smuggled in behind it.",
   },
   {
-    key: "Lean bundle",
+    key: "Ships light on purpose",
     detail:
-      "LazyMotion with strict + domAnimation loads only the DOM-animation feature set, not the whole library.",
+      "Loads only the animation features it needs, not the whole library. Your bundle barely notices.",
   },
   {
-    key: "Reduced-motion",
+    key: "Respects 'reduce motion'",
     detail:
-      'reducedMotion="user" on MotionConfig honors the OS setting for everyone — transforms fall back to a clean opacity fade, no special-casing.',
+      "Honors the OS setting for everyone — motion gracefully becomes a clean fade. No motion sickness.",
   },
   {
-    key: "Flat exports",
+    key: "Calm is the default",
     detail:
-      "Stagger and StaggerItem ship as two named exports — a compound Stagger.Item is undefined across the RSC client-reference boundary and crashes next build's prerender.",
+      "Subtle out of the box. It reads as designed, not decorated — you turn the dial up, it never shouts first.",
   },
   {
-    key: "className passthrough",
+    key: "Slots into your layout",
     detail:
-      "Every primitive forwards className + style, so it becomes your grid or flex child instead of adding an orphan wrapper div.",
+      "Every primitive becomes your real grid or flex child instead of wrapping one in a throwaway element.",
   },
   {
-    key: "Own and tweak",
+    key: "You own every line",
     detail:
-      "The shadcn CLI copies the source into your repo — lib/motion.ts + components/motion/* — not an opaque node_modules dependency. Retune the whole feel from one object.",
+      "The source lands right in your project — yours to read, edit, and retune. No black box, no lock-in.",
   },
 ];
 

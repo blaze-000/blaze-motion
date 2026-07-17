@@ -29,14 +29,13 @@ export const metadata: Metadata = {
     template: "%s · blaze-motion",
   },
   description:
-    "Subtle, RSC-safe motion primitives for Next.js + shadcn. One command installs the whole engine into your repo — you own the files, and retune the entire feel from a single object.",
+    "Subtle, RSC-safe motion primitives for React + shadcn. One command installs the whole engine into your repo — you own the files, and retune the entire feel from a single object.",
   keywords: [
     "motion",
     "motion.dev",
     "framer motion",
     "shadcn",
     "registry",
-    "Next.js",
     "React",
     "animation",
     "RSC",
@@ -49,12 +48,12 @@ export const metadata: Metadata = {
     siteName: "blaze-motion",
     title: "blaze-motion — Motion, tuned once",
     description:
-      "Subtle, RSC-safe motion primitives for Next.js + shadcn. Own the files, tune the whole feel from one object.",
+      "Subtle, RSC-safe motion primitives for React + shadcn. Own the files, tune the whole feel from one object.",
   },
   twitter: {
     card: "summary_large_image",
     title: "blaze-motion — Motion, tuned once",
-    description: "Subtle, RSC-safe motion primitives for Next.js + shadcn.",
+    description: "Subtle, RSC-safe motion primitives for React + shadcn.",
   },
 };
 

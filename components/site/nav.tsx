@@ -8,9 +8,10 @@ import { EasingCurveMark } from "./easing-curve-mark";
 import { GitHubStars } from "./github-stars";
 
 const LINKS = [
-  { label: "Primitives", href: "/#primitives" },
-  { label: "Docs", href: "/docs" },
   { label: "Install", href: "/#install" },
+  { label: "Wrap", href: "/#wrap" },
+  { label: "Tune", href: "/#tune" },
+  { label: "Docs", href: "/docs" },
 ] as const;
 
 export function Nav() {
